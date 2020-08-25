@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>669855869593-tb8ubrjhqfle25ojnjst1ebems16be1s.apps.googleusercontent.com</string>
+	<string>935851541246-8u7rnnr4r8n4m6gfdf50l7bp8jqfqn6r.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.669855869593-tb8ubrjhqfle25ojnjst1ebems16be1s</string>
+	<string>com.googleusercontent.apps.935851541246-8u7rnnr4r8n4m6gfdf50l7bp8jqfqn6r</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDiBgwFDhAAWUPaJpeCOAWyMDRl3P2oDeY</string>
+	<string>AIzaSyDZXdRj-CPHgrrdzz1rlRx5RIVYFGxE6wY</string>
 	<key>GCM_SENDER_ID</key>
-	<string>669855869593</string>
+	<string>935851541246</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>dev.adalberto.lojavirtual</string>
+	<string>com.dozedeagosto.etafome</string>
 	<key>PROJECT_ID</key>
-	<string>loja-virtual-a4e23</string>
+	<string>etafome-33c6e</string>
 	<key>STORAGE_BUCKET</key>
-	<string>loja-virtual-a4e23.appspot.com</string>
+	<string>etafome-33c6e.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:669855869593:ios:b36d55b3e76b585fbb6608</string>
+	<string>1:935851541246:ios:51da82d31eeee999491baf</string>
 	<key>DATABASE_URL</key>
-	<string>https://loja-virtual-a4e23.firebaseio.com</string>
+	<string>https://etafome-33c6e.firebaseio.com</string>
 </dict>
 </plist>
