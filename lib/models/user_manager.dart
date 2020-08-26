@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:lojavirtual/helpers/firebase_erros.dart';
+import 'package:lojavirtual/models/store.dart';
 import 'package:lojavirtual/models/user.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -152,17 +153,27 @@ class UserManager extends ChangeNotifier {
       user = User.fromDocument(docUser);
       user.saveToken();
 
-      final docAdmin = await firestore.collection('admins').document(user.id).get();
-      if(docAdmin.exists){
-        user.admin = true;
-      }
+//      final docAdmin = await firestore.collection('admins').document(user.id).get();
+//      if(docAdmin.exists && docAdmin['store'] == "PCnz9egFX0cF0vfcFlHi"){
+//        user.admin = true;
+//      }
 
       notifyListeners();
     }
   }
 
-  bool get adminEnabled => user != null && user.admin;
+  Future<void> adminStore(Store store) async{
+    final docAdmin = await firestore.collection('admins').document(user.id).get();
+    if(docAdmin.exists && docAdmin['store'] == store.id){
+      user.admin = true;
+    } else {
+      user.admin = false;
+    }
 
+    notifyListeners();
+  }
+
+  bool get adminEnabled => user != null && user.admin;
 
 }
 

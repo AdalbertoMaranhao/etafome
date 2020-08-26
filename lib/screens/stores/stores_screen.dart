@@ -17,7 +17,7 @@ class StoresScreen extends StatelessWidget {
       body: Consumer<StoresManager>(
         builder: (_, storesManager, __){
           if(storesManager.stores.isEmpty){
-            return LinearProgressIndicator(
+            return const LinearProgressIndicator(
               valueColor: AlwaysStoppedAnimation(Colors.white),
               backgroundColor: Colors.transparent,
             );

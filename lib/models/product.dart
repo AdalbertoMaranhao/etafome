@@ -14,7 +14,7 @@ class Product extends ChangeNotifier {
 
   StorageReference get storageRef => storage.ref().child('products').child(id);
 
-  Product({this.id, this.name, this.description, this.images, this.sizes, this.deleted = false}) {
+  Product({this.id, this.name, this.description, this.images, this.sizes, this.deleted = false, this.store}) {
     images = images ?? [];
     sizes = sizes ?? [];
   }
@@ -22,6 +22,7 @@ class Product extends ChangeNotifier {
   Product.fromDocument(DocumentSnapshot document) {
     id = document.documentID;
     name = document['name'] as String;
+    store = document['store'] as String;
     description = document['description'] as String;
     images = List<String>.from(document.data['images'] as List<dynamic> ?? []);
     sizes = (document.data['sizes'] as List<dynamic>)
@@ -34,6 +35,7 @@ class Product extends ChangeNotifier {
   String id;
   String name;
   String description;
+  String store;
   List<String> images;
   List<ItemSize> sizes;
 
@@ -97,6 +99,7 @@ class Product extends ChangeNotifier {
     final Map<String, dynamic> data = {
       'name': name,
       'description': description,
+      'store': store,
       'sizes': exportSizeList(),
       'deleted': deleted,
     };
@@ -149,6 +152,7 @@ class Product extends ChangeNotifier {
       id: id,
       name: name,
       description: description,
+      store: store,
       images: List.from(images),
       sizes: sizes.map((size) => size.clone()).toList(),
       deleted: deleted,

@@ -7,6 +7,7 @@ enum StoreStatus { closed, open, closing }
 
 class Store {
   Store.fromDocument(DocumentSnapshot doc) {
+    id = doc.documentID;
     name = doc.data['name'] as String;
     image = doc.data['image'] as String;
     phone = doc.data['phone'] as String;
@@ -32,6 +33,7 @@ class Store {
     updateStatus();
   }
 
+  String id;
   String name;
   String image;
   String phone;

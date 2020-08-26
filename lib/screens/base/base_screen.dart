@@ -78,7 +78,7 @@ class _BaseScreenState extends State<BaseScreen> {
             physics: const NeverScrollableScrollPhysics(),
             children: <Widget>[
               HomeScreen(),
-              ProductScreen(),
+              ProductsScreen(),
               OrdersScreen(),
               StoresScreen(),
               if(userManager.adminEnabled)

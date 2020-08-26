@@ -8,10 +8,16 @@ import 'package:provider/provider.dart';
 
 import 'components/search_dialog.dart';
 
-class ProductsScreen extends StatelessWidget {
+class ProductsStoreScreen extends StatelessWidget {
+
+  const ProductsStoreScreen(this.store);
+
+  final Store store;
 
   @override
   Widget build(BuildContext context) {
+    //final userManager = context.watch<UserManager>();
+//    userManager.adminStore(store);
     return Scaffold(
       drawer: CustomDrawer(),
       appBar: AppBar(
@@ -31,11 +37,11 @@ class ProductsScreen extends StatelessWidget {
                       }
                     },
                     child: Container(
-                        width: contrains.biggest.width,
-                        child: Text(
-                          productManager.search,
-                          textAlign: TextAlign.center,
-                        ),
+                      width: contrains.biggest.width,
+                      child: Text(
+                        productManager.search,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   );
                 },
@@ -84,6 +90,7 @@ class ProductsScreen extends StatelessWidget {
               }
             },
           )
+
         ],
       ),
       body: Consumer<ProductManager>(
@@ -92,7 +99,16 @@ class ProductsScreen extends StatelessWidget {
           return ListView.builder(
             itemCount: filteredProducts.length,
             itemBuilder: (_, index) {
-              return ProductListTile(filteredProducts[index]);
+              if(filteredProducts[index].store == store.id) {
+                print(filteredProducts[index].store);
+                print(store.id);
+                return ProductListTile(filteredProducts[index]);
+              } else {
+                //print(filteredProducts[index].store);
+                //print(store.id);
+                //return ProductListTile(filteredProducts[index]);
+              }
+              return Container();
             },
           );
         },
