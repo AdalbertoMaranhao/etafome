@@ -7,6 +7,7 @@ class CartProduct extends ChangeNotifier{
 
   CartProduct.fromProduct(this._product){
     productID = product.id;
+    productStore = product.store;
     quantity = 1;
     size = product.selectedSize.name;
   }
@@ -14,6 +15,7 @@ class CartProduct extends ChangeNotifier{
   CartProduct.fromDocument(DocumentSnapshot document){
     id = document.documentID;
     productID = document.data['pid'] as String;
+    productStore = document.data['pst'] as String;
     quantity = document.data['quantity'] as int;
     size = document.data['size'] as String;
 
@@ -26,6 +28,7 @@ class CartProduct extends ChangeNotifier{
 
   CartProduct.fromMap(Map<String, dynamic> map){
     productID = map['pid'] as String;
+    productStore = map['pst'] as String;
     quantity = map['quantity'] as int;
     size = map['size'] as String;
     fixedPrice = map['fixedPrice'] as num;
@@ -41,6 +44,7 @@ class CartProduct extends ChangeNotifier{
 
   String id;
   String productID;
+  String productStore;
   int quantity;
   String size;
   num fixedPrice;
@@ -67,6 +71,7 @@ class CartProduct extends ChangeNotifier{
   Map<String, dynamic> toCartItemMap() {
     return {
       'pid': productID,
+      'pst': productStore,
       'quantity': quantity,
       'size': size,
     };
@@ -75,6 +80,7 @@ class CartProduct extends ChangeNotifier{
   Map<String, dynamic> toOrderItemMap() {
     return {
       'pid': productID,
+      'pst': productStore,
       'quantity': quantity,
       'size': size,
       'fixedPrice': fixedPrice ?? unitPrice,

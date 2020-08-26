@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/product_manager.dart';
+import 'package:lojavirtual/models/store.dart';
 import 'package:lojavirtual/screens/edit_product/components/delete_product_dialog.dart';
 import 'package:provider/provider.dart';
 
@@ -8,17 +9,22 @@ import 'components/images_form.dart';
 import 'components/sizes_form.dart';
 
 class EditProductScreen extends StatelessWidget {
-  EditProductScreen(Product p)
+  EditProductScreen(Product p, {this.productStore})
       : editing = p != null,
         product = p != null ? p.clone() : Product();
 
   final Product product;
+  final Store productStore;
   final bool editing;
+
+
 
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    print(productStore.id);
+    product.store = productStore.id;
     final primaryColor = Theme.of(context).primaryColor;
 
     return ChangeNotifierProvider.value(

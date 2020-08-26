@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lojavirtual/models/order.dart';
+import 'package:lojavirtual/models/store.dart';
 import 'package:lojavirtual/models/user.dart';
 
 class AdminOrdersManager extends ChangeNotifier {
@@ -10,6 +11,7 @@ class AdminOrdersManager extends ChangeNotifier {
   final List<Order> _orders = [];
 
   User userFilter;
+  Store storeFilter;
   List<Status> statusFilter = [Status.preparing];
 
   final Firestore firestore = Firestore.instance;
@@ -27,6 +29,10 @@ class AdminOrdersManager extends ChangeNotifier {
 
   List<Order> get filteredOrders {
     List<Order> output = _orders.reversed.toList();
+
+    if(storeFilter != null){
+      output = output.where((o) => o.items[0].productStore == storeFilter.id).toList();
+    }
 
     if(userFilter != null){
       output = output.where((o) => o.userId == userFilter.id).toList();
@@ -62,6 +68,11 @@ class AdminOrdersManager extends ChangeNotifier {
 
           notifyListeners();
         });
+  }
+
+  void setStoreFilter(Store store) {
+    storeFilter = store;
+    notifyListeners();
   }
 
   void setUserFilter(User user) {

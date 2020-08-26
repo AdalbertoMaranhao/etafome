@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/common/custom_drawer/custom_drawer.dart';
+import 'package:lojavirtual/models/admin_orders_manager.dart';
 import 'package:lojavirtual/models/product_manager.dart';
 import 'package:lojavirtual/models/store.dart';
 import 'package:lojavirtual/models/user_manager.dart';
+import 'package:lojavirtual/screens/edit_product/edit_product_screen.dart';
 import 'package:lojavirtual/screens/products/components/products_list_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -16,8 +18,7 @@ class ProductsStoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final userManager = context.watch<UserManager>();
-//    userManager.adminStore(store);
+
     return Scaffold(
       drawer: CustomDrawer(),
       appBar: AppBar(
@@ -81,7 +82,24 @@ class ProductsStoreScreen extends StatelessWidget {
                   icon: Icon(Icons.add),
                   onPressed: (){
                     Navigator.of(context).pushNamed(
-                      '/edit_product',
+                      '/edit_product', arguments: store
+                    );
+                  },
+                );
+              } else {
+                return Container();
+              }
+            },
+          ),
+          Consumer<UserManager>(
+            builder: (_, userManager, __){
+              if(userManager.adminEnabled){
+                return IconButton(
+                  icon: Icon(Icons.shopping_cart),
+                  onPressed: (){
+                    context.read<AdminOrdersManager>().setStoreFilter(store);
+                    Navigator.of(context).pushNamed(
+                      '/orders',
                     );
                   },
                 );
@@ -90,6 +108,7 @@ class ProductsStoreScreen extends StatelessWidget {
               }
             },
           )
+
 
         ],
       ),
@@ -100,13 +119,7 @@ class ProductsStoreScreen extends StatelessWidget {
             itemCount: filteredProducts.length,
             itemBuilder: (_, index) {
               if(filteredProducts[index].store == store.id) {
-                print(filteredProducts[index].store);
-                print(store.id);
                 return ProductListTile(filteredProducts[index]);
-              } else {
-                //print(filteredProducts[index].store);
-                //print(store.id);
-                //return ProductListTile(filteredProducts[index]);
               }
               return Container();
             },
