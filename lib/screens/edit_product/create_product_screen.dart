@@ -8,13 +8,13 @@ import 'package:provider/provider.dart';
 import 'components/images_form.dart';
 import 'components/sizes_form.dart';
 
-class EditProductScreen extends StatelessWidget {
-  EditProductScreen(Product p)
-      : editing = p != null,
-        product = p != null ? p.clone() : Product();
+class CreateProductScreen extends StatelessWidget {
 
-  final Product product;
-  final bool editing;
+  CreateProductScreen(this.productStore);
+
+  Product product = Product();
+  final String productStore;
+
 
 
 
@@ -22,6 +22,8 @@ class EditProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(productStore);
+    product.store = productStore;
     final primaryColor = Theme.of(context).primaryColor;
 
     return ChangeNotifierProvider.value(
@@ -29,20 +31,8 @@ class EditProductScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text(editing ? 'Editar Produto' : 'Criar Produto'),
+          title: const Text('Criar Produto'),
           centerTitle: true,
-          actions: <Widget>[
-            if(editing)
-              IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: (){
-                  showDialog(context: context,
-                      builder: (_) => DeleteProductDialog(product)
-                  );
-                },
-              )
-
-          ],
         ),
         body: Form(
           key: formkey,
@@ -61,7 +51,7 @@ class EditProductScreen extends StatelessWidget {
                         border: InputBorder.none,
                       ),
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                      const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                       validator: (name) {
                         if (name.length < 6) {
                           return 'Titulo muito curto';
@@ -134,28 +124,28 @@ class EditProductScreen extends StatelessWidget {
                             textColor: Colors.white,
                             onPressed: !product.loading
                                 ? () async {
-                                    if (formkey.currentState.validate()) {
-                                      formkey.currentState.save();
-                                      await product.save();
+                              if (formkey.currentState.validate()) {
+                                formkey.currentState.save();
+                                await product.save();
 
-                                      context.read<ProductManager>()
-                                          .update(product);
+                                context.read<ProductManager>()
+                                    .update(product);
 
-                                      Navigator.of(context).pop();
-                                    }
-                                  }
+                                Navigator.of(context).pop();
+                              }
+                            }
                                 : null,
                             child: product.loading
-                                ? CircularProgressIndicator(
-                                    valueColor:
-                                        AlwaysStoppedAnimation(Colors.white),
-                                  )
+                                ? const CircularProgressIndicator(
+                              valueColor:
+                              AlwaysStoppedAnimation(Colors.white),
+                            )
                                 : const Text(
-                                    'Salvar',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                    ),
-                                  ),
+                              'Salvar',
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
                           ),
                         );
                       },

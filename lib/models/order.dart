@@ -33,7 +33,7 @@ class Order {
 
   final Firestore firestore = Firestore.instance;
   DocumentReference get firestoreRef =>
-      firestore.collection('orders').document(orderId);
+      firestore.collection('orders').document("${orderId}@${items[0].productStore}");
 
   String orderId;
   String payId;
@@ -46,11 +46,16 @@ class Order {
   Status status;
 
   Timestamp date;
+  String newOrderId;
 
-  String get formattedId => '#${orderId.padLeft(6, '0')}';
+  String get formattedId => '#${splitOrderId().padLeft(6, '0')}';
 
   String get statusText => getStatusText(status);
 
+  String splitOrderId (){
+    final List<String> split = orderId.split("@");
+    return newOrderId = split[0];
+  }
 
   Future<void> save() async {
     firestoreRef.setData(

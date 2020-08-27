@@ -82,7 +82,7 @@ class ProductsStoreScreen extends StatelessWidget {
                   icon: Icon(Icons.add),
                   onPressed: (){
                     Navigator.of(context).pushNamed(
-                      '/edit_product', arguments: store
+                      '/create_product', arguments: store.id
                     );
                   },
                 );

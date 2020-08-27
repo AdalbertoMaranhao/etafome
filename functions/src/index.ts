@@ -4,7 +4,6 @@ import * as admin from 'firebase-admin';
 import { CieloConstructor, Cielo, TransactionCreditCardRequestModel, EnumBrands, CaptureRequestModel, CancelTransactionRequestModel} from 'cielo';
 
 
-
 admin.initializeApp(functions.config().firebase);
 
 // Start writing Firebase Functions
@@ -285,51 +284,33 @@ export const cancelCreditCard = functions.https.onCall(async (data, context) => 
 
 });
 
-
-
-
-
-
-
-
-
-
-
-export const helloWorld = functions.https.onCall((data, context) => {
-  return {data: "Hellow from cloud functions!!!"};
-});
-
-export const getUserData = functions.https.onCall( async (data, context) => {
-    if(!context.auth){
-        return {
-            "data": "Nenhum usuário logado"
-        };
-    }
-
-    const snapshot = await admin.firestore().collection("users").doc(context.auth.uid).get();
-    return {
-        "data": snapshot.data()
-    };
-
-});
+//Mensagens
 
 export const onNewOrder = functions.firestore.document("/orders/{orderId}").onCreate(async (snapshot, context) => {
     const orderId = context.params.orderId;
+    //capturando o storeId da order
+    const orderStore = orderId.split("@");
+    const store = orderStore[1];
+    const newOrderId = orderStore[0];
     
     const querySnapshot = await admin.firestore().collection("admins").get();
 
+    const adminStore = querySnapshot.docs.map(doc => doc.data().store);
     const admins = querySnapshot.docs.map(doc => doc.id);
 
     let adminsTokens: string[] = [];
     for(let i = 0; i < admins.length; i++){
-        const tokensAdmin: string[] = await getDeviceTokens(admins[i]);
-        adminsTokens = adminsTokens.concat(tokensAdmin);
+        if(store === adminStore[i]){
+            //se admin.store for igual a order.store faça 
+            const tokensAdmin: string[] = await getDeviceTokens(admins[i]);
+            adminsTokens = adminsTokens.concat(tokensAdmin);
+        }
     }
 
    await sendPushFCM(
        adminsTokens,
        'Novo Pedido',
-       'Nova venda realizada. Pedido: ' + orderId,
+       'Nova venda realizada. Pedido: ' + newOrderId,
    );
 
 
