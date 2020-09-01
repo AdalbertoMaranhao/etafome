@@ -153,10 +153,10 @@ class UserManager extends ChangeNotifier {
       user = User.fromDocument(docUser);
       user.saveToken();
 
-//      final docAdmin = await firestore.collection('admins').document(user.id).get();
-//      if(docAdmin.exists && docAdmin['store'] == "PCnz9egFX0cF0vfcFlHi"){
-//        user.admin = true;
-//      }
+      final docAdmin = await firestore.collection('admins').document(user.id).get();
+      if(docAdmin.exists && docAdmin['store'] == "geral"){
+        user.admin = true;
+      }
 
       notifyListeners();
     }
@@ -164,12 +164,17 @@ class UserManager extends ChangeNotifier {
 
   Future<void> adminStore(Store store) async{
     final docAdmin = await firestore.collection('admins').document(user.id).get();
-    if(docAdmin.exists && docAdmin['store'] == store.id){
+    if(docAdmin.exists && (docAdmin['store'] == store.id || docAdmin['store'] == "geral")){
       user.admin = true;
     } else {
       user.admin = false;
     }
 
+    notifyListeners();
+  }
+
+  void adminClear () {
+    user.admin = false;
     notifyListeners();
   }
 

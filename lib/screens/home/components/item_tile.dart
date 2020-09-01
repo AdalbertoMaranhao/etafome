@@ -2,10 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/models/home_manager.dart';
-import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/product_manager.dart';
 import 'package:lojavirtual/models/section.dart';
 import 'package:lojavirtual/models/section_item.dart';
+import 'package:lojavirtual/models/store.dart';
+import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -20,11 +21,11 @@ class ItemTile extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        if (item.product != null) {
-          final product =
-              context.read<ProductManager>().findProductById(item.product);
-          if (product != null) {
-            Navigator.of(context).pushNamed('/product', arguments: product);
+        if (item.store != null) {
+          final store =
+              context.read<StoresManager>().findStoreById(item.store);
+          if (store != null) {
+            Navigator.of(context).pushNamed('/productsStore', arguments: store);
           }
         }
       },
@@ -33,18 +34,18 @@ class ItemTile extends StatelessWidget {
               showDialog(
                   context: context,
                   builder: (_) {
-                    final product = context
-                        .read<ProductManager>()
-                        .findProductById(item.product);
+                    final store = context
+                        .read<StoresManager>()
+                        .findStoreById(item.store);
                     return AlertDialog(
                       title: const Text('Editar Item'),
-                      content: product != null
+                      content: store != null
                           ? ListTile(
                               contentPadding: EdgeInsets.zero,
-                              leading: Image.network(product.images.first),
-                              title: Text(product.name),
-                              subtitle: Text(
-                                  'R\$ ${product.basePrice.toStringAsFixed(2)}'),
+                              leading: Image.network(store.image),
+                              title: Text(store.name),
+//                              subtitle: Text(
+//                                  'R\$ ${store.basePrice.toStringAsFixed(2)}'),
                             )
                           : null,
                       actions: <Widget>[
@@ -58,18 +59,18 @@ class ItemTile extends StatelessWidget {
                         ),
                         FlatButton(
                           onPressed: () async {
-                            if (product != null) {
-                              item.product = null;
+                            if (store != null) {
+                              item.store = null;
                             } else {
-                              final Product product =
+                              final Store store =
                                   await Navigator.of(context)
-                                      .pushNamed('/select_product') as Product;
-                              item.product = product?.id;
+                                      .pushNamed('/select_product') as Store;
+                              item.store = store?.id;
                             }
                             Navigator.of(context).pop();
                           },
                           child: Text(
-                              product != null ? 'Desvincular' : 'Vincular'),
+                              store != null ? 'Desvincular' : 'Vincular'),
                         ),
                       ],
                     );

@@ -24,6 +24,14 @@ class StoresManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  Store findStoreById(String id) {
+    try {
+      return stores.firstWhere((p) => p.id == id);
+    } catch(e) {
+      return null;
+    }
+  }
+
   void _startTimer(){
     _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
       _checkOpening();

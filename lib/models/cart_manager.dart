@@ -86,6 +86,17 @@ class CartManager extends ChangeNotifier{
     notifyListeners();
   }
 
+  bool verifyCart(String store){
+    if(items.isNotEmpty){
+      if(items[0].productStore != store){
+        return false;
+      } else {
+        return true;
+      }
+    }
+    return false;
+  }
+
 
   void _onItemUpdate() {
     productsPrice = 0.0;

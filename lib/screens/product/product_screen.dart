@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/user_manager.dart';
+import 'package:lojavirtual/screens/product/components/alert_stores_different.dart';
+
 import 'package:lojavirtual/screens/product/components/size_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +31,7 @@ class ProductScreen extends StatelessWidget {
               builder: (_, userManager, __){
                 if(userManager.adminEnabled && !product.deleted){
                   return IconButton(
-                    icon: Icon(Icons.edit),
+                    icon: const Icon(Icons.edit),
                     onPressed: (){
                       Navigator.of(context).pushReplacementNamed(
                           '/edit_product',
@@ -65,7 +69,7 @@ class ProductScreen extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     product.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w600
                     ),
@@ -88,8 +92,8 @@ class ProductScreen extends StatelessWidget {
                       color: primaryColor,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16, bottom: 8),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 16, bottom: 8),
                     child: Text(
                       'Descrição',
                       style: TextStyle(
@@ -105,8 +109,8 @@ class ProductScreen extends StatelessWidget {
                     ),
                   ),
                   if(product.deleted)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16, bottom: 8),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 16, bottom: 8),
                       child: Text(
                         'Este produto não está mais disponível',
                         style: TextStyle(
@@ -118,8 +122,8 @@ class ProductScreen extends StatelessWidget {
                     )
                   else
                     ...[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16, bottom: 8),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 16, bottom: 8),
                         child: Text(
                           'Tamanhos',
                           style: TextStyle(
@@ -145,8 +149,17 @@ class ProductScreen extends StatelessWidget {
                           child: RaisedButton(
                             onPressed: product.selectedSize != null ? (){
                               if(userManager.isLoggedIn){
-                                context.read<CartManager>().addToCart(product);
-                                Navigator.of(context).pushNamed('/cart');
+                                if(context.read<CartManager>().verifyCart(product.store)) {
+                                  context.read<CartManager>().addToCart(
+                                      product);
+                                  Navigator.of(context).pushNamed("/cart");
+//                                  showDialog(context: context,
+//                                      builder: (_) => AlertProductAdd());
+                                } else {
+                                  showDialog(context: context,
+                                      builder: (_) => AlertStoresDifferent(product));
+                                }
+
                               } else {
                                 Navigator.of(context).pushNamed('/login');
                               }

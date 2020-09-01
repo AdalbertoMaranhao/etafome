@@ -41,7 +41,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                         Expanded(
                           child: Text(
                             'Pedidos de ${ordersManager.userFilter.name}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w800,
                               color: Colors.white,
                             ),
@@ -58,7 +58,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                     ),
                   ),
                 if(filteredOrders.isEmpty)
-                  Expanded(
+                  const Expanded(
                     child: EmptyCard(
                       title: 'Nenhuma venda realizada!',
                       iconData: Icons.border_clear,

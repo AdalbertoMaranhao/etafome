@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lojavirtual/models/product_manager.dart';
+import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:provider/provider.dart';
 
 class SelectProductScreen extends StatelessWidget {
@@ -11,18 +11,18 @@ class SelectProductScreen extends StatelessWidget {
         centerTitle: true,
       ),
       backgroundColor: Colors.white,
-      body: Consumer<ProductManager>(
-        builder: (_, productManager, __){
+      body: Consumer<StoresManager>(
+        builder: (_, storesManager, __){
           return ListView.builder(
-            itemCount: productManager.allProducts.length,
+            itemCount: storesManager.stores.length,
             itemBuilder: (_, index){
-              final product = productManager.allProducts[index];
+              final store = storesManager.stores[index];
               return ListTile(
-                leading: Image.network(product.images.first),
-                title: Text(product.name),
-                subtitle: Text('R\$ ${product.basePrice.toStringAsFixed(2)}'),
+                leading: Image.network(store.image),
+                title: Text(store.name),
+                //subtitle: Text('R\$ ${product.basePrice.toStringAsFixed(2)}'),
                 onTap: (){
-                  Navigator.of(context).pop(product);
+                  Navigator.of(context).pop(store);
                 },
               );
             }

@@ -33,7 +33,7 @@ class Order {
 
   final Firestore firestore = Firestore.instance;
   DocumentReference get firestoreRef =>
-      firestore.collection('orders').document("${orderId}@${items[0].productStore}");
+      firestore.collection('orders').document("$orderId@${items[0].productStore}");
 
   String orderId;
   String payId;
