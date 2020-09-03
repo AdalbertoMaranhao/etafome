@@ -101,7 +101,7 @@ class ProductsStoreScreen extends StatelessWidget {
               builder: (_, userManager, __){
                 if(userManager.adminEnabled){
                   return IconButton(
-                    icon: const Icon(Icons.shopping_cart),
+                    icon: const Icon(Icons.playlist_add_check),
                     onPressed: (){
                       context.read<AdminOrdersManager>().setStoreFilter(store);
                       Navigator.of(context).pushNamed(

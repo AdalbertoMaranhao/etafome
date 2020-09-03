@@ -113,7 +113,7 @@ class StoreCard extends StatelessWidget {
                     child: Container(
                       decoration: const BoxDecoration(
                           color: Colors.white,
-                          borderRadius: const BorderRadius.only(
+                          borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(8)
                           )
                       ),

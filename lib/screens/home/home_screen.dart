@@ -16,10 +16,10 @@ class HomeScreen extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
 
-                colors: const [
+                colors: [
                   Color.fromARGB(255, 211, 118, 130),
                   Color.fromARGB(255, 253, 181, 168)
                 ],
@@ -82,7 +82,7 @@ class HomeScreen extends StatelessWidget {
               Consumer<HomeManager>(
                 builder: (_, homeManager, __) {
                   if(homeManager.loading){
-                    return SliverToBoxAdapter(
+                    return const SliverToBoxAdapter(
                       child: LinearProgressIndicator(
                         valueColor: AlwaysStoppedAnimation(Colors.white),
                         backgroundColor: Colors.transparent,
@@ -103,6 +103,7 @@ class HomeScreen extends StatelessWidget {
                                 }
                               }
                       ).toList();
+                  
                   if(homeManager.editing) {
                     children.add(AddSectionWidget(homeManager));
                   }

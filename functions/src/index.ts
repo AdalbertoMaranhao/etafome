@@ -326,6 +326,11 @@ const orderStatus = new Map([
 
 export const onOrderStatusChanged = functions.firestore.document("/orders/{orderId}").onUpdate(async(snapshot, context) => {
 
+    const orderId = context.params.orderId;
+    //capturando o storeId da order
+    const orderSplit = orderId.split("@");
+    const newOrderId = orderSplit[0];
+    
     const beforeStatus = snapshot.before.data().status;
     const afterStatus = snapshot.after.data().status;
 
@@ -334,7 +339,7 @@ export const onOrderStatusChanged = functions.firestore.document("/orders/{order
 
         await sendPushFCM(
             tokensUser,
-            'Pedido: ' + context.params.orderId,
+            'Pedido: ' + newOrderId,
             'Status atualizado para: ' + orderStatus.get(afterStatus),
         );
     }

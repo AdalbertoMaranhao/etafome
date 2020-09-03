@@ -12,7 +12,7 @@ class AdminOrdersManager extends ChangeNotifier {
 
   User userFilter;
   Store storeFilter;
-  List<Status> statusFilter = [Status.preparing];
+  List<Status> statusFilter = [Status.waiting, Status.preparing];
 
   final Firestore firestore = Firestore.instance;
 
