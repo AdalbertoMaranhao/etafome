@@ -94,7 +94,7 @@ class CartManager extends ChangeNotifier{
         return true;
       }
     }
-    return false;
+    return true;
   }
 
 

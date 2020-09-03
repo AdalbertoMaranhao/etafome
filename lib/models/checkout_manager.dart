@@ -61,7 +61,7 @@ class CheckoutManager extends ChangeNotifier {
     }
 
     final order = Order.fromCartManager(cartManager);
-    order.orderId = orderId.toString();
+    order.orderId = "${orderId.toString()}@${order.items[0].productStore}";
     order.payId = payId;
 
     order.save();

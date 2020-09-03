@@ -5,7 +5,7 @@ import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:lojavirtual/models/cart_product.dart';
 import 'package:lojavirtual/services/cielo_payment.dart';
 
-enum Status {canceled, preparing, transporting, delivered}
+enum Status {canceled, waiting, preparing, transporting, delivered}
 
 class Order {
   
@@ -14,7 +14,7 @@ class Order {
     price = cartManager.totalPrice;
     userId = cartManager.user.id;
     address = cartManager.address;
-    status = Status.preparing;
+    status = Status.waiting;
   }
 
   Order.fromDocument(DocumentSnapshot doc){
@@ -33,7 +33,7 @@ class Order {
 
   final Firestore firestore = Firestore.instance;
   DocumentReference get firestoreRef =>
-      firestore.collection('orders').document("$orderId@${items[0].productStore}");
+      firestore.collection('orders').document(orderId);
 
   String orderId;
   String payId;
@@ -46,7 +46,9 @@ class Order {
   Status status;
 
   Timestamp date;
-  String newOrderId;
+  //String saveOrderId "$orderId@${items[0].productStore}";
+
+  String exibitionOrderId;
 
   String get formattedId => '#${splitOrderId().padLeft(6, '0')}';
 
@@ -54,7 +56,7 @@ class Order {
 
   String splitOrderId (){
     final List<String> split = orderId.split("@");
-    return newOrderId = split[0];
+    return exibitionOrderId = split[0];
   }
 
   Future<void> save() async {
@@ -79,10 +81,12 @@ class Order {
     switch(status){
       case Status.canceled:
         return 'Cancelado';
+      case Status.waiting:
+        return 'Aguardando Vizualização';
       case Status.preparing:
-        return 'Em Separação';
+        return 'Em Preparo';
       case Status.transporting:
-        return 'Em Transporte';
+        return 'Saiu para entrega';
       case Status.delivered:
         return 'Entregue';
       default:
@@ -91,7 +95,7 @@ class Order {
   }
 
   Function() get back {
-    if(status.index >= Status.transporting.index){
+    if(status.index >= Status.preparing.index){
       return (){
         status = Status.values[status.index - 1];
         firestoreRef.updateData({'status': status.index});

@@ -12,13 +12,13 @@ class AlertStoresDifferent extends StatelessWidget {
   Widget build(BuildContext context) {
     Color primaryColor = Theme.of(context).primaryColor;
     return AlertDialog(
-      title: const Text('Você já tem itens no seu carrinho: deseja limpar o carrnho?'),
+      title: const Text('Você já tem itens no seu carrinho: deseja limpar o carrinho?'),
       actions: <Widget>[
         FlatButton(
           onPressed: () {
             context.read<CartManager>().clear();
             context.read<CartManager>().addToCart(product);
-            Navigator.of(context).pushNamed("/cart");
+            Navigator.of(context).popAndPushNamed("/cart");
           },
           textColor: primaryColor,
           child: const Text('sim'),

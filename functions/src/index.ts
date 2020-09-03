@@ -318,9 +318,10 @@ export const onNewOrder = functions.firestore.document("/orders/{orderId}").onCr
 
 const orderStatus = new Map([
    [0, "Cancelado"],
-   [1, "Em Separação"],
-   [2, "Em Transporte"],
-   [3, "Entregue"]
+   [1, "Aguardando Vizualização"],
+   [2, "Em Preparo"],
+   [3, "Saiu para entrega"],
+   [4, "Entregue"]
 ])
 
 export const onOrderStatusChanged = functions.firestore.document("/orders/{orderId}").onUpdate(async(snapshot, context) => {

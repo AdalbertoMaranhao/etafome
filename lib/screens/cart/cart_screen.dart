@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lojavirtual/common/empty_card.dart';
 import 'package:lojavirtual/common/login_card.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
+import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/price_card.dart';
@@ -11,6 +12,13 @@ import 'components/cart_tile.dart';
 class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //codigo para mudar o retorno da tela do carrinho para a tela da loja, ao invés da tela do produto
+//    final storeId = context.watch<CartManager>().items[0].productStore;
+//    final store = context.watch<StoresManager>().findStoreById(storeId);
+//    Future<bool> _backScreem(){
+//      Navigator.of(context).pushNamed("/productsStore", arguments: store);
+//    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Carrinho'),
@@ -23,7 +31,7 @@ class CartScreen extends StatelessWidget {
           }
 
           if(cartManager.items.isEmpty){
-            return EmptyCard(
+            return const EmptyCard(
               iconData: Icons.remove_shopping_cart,
               title: 'Nenhum produto no carrinho!',
             );

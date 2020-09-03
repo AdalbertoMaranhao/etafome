@@ -34,7 +34,7 @@ class OrderTile extends StatelessWidget {
                   ),
                   Text(
                     'R\$ ${order.price.toStringAsFixed(2)}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Colors.black,
                       fontSize: 14,

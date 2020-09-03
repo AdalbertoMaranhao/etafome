@@ -21,7 +21,7 @@ class OrdersScreen extends StatelessWidget {
             return LoginCard();
           }
           if(ordersManager.orders.isEmpty){
-            return EmptyCard(
+            return const EmptyCard(
               title: 'Nenhuma compra encontrada!',
               iconData: Icons.border_clear,
             );

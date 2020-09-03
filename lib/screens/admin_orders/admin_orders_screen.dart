@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lojavirtual/common/custom_drawer/custom_drawer.dart';
 import 'package:lojavirtual/common/custom_icon_button.dart';
 import 'package:lojavirtual/common/empty_card.dart';
 import 'package:lojavirtual/common/order_tile/order_tile.dart';
@@ -20,7 +19,6 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: CustomDrawer(),
       appBar: AppBar(
         title: const Text('Todos os Pedidos'),
         centerTitle: true,
@@ -80,7 +78,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
               ],
             ),
             minHeight: 40,
-            maxHeight: 250,
+            maxHeight: 300,
             panel: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
