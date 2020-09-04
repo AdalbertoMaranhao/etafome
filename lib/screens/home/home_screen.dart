@@ -1,6 +1,9 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/common/custom_drawer/custom_drawer.dart';
 import 'package:lojavirtual/models/home_manager.dart';
+import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -9,8 +12,17 @@ import 'components/section_list.dart';
 import 'components/section_staggered.dart';
 
 class HomeScreen extends StatelessWidget {
+
+
+
+
   @override
   Widget build(BuildContext context) {
+    final storeManager = context.watch<StoresManager>();
+
+    String dropDownValue = storeManager.city;
+
+
     return Scaffold(
       drawer: CustomDrawer(),
       body: Stack(
@@ -40,6 +52,28 @@ class HomeScreen extends StatelessWidget {
                   centerTitle: true,
                 ),
                 actions: <Widget>[
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      value: dropDownValue,
+                      style: TextStyle(color: Colors.white,),
+                      iconEnabledColor: Colors.white,
+                      dropdownColor: Color.fromARGB(255, 211, 118, 130),
+                      icon: Icon(Icons.location_on, color: Colors.white,),
+                      iconSize: 20,
+                      elevation: 16,
+
+                      onChanged: (String newValue) {
+                          storeManager.getStoresCity(newValue);
+                        },
+
+                      items: <String>['Mauriti', 'Trindade', 'Fortaleza', 'Juazeiro']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),),
+                  ),
                   IconButton(
                     icon: Icon(Icons.shopping_cart),
                     color: Colors.white,
@@ -79,20 +113,23 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Consumer<HomeManager>(
-                builder: (_, homeManager, __) {
-                  if(homeManager.loading){
-                    return const SliverToBoxAdapter(
-                      child: LinearProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation(Colors.white),
-                        backgroundColor: Colors.transparent,
-                      ),
-                    );
-                  }
+              //TODO validação da cidade, deve ser revisto depois
+              if(storeManager.storesCity.isNotEmpty)
+                Consumer<HomeManager>(
+                  builder: (_, homeManager, __) {
+                    if(homeManager.loading){
+                      return const SliverToBoxAdapter(
+                        child: LinearProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation(Colors.white),
+                          backgroundColor: Colors.transparent,
+                        ),
+                      );
+                    }
 
-                  final List<Widget> children =
-                      homeManager.sections.map<Widget>(
-                              (section) {
+                    final List<Widget> children =
+                    homeManager.sections.map<Widget>(
+                            (section) {
+                              //TODO criar verificacao de cidade
                                 switch(section.type){
                                   case 'List':
                                     return SectionList(section);
@@ -101,17 +138,18 @@ class HomeScreen extends StatelessWidget {
                                   default:
                                     return Container();
                                 }
-                              }
-                      ).toList();
-                  
-                  if(homeManager.editing) {
-                    children.add(AddSectionWidget(homeManager));
-                  }
-                  return SliverList(
-                    delegate: SliverChildListDelegate(children),
-                  );
-                },
-              ),
+
+                        }
+                    ).toList();
+
+                    if(homeManager.editing) {
+                      children.add(AddSectionWidget(homeManager));
+                    }
+                    return SliverList(
+                      delegate: SliverChildListDelegate(children),
+                    );
+                  },
+                ),
             ],
           ),
         ],

@@ -44,7 +44,7 @@ class StoresManager extends ChangeNotifier {
 
   Future<void> getStoresCity(String cidade) async {
     storesCity.clear();
-    //await getLocation();
+    city = cidade;
 
     for(final store in stores){
       if(store.address.city.toLowerCase() == cidade.toLowerCase()){
