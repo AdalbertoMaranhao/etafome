@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:lojavirtual/models/store.dart';
+import 'package:lojavirtual/services/cepaberto_service.dart';
 
 class StoresManager extends ChangeNotifier {
 
@@ -12,6 +14,8 @@ class StoresManager extends ChangeNotifier {
   }
 
   List<Store> stores = [];
+  List<Store> storesCity = [];
+  String city;
   Timer _timer;
 
   final Firestore firestore = Firestore.instance;
@@ -20,6 +24,33 @@ class StoresManager extends ChangeNotifier {
     final snapshot = await firestore.collection('stores').getDocuments();
 
     stores = snapshot.documents.map((doc) => Store.fromDocument(doc)).toList();
+
+    await getLocation();
+    getStoresCity(city);
+
+    notifyListeners();
+  }
+
+  Future<void> getLocation() async{
+    final loc = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.lowest);
+    double lat = loc.latitude;
+    double long = loc.longitude;
+
+    final a = await CepAbertoService().getAddressFromLatAndLong(lat, long);
+    city = a.cidade.nome;
+    notifyListeners();
+
+  }
+
+  Future<void> getStoresCity(String cidade) async {
+    storesCity.clear();
+    //await getLocation();
+
+    for(final store in stores){
+      if(store.address.city.toLowerCase() == cidade.toLowerCase()){
+        storesCity.add(store);
+      }
+    }
 
     notifyListeners();
   }

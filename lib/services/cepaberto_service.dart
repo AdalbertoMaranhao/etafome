@@ -34,4 +34,32 @@ class CepAbertoService {
 
   }
 
+  Future<CepAbertoAddress> getAddressFromLatAndLong (double lat, double long) async{
+    const endPoint = "https://www.cepaberto.com/api/v3/nearest";
+    final queryParameters = {'lat': lat, 'lng': long};
+
+    final Dio dio = Dio();
+
+    dio.options.headers[HttpHeaders.authorizationHeader] = 'Token token=$token';
+    dio.options.queryParameters = queryParameters;
+
+
+    try{
+      final response = await dio.get<Map<String, dynamic>>(endPoint);
+
+      if(response.data.isEmpty){
+        return Future.error('CEP Inválido');
+      }
+
+      final CepAbertoAddress address = CepAbertoAddress.fromMap(response.data);
+
+      return address;
+
+    } on DioError catch(e){
+      debugPrint('Erro ao buscar CEP: $e');
+      return Future.error('Erro ao buscar CEP');
+    }
+
+  }
+
 }

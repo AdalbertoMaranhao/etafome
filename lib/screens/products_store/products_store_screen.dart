@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:lojavirtual/models/address.dart';
 import 'package:lojavirtual/models/admin_orders_manager.dart';
+import 'package:lojavirtual/models/cepaberto_address.dart';
 import 'package:lojavirtual/models/page_manager.dart';
 import 'package:lojavirtual/models/product_manager.dart';
 import 'package:lojavirtual/models/store.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:lojavirtual/screens/products/components/products_list_tile.dart';
 import 'package:lojavirtual/screens/stores/stores_screen.dart';
+import 'package:lojavirtual/services/cepaberto_service.dart';
 import 'package:provider/provider.dart';
 
 import 'components/search_dialog.dart';
@@ -15,6 +19,7 @@ class ProductsStoreScreen extends StatelessWidget {
   const ProductsStoreScreen(this.store);
 
   final Store store;
+
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +140,7 @@ class ProductsStoreScreen extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.white,
           foregroundColor: Theme.of(context).primaryColor,
-          onPressed: (){
+          onPressed: () async {
             Navigator.of(context).pushNamed('/cart');
           },
           child: Icon(Icons.shopping_cart),
@@ -143,4 +148,9 @@ class ProductsStoreScreen extends StatelessWidget {
       ),
     );
   }
+
+
+
 }
+
+
