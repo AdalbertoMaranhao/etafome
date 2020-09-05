@@ -16,7 +16,7 @@ class Section extends ChangeNotifier {
   StorageReference get storageRef => storage.ref().child('home').child(id);
 
 
-  Section({this.id, this.name, this.type, this.items}) {
+  Section({this.id, this.name, this.type, this.items, this.city}) {
     items = items ?? [];
     originalItems = List.from(items);
   }
@@ -25,6 +25,7 @@ class Section extends ChangeNotifier {
     id = document.documentID;
     name = document.data['name'] as String;
     type = document.data['type'] as String;
+    city = document.data['city'] as String;
     items = (document.data['items'] as List)
         .map((i) => SectionItem.fromMap(i as Map<String, dynamic>))
         .toList();
@@ -33,6 +34,7 @@ class Section extends ChangeNotifier {
   String id;
   String name;
   String type;
+  String city;
   List<SectionItem> items;
   List<SectionItem> originalItems;
 
@@ -50,6 +52,7 @@ class Section extends ChangeNotifier {
       id: id,
       name: name,
       type: type,
+      city: city,
       items: items.map((e) => e.clone()).toList(),
     );
   }
@@ -80,6 +83,7 @@ class Section extends ChangeNotifier {
       'name': name,
       'type': type,
       'pos': pos,
+      'city': city,
     };
 
     if (id == null) {

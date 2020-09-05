@@ -113,6 +113,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
+
               //TODO validação da cidade, deve ser revisto depois
               if(storeManager.storesCity.isNotEmpty)
                 Consumer<HomeManager>(
@@ -129,7 +130,9 @@ class HomeScreen extends StatelessWidget {
                     final List<Widget> children =
                     homeManager.sections.map<Widget>(
                             (section) {
-                              //TODO criar verificacao de cidade
+
+                              //verificacao de cidade
+                              if((section.city.toLowerCase() == storeManager.city.toLowerCase()) || section.city.toLowerCase() == "todos") {
                                 switch(section.type){
                                   case 'List':
                                     return SectionList(section);
@@ -138,6 +141,8 @@ class HomeScreen extends StatelessWidget {
                                   default:
                                     return Container();
                                 }
+                              }
+                              return Container();
 
                         }
                     ).toList();
@@ -150,6 +155,7 @@ class HomeScreen extends StatelessWidget {
                     );
                   },
                 ),
+
             ],
           ),
         ],

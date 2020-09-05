@@ -27,7 +27,7 @@ class StoresScreen extends StatelessWidget {
               backgroundColor: Colors.transparent,
             );
           }
-          
+
           return ListView.builder(
             itemCount: storesManager.storesCity.length,
             itemBuilder: (_, index){
