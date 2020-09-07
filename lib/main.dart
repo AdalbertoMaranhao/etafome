@@ -17,6 +17,9 @@ import 'package:lojavirtual/screens/checkout/checkout_screen.dart';
 import 'package:lojavirtual/screens/confirmation/confirmation_screen.dart';
 import 'package:lojavirtual/screens/edit_product/create_product_screen.dart';
 import 'package:lojavirtual/screens/edit_product/edit_product_screen.dart';
+import 'package:lojavirtual/screens/home/home_screen.dart';
+import 'package:lojavirtual/screens/home/select_city_screen.dart';
+import 'package:lojavirtual/screens/home/splash_screen.dart';
 import 'package:lojavirtual/screens/login/login_screen.dart';
 import 'package:lojavirtual/screens/product/product_screen.dart';
 import 'package:lojavirtual/screens/products/products_screen.dart';
@@ -92,6 +95,7 @@ class MyApp extends StatelessWidget {
           appBarTheme: const AppBarTheme(elevation: 0),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
+        home: SplashScreen(),
         onGenerateRoute: (settings) {
           switch (settings.name) {
             case '/login':
@@ -130,6 +134,9 @@ class MyApp extends StatelessWidget {
             case '/create_product':
               return MaterialPageRoute(
                   builder: (_) => CreateProductScreen(settings.arguments as String));
+            case '/select_city':
+              return MaterialPageRoute(
+                  builder: (_) => SelectCityScreen());
             case '/':
             default:
               return MaterialPageRoute(

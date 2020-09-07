@@ -5,11 +5,13 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lojavirtual/models/page_manager.dart';
+import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:lojavirtual/screens/admin_orders/admin_orders_screen.dart';
 import 'package:lojavirtual/screens/admin_users/admin_users_screen.dart';
 import 'package:lojavirtual/screens/categories/categories_screen.dart';
 import 'package:lojavirtual/screens/home/home_screen.dart';
+import 'package:lojavirtual/screens/home/select_city_screen.dart';
 import 'package:lojavirtual/screens/orders/orders_screen.dart';
 import 'package:lojavirtual/screens/products/products_screen.dart';
 import 'package:lojavirtual/screens/stores/stores_screen.dart';
@@ -64,7 +66,7 @@ class _BaseScreenState extends State<BaseScreen> {
       isDismissible: true,
       backgroundColor: Theme.of(context).primaryColor,
       duration: const Duration(seconds: 5),
-      icon: Icon(Icons.shopping_cart, color: Colors.white,),
+      icon: const Icon(Icons.shopping_cart, color: Colors.white,),
     ).show(context);
   }
 

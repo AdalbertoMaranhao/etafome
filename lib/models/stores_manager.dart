@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:lojavirtual/models/store.dart';
 import 'package:lojavirtual/services/cepaberto_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StoresManager extends ChangeNotifier {
 
@@ -13,10 +14,21 @@ class StoresManager extends ChangeNotifier {
     _startTimer();
   }
 
+
+
   List<Store> stores = [];
   List<Store> storesCity = [];
-  String city;
   Timer _timer;
+
+  String _city;
+  String get city => _city;
+  void setCity (String value) async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    _city = value;
+    await prefs.setString('city', _city);
+    notifyListeners();
+  }
 
   final Firestore firestore = Firestore.instance;
 
@@ -25,26 +37,29 @@ class StoresManager extends ChangeNotifier {
 
     stores = snapshot.documents.map((doc) => Store.fromDocument(doc)).toList();
 
-    await getLocation();
-    getStoresCity(city);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    _city = prefs.getString('city') ?? "";
+
+    //await getLocation();
+    //getStoresCity(_city);
 
     notifyListeners();
   }
 
-  Future<void> getLocation() async{
-    final loc = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.lowest);
-    double lat = loc.latitude;
-    double long = loc.longitude;
-
-    final a = await CepAbertoService().getAddressFromLatAndLong(lat, long);
-    city = a.cidade.nome;
-    notifyListeners();
-
-  }
+  // Future<void> getLocation() async{
+  //   final loc = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.lowest);
+  //   double lat = loc.latitude;
+  //   double long = loc.longitude;
+  //
+  //   final a = await CepAbertoService().getAddressFromLatAndLong(lat, long);
+  //   city = a.cidade.nome;
+  //   notifyListeners();
+  //
+  // }
 
   Future<void> getStoresCity(String cidade) async {
     storesCity.clear();
-    city = cidade;
+    setCity(cidade);
 
     for(final store in stores){
       if(store.address.city.toLowerCase() == cidade.toLowerCase()){
@@ -81,5 +96,6 @@ class StoresManager extends ChangeNotifier {
     super.dispose();
     _timer?.cancel();
   }
+
 
 }

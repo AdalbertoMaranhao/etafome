@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/common/custom_drawer/custom_drawer.dart';
+import 'package:lojavirtual/common/empty_card.dart';
 import 'package:lojavirtual/models/home_manager.dart';
+import 'package:lojavirtual/models/page_manager.dart';
 import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:provider/provider.dart';
@@ -13,14 +15,13 @@ import 'components/section_staggered.dart';
 
 class HomeScreen extends StatelessWidget {
 
-
-
-
   @override
   Widget build(BuildContext context) {
     final storeManager = context.watch<StoresManager>();
 
-    String dropDownValue = storeManager.city;
+
+    final String dropDownValue = storeManager.city;
+    final List<String> dropDownList = ['Mauriti', 'Trindade'];
 
 
     return Scaffold(
@@ -52,32 +53,34 @@ class HomeScreen extends StatelessWidget {
                   centerTitle: true,
                 ),
                 actions: <Widget>[
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      value: dropDownValue,
-                      style: TextStyle(color: Colors.white,),
-                      iconEnabledColor: Colors.white,
-                      dropdownColor: Color.fromARGB(255, 211, 118, 130),
-                      icon: Icon(Icons.location_on, color: Colors.white,),
-                      iconSize: 20,
-                      elevation: 16,
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: dropDownValue,
+                        style: TextStyle(color: Colors.white,),
+                        iconEnabledColor: Colors.white,
+                        dropdownColor: Color.fromARGB(255, 211, 118, 130),
+                        icon: Icon(Icons.location_on, color: Colors.white,),
+                        iconSize: 20,
+                        elevation: 16,
 
-                      onChanged: (String newValue) {
+                        onChanged: (String newValue) {
                           storeManager.getStoresCity(newValue);
                         },
 
-                      items: <String>['Mauriti', 'Trindade', 'Fortaleza', 'Juazeiro']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),),
-                  ),
+                        items: dropDownList
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),),
+                    ),
+
+
                   IconButton(
                     icon: Icon(Icons.shopping_cart),
                     color: Colors.white,
-                    onPressed: () => Navigator.of(context).pushNamed('/cart'),
+                    onPressed: () => Navigator.of(context).pushNamed('/select_city'),
                   ),
                   Consumer2<UserManager, HomeManager>(
                     builder: (_, userManager, homeManager, __){
@@ -114,47 +117,43 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
 
-              //TODO validação da cidade, deve ser revisto depois
-              if(storeManager.storesCity.isNotEmpty)
-                Consumer<HomeManager>(
-                  builder: (_, homeManager, __) {
-                    if(homeManager.loading){
-                      return const SliverToBoxAdapter(
-                        child: LinearProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation(Colors.white),
-                          backgroundColor: Colors.transparent,
-                        ),
-                      );
-                    }
-
-                    final List<Widget> children =
-                    homeManager.sections.map<Widget>(
-                            (section) {
-
-                              //verificacao de cidade
-                              if((section.city.toLowerCase() == storeManager.city.toLowerCase()) || section.city.toLowerCase() == "todos") {
-                                switch(section.type){
-                                  case 'List':
-                                    return SectionList(section);
-                                  case 'Staggered':
-                                    return SectionStaggered(section);
-                                  default:
-                                    return Container();
-                                }
-                              }
-                              return Container();
-
-                        }
-                    ).toList();
-
-                    if(homeManager.editing) {
-                      children.add(AddSectionWidget(homeManager));
-                    }
-                    return SliverList(
-                      delegate: SliverChildListDelegate(children),
+              Consumer<HomeManager>(
+                builder: (_, homeManager, __) {
+                  if(homeManager.loading){
+                    return const SliverToBoxAdapter(
+                      child: LinearProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation(Colors.white),
+                        backgroundColor: Colors.transparent,
+                      ),
                     );
-                  },
-                ),
+                  }
+
+                  final List<Widget> children =
+                  homeManager.sections.map<Widget>(
+                          (section) {
+                        //verificacao de cidade
+                        if((section.city.toLowerCase() == storeManager.city.toLowerCase()) || section.city.toLowerCase() == "todos") {
+                          switch(section.type){
+                            case 'List':
+                              return SectionList(section);
+                            case 'Staggered':
+                              return SectionStaggered(section);
+                            default:
+                              return Container();
+                          }
+                        }
+                        return Container();
+                      }
+                  ).toList();
+
+                  if(homeManager.editing) {
+                    children.add(AddSectionWidget(homeManager, dropDownValue));
+                  }
+                  return SliverList(
+                    delegate: SliverChildListDelegate(children),
+                  );
+                },
+              ),
 
             ],
           ),

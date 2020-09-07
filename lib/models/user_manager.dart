@@ -93,7 +93,6 @@ class UserManager extends ChangeNotifier {
     try {
       await googleSignIn.signIn();
       final result = googleSignIn.currentUser;
-      print(result);
       user = User(
           id: result.id,
           name: result.displayName,
