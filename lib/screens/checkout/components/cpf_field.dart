@@ -17,7 +17,7 @@ class CpfField extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
+            const Text(
               'CPF',
               textAlign: TextAlign.start,
               style: TextStyle(

@@ -11,13 +11,17 @@ import 'package:lojavirtual/services/cepaberto_service.dart';
 class CartManager extends ChangeNotifier{
   List<CartProduct> items = [];
 
+  String cupomCode;
+  int discoutPercentage = 0;
+
   User user;
   Address address;
 
   num productsPrice = 0.0;
   num deliveryPrice;
+  num discount;
 
-  num get totalPrice => productsPrice + (deliveryPrice ?? 0);
+  num get totalPrice => (productsPrice + (deliveryPrice ?? 0)) - (discount ?? 0.0);
 
   bool _loading = false;
   bool get loading => _loading;
@@ -54,6 +58,15 @@ class CartManager extends ChangeNotifier{
       address = user.address;
       notifyListeners();
     }
+  }
+
+  void setCoupon(String couponCode, int percent){
+    cupomCode = couponCode;
+    discoutPercentage = percent;
+
+    discount = productsPrice * discoutPercentage / 100;
+
+    notifyListeners();
   }
 
   void addToCart(Product product) {

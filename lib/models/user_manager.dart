@@ -91,22 +91,30 @@ class UserManager extends ChangeNotifier {
     loading = true;
 
     try {
-      await googleSignIn.signIn();
-      final result = googleSignIn.currentUser;
-      user = User(
-          id: result.id,
-          name: result.displayName,
-          email: result.email
+      final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken
       );
 
-      await user.saveData();
-      user.saveToken();
+      final AuthResult authResult = await FirebaseAuth.instance.signInWithCredential(credential);
+
+      final FirebaseUser user = authResult.user;
+
+      User(
+        id: user.uid,
+        name: user.displayName,
+        email: user.email,
+      );
+
       onSuccess();
       loading = false;
 
     } catch (e){
       onFail(e.toString());
-      print(e);
+      debugPrint(e.toString());
       loading = false;
     }
 
@@ -178,6 +186,10 @@ class UserManager extends ChangeNotifier {
   }
 
   bool get adminEnabled => user != null && user.admin;
+
+  void recoverPass(String email) {
+    auth.sendPasswordResetEmail(email: email);
+  }
 
 }
 

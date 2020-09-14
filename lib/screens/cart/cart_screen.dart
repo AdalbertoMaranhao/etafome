@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:lojavirtual/common/empty_card.dart';
 import 'package:lojavirtual/common/login_card.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
-import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/price_card.dart';

@@ -75,7 +75,23 @@ class LoginScreen extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: FlatButton(
                           onPressed: (){
+                            if(emailController.text.isEmpty){
+                              scaffoldKey.currentState.showSnackBar(
+                                const SnackBar(
+                                  content: Text("Insira seu email para recuperação!"),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            } else {
+                              userManager.recoverPass(emailController.text);
+                              scaffoldKey.currentState.showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Confira seu email!"),
+                                    backgroundColor: Colors.greenAccent,
+                                  ),
+                              );
 
+                            }
                           },
                           padding: EdgeInsets.zero,
                           child: const Text(

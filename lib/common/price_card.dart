@@ -14,6 +14,7 @@ class PriceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartManager = context.watch<CartManager>();
     final productsPrice = cartManager.productsPrice;
+    final discount = cartManager.discount;
     final deliveryPrice = cartManager.deliveryPrice;
     final totalPrice = cartManager.totalPrice;
 
@@ -41,6 +42,17 @@ class PriceCard extends StatelessWidget {
               ],
             ),
             const Divider(),
+            if(discount != null)
+              ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    const Text('Desconto'),
+                    Text('R\$ - ${discount.toStringAsFixed(2)}'),
+                  ],
+                ),
+                const Divider(),
+              ],
             if(deliveryPrice != null)
               ...[
                 Row(
