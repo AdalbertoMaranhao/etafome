@@ -15,6 +15,11 @@ class Order {
     userId = cartManager.user.id;
     address = cartManager.address;
     status = Status.waiting;
+    if(cartManager.deliveryType == 0) {
+      deliveryType = "Receber em Casa";
+    } else {
+      deliveryType = "Retirar na Loja";
+    }
   }
 
   Order.fromDocument(DocumentSnapshot doc){
@@ -29,6 +34,7 @@ class Order {
 
     status = Status.values[doc.data['status'] as int];
     payId = doc.data['payId'] as String;
+    deliveryType = doc.data['deliveryType'] as String;
   }
 
   final Firestore firestore = Firestore.instance;
@@ -37,6 +43,7 @@ class Order {
 
   String orderId;
   String payId;
+  String deliveryType;
 
   List<CartProduct> items;
   num price;
@@ -69,6 +76,7 @@ class Order {
         'status': status.index,
         'date': Timestamp.now(),
         'payId': payId,
+        'deliveryType': deliveryType,
       }
     );
   }

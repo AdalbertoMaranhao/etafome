@@ -6,6 +6,7 @@ import 'package:lojavirtual/models/credit_card.dart';
 import 'package:lojavirtual/screens/checkout/components/cpf_field.dart';
 import 'package:lojavirtual/screens/checkout/components/credit_card_widget.dart';
 import 'package:lojavirtual/screens/checkout/components/cupom_card.dart';
+import 'package:lojavirtual/screens/checkout/components/delivery_payment_card.dart';
 import 'package:provider/provider.dart';
 
 class CheckoutScreen extends StatelessWidget {
@@ -64,7 +65,8 @@ class CheckoutScreen extends StatelessWidget {
                   children: <Widget>[
                     CreditCardWidget(creditCard),
                     CpfField(),
-                    CupomCard(),
+                    DeliveryPaymentCard(),
+                    //CupomCard(),
                     PriceCard(
                       buttonText: 'Finalizar Pedido',
                       onPressed: () {

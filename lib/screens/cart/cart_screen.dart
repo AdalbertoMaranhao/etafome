@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:lojavirtual/common/empty_card.dart';
 import 'package:lojavirtual/common/login_card.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
+import 'package:lojavirtual/screens/address/components/address_card.dart';
+import 'package:lojavirtual/screens/address/components/delivery_type.dart';
+import 'package:lojavirtual/screens/checkout/components/cupom_card.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/price_card.dart';
@@ -43,10 +46,14 @@ class CartScreen extends StatelessWidget {
                     .map((cartProduct) => CartTile(cartProduct))
                     .toList(),
               ),
+              DeliveryType(),
+              if(cartManager.deliveryType == 0)
+                AddressCard(),
+              CupomCard(),
               PriceCard(
-                buttonText: 'Continuar para Entrega',
+                buttonText: 'Continuar para Pagamento',
                 onPressed: cartManager.isCartValid ? (){
-                  Navigator.of(context).pushNamed('/address');
+                  Navigator.of(context).pushNamed('/checkout');
                 } : null,
               ),
             ],

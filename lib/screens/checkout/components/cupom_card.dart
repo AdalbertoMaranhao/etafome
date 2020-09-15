@@ -11,17 +11,18 @@ class CupomCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: ExpansionTile(
-          title: const Text(
+        title: const Text(
             "Cupom de desconto",
             textAlign: TextAlign.start,
             style: TextStyle(
+              color: Colors.black,
               fontWeight: FontWeight.w500,
               fontSize: 16,
             ),
           ),
 
-        leading: const Icon(Icons.card_giftcard),
-        trailing: const Icon(Icons.add),
+        leading: const Icon(Icons.card_giftcard, color: Colors.black,),
+        trailing: const Icon(Icons.add, color: Colors.black,),
         children: [
           Padding(
             padding: EdgeInsets.all(8),

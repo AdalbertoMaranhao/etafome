@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:lojavirtual/models/address.dart';
 import 'package:lojavirtual/models/cart_product.dart';
 import 'package:lojavirtual/models/product.dart';
+import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:lojavirtual/models/user.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:lojavirtual/services/cepaberto_service.dart';
@@ -13,6 +14,8 @@ class CartManager extends ChangeNotifier{
 
   String cupomCode;
   int discoutPercentage = 0;
+
+  int deliveryType = 1;
 
   User user;
   Address address;
@@ -58,6 +61,17 @@ class CartManager extends ChangeNotifier{
       address = user.address;
       notifyListeners();
     }
+  }
+
+  void setDeliveryType(int num) async{
+    deliveryType = num;
+    notifyListeners();
+    if(num ==1){
+      deliveryPrice = 0.0;
+    } else{
+      await calculateDelivery(address.lat, address.long);
+    }
+    notifyListeners();
   }
 
   void setCoupon(String couponCode, int percent){
@@ -175,16 +189,21 @@ class CartManager extends ChangeNotifier{
   }
 
   Future<void> setAddress(Address address) async {
-    loading = true;
-
-    this.address = address;
-
-    if(await calculateDelivery(address.lat, address.long)){
-      user.setAddress(address);
-      loading = false;
+    if(deliveryType == 1){
+      this.address = StoresManager().findStoreById(items[0].productStore).address;
+      deliveryPrice = 0.0;
     } else {
-      loading = false;
-      return Future.error('Endereço fora do raio de entrega :(');
+      loading = true;
+
+      this.address = address;
+
+      if(await calculateDelivery(address.lat, address.long)){
+        user.setAddress(address);
+        loading = false;
+      } else {
+        loading = false;
+        return Future.error('Endereço fora do raio de entrega :(');
+      }
     }
   }
 
