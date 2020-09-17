@@ -35,6 +35,7 @@ class Order {
     status = Status.values[doc.data['status'] as int];
     payId = doc.data['payId'] as String;
     deliveryType = doc.data['deliveryType'] as String;
+    paymentMethod = doc.data['paymentMethod'] as String;
   }
 
   final Firestore firestore = Firestore.instance;
@@ -44,6 +45,7 @@ class Order {
   String orderId;
   String payId;
   String deliveryType;
+  String paymentMethod;
 
   List<CartProduct> items;
   num price;
@@ -53,7 +55,6 @@ class Order {
   Status status;
 
   Timestamp date;
-  //String saveOrderId "$orderId@${items[0].productStore}";
 
   String exibitionOrderId;
 
@@ -77,6 +78,7 @@ class Order {
         'date': Timestamp.now(),
         'payId': payId,
         'deliveryType': deliveryType,
+        'paymentMethod': paymentMethod,
       }
     );
   }

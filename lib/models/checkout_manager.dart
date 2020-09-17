@@ -5,6 +5,7 @@ import 'package:lojavirtual/models/credit_card.dart';
 import 'package:lojavirtual/models/order.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/services/cielo_payment.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CheckoutManager extends ChangeNotifier {
   final Firestore firestore = Firestore.instance;
@@ -65,6 +66,8 @@ class CheckoutManager extends ChangeNotifier {
     order.payId = payId;
 
     order.save();
+    //save Credit Card
+    saveCreditCard(creditCard);
     cartManager.clear();
 
     onSuccess(order);
@@ -131,5 +134,14 @@ class CheckoutManager extends ChangeNotifier {
       }
 
     });
+  }
+
+  Future<void> saveCreditCard(CreditCard creditCard) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('cardName', creditCard.holder);
+    await prefs.setString('cardNumber', creditCard.number);
+    await prefs.setString('cardDate', creditCard.expirationDate);
+    await prefs.setString('cardCVV', creditCard.securityCode);
+    print(prefs.getString('cardName') ?? "");
   }
 }

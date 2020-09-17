@@ -15,7 +15,7 @@ class CartManager extends ChangeNotifier{
   String cupomCode;
   int discoutPercentage = 0;
 
-  int deliveryType = 1;
+  bool deliveryType = false;
 
   User user;
   Address address;
@@ -63,10 +63,10 @@ class CartManager extends ChangeNotifier{
     }
   }
 
-  void setDeliveryType(int num) async{
-    deliveryType = num;
-    notifyListeners();
-    if(num ==1){
+  void setDeliveryType(bool value) async{
+    deliveryType = value;
+    //notifyListeners();
+    if(value){
       deliveryPrice = 0.0;
     } else{
       await calculateDelivery(address.lat, address.long);

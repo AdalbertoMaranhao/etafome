@@ -46,9 +46,8 @@ class CartScreen extends StatelessWidget {
                     .map((cartProduct) => CartTile(cartProduct))
                     .toList(),
               ),
+              AddressCard(),
               DeliveryType(),
-              if(cartManager.deliveryType == 0)
-                AddressCard(),
               CupomCard(),
               PriceCard(
                 buttonText: 'Continuar para Pagamento',

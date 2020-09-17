@@ -132,7 +132,7 @@ class HomeScreen extends StatelessWidget {
                   homeManager.sections.map<Widget>(
                           (section) {
                         //verificacao de cidade
-                        if((section.city.toLowerCase() == storeManager.city.toLowerCase()) || section.city.toLowerCase() == "todos") {
+                        if((section.city == storeManager.city) || section.city == "todos") {
                           switch(section.type){
                             case 'List':
                               return SectionList(section);

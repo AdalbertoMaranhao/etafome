@@ -41,12 +41,22 @@ class ConfirmationScreen extends StatelessWidget {
                     ),
                     Text(
                       'Valor Total: R\$ ${order.price.toStringAsFixed(2)}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Colors.black,
                         fontSize: 16,
                       ),
                     ),
+                    const SizedBox(height: 4,),
+                    RaisedButton(
+                      color: Theme.of(context).primaryColor,
+                      disabledColor: Theme.of(context).primaryColor.withAlpha(100),
+                      textColor: Colors.white,
+                      onPressed: (){
+                        Navigator.of(context).pushNamed("/");
+                      },
+                      child: Text("Tudo certo, agora é só aguardar!"),
+                    )
                   ],
                 ),
               ),

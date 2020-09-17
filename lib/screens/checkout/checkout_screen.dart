@@ -8,16 +8,19 @@ import 'package:lojavirtual/screens/checkout/components/credit_card_widget.dart'
 import 'package:lojavirtual/screens/checkout/components/cupom_card.dart';
 import 'package:lojavirtual/screens/checkout/components/delivery_payment_card.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CheckoutScreen extends StatelessWidget {
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  final CreditCard creditCard = CreditCard();
+  //final CreditCard creditCard = CreditCard();
 
   @override
   Widget build(BuildContext context) {
+    final creditCard = context.watch<CreditCard>();
+
     return ChangeNotifierProxyProvider<CartManager, CheckoutManager>(
       create: (_) => CheckoutManager(),
       update: (_, cartManager, checkoutManager) =>
@@ -66,7 +69,6 @@ class CheckoutScreen extends StatelessWidget {
                     CreditCardWidget(creditCard),
                     CpfField(),
                     DeliveryPaymentCard(),
-                    //CupomCard(),
                     PriceCard(
                       buttonText: 'Finalizar Pedido',
                       onPressed: () {
@@ -109,3 +111,5 @@ class CheckoutScreen extends StatelessWidget {
     );
   }
 }
+
+

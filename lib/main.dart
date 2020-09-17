@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:lojavirtual/models/admin_user_manager.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
+import 'package:lojavirtual/models/credit_card.dart';
 import 'package:lojavirtual/models/home_manager.dart';
 import 'package:lojavirtual/models/order.dart';
 import 'package:lojavirtual/models/orders_manager.dart';
@@ -57,6 +57,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => StoresManager(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CreditCard(),
           lazy: false,
         ),
         ChangeNotifierProxyProvider<UserManager, CartManager>(
