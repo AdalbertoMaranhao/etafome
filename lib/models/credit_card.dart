@@ -4,6 +4,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CreditCard extends ChangeNotifier{
 
+  CreditCard(){
+    getCreditCard();
+  }
+
   String number;
   String holder;
   String expirationDate;

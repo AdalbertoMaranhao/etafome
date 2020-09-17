@@ -16,6 +16,7 @@ class CartManager extends ChangeNotifier{
   int discoutPercentage = 0;
 
   bool deliveryType = false;
+  String paymentMethod;
 
   User user;
   Address address;
@@ -74,6 +75,11 @@ class CartManager extends ChangeNotifier{
     notifyListeners();
   }
 
+  void setPaymentMethod(String value){
+    paymentMethod = value;
+    notifyListeners();
+  }
+
   void setCoupon(String couponCode, int percent){
     cupomCode = couponCode;
     discoutPercentage = percent;
@@ -110,6 +116,9 @@ class CartManager extends ChangeNotifier{
       user.cartReference.document(cartProduct.id).delete();
     }
     items.clear();
+    paymentMethod = null;
+    deliveryType = false;
+
     notifyListeners();
   }
 

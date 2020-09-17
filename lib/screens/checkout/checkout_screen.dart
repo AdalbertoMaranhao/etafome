@@ -15,11 +15,11 @@ class CheckoutScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  //final CreditCard creditCard = CreditCard();
 
   @override
   Widget build(BuildContext context) {
     final creditCard = context.watch<CreditCard>();
+    final cartManager = context.watch<CartManager>();
 
     return ChangeNotifierProxyProvider<CartManager, CheckoutManager>(
       create: (_) => CheckoutManager(),
@@ -66,8 +66,10 @@ class CheckoutScreen extends StatelessWidget {
                 key: formKey,
                 child: ListView(
                   children: <Widget>[
-                    CreditCardWidget(creditCard),
-                    CpfField(),
+                    if(cartManager.paymentMethod == null)
+                      CreditCardWidget(creditCard),
+                    if(cartManager.paymentMethod == null)
+                      CpfField(),
                     DeliveryPaymentCard(),
                     PriceCard(
                       buttonText: 'Finalizar Pedido',

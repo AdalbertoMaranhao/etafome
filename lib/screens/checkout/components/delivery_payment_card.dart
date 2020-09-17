@@ -11,7 +11,7 @@ class DeliveryPaymentCard extends StatefulWidget {
 class _DeliveryPaymentCardState extends State<DeliveryPaymentCard> {
   @override
 
-  String paymentSelect = "card";
+  String paymentSelect;
 
   Widget build(BuildContext context) {
     final cartManager = context.watch<CartManager>();
@@ -43,6 +43,7 @@ class _DeliveryPaymentCardState extends State<DeliveryPaymentCard> {
                   activeColor: Theme.of(context).primaryColor,
                   groupValue: paymentSelect,
                   onChanged: (val){
+                    cartManager.setPaymentMethod(val);
                     setState(() {
                       paymentSelect = val;
                     });
@@ -54,6 +55,7 @@ class _DeliveryPaymentCardState extends State<DeliveryPaymentCard> {
                   activeColor: Theme.of(context).primaryColor,
                   groupValue: paymentSelect,
                   onChanged: (val){
+                    cartManager.setPaymentMethod(val);
                     setState(() {
                       paymentSelect = val;
                     });

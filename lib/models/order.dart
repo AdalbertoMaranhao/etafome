@@ -15,10 +15,17 @@ class Order {
     userId = cartManager.user.id;
     address = cartManager.address;
     status = Status.waiting;
-    if(cartManager.deliveryType == 0) {
+    if(!cartManager.deliveryType) {
       deliveryType = "Receber em Casa";
     } else {
       deliveryType = "Retirar na Loja";
+    }
+    if(cartManager.paymentMethod == 'card') {
+      paymentMethod = "Pagamento na Entrega: cartão";
+    } else if(cartManager.paymentMethod == 'money'){
+      paymentMethod = "Pagamento na Entrega: dinheiro";
+    } else {
+      paymentMethod = "Pago no App";
     }
   }
 
