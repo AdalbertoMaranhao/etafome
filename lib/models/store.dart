@@ -6,6 +6,7 @@ import 'package:lojavirtual/helpers/extensions.dart';
 enum StoreStatus { closed, open, closing }
 
 class Store {
+
   Store.fromDocument(DocumentSnapshot doc) {
     id = doc.documentID;
     name = doc.data['name'] as String;
@@ -55,6 +56,7 @@ class Store {
   }
 
   String get cleanPhone => phone.replaceAll(RegExp(r"[^\d]"), "");
+
 
   String formattedPeriod(Map<String, TimeOfDay> period) {
     if (period == null) return "Fechada";

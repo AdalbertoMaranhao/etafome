@@ -9,29 +9,31 @@ class ProductListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: (){
         Navigator.of(context).pushNamed('/product', arguments: product);
       },
       child: Card(
+        clipBehavior: Clip.antiAlias,
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(4)
         ),
-        child: Container(
-          height: 100,
-          padding: const EdgeInsets.all(8),
-          child: Row(
-            children: <Widget>[
-              AspectRatio(
-                aspectRatio: 1,
-                child: Image.network(product.images.first),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            AspectRatio(
+              aspectRatio: 1,
+              child: Image.network(
+                product.images.first,
+                fit: BoxFit.cover,
               ),
-              const SizedBox(width: 16,),
-              Expanded(
+            ),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(8),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     Text(
                       product.name,
@@ -40,14 +42,11 @@ class ProductListTile extends StatelessWidget {
                         fontWeight: FontWeight.w800,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Text(
-                        'A partir de',
-                        style: TextStyle(
-                          color: Colors.grey[400],
-                          fontSize: 12,
-                        ),
+                    Text(
+                      'A partir de',
+                      style: TextStyle(
+                        color: Colors.grey[400],
+                        fontSize: 12,
                       ),
                     ),
                     Text(
@@ -71,9 +70,9 @@ class ProductListTile extends StatelessWidget {
                       )
                   ],
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );

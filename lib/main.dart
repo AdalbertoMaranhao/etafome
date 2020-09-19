@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/models/admin_user_manager.dart';
+import 'package:lojavirtual/models/avaliation_manager.dart';
+import 'package:lojavirtual/models/avalition.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:lojavirtual/models/credit_card.dart';
 import 'package:lojavirtual/models/home_manager.dart';
@@ -11,6 +13,8 @@ import 'package:lojavirtual/models/store.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:lojavirtual/screens/address/address_screen.dart';
 import 'package:lojavirtual/screens/admin_orders/admin_orders_screen.dart';
+import 'package:lojavirtual/screens/avaliations/avaliations_screen.dart';
+import 'package:lojavirtual/screens/avaliations/create_avaliation_screen.dart';
 import 'package:lojavirtual/screens/base/base_screen.dart';
 import 'package:lojavirtual/screens/cart/cart_screen.dart';
 import 'package:lojavirtual/screens/checkout/checkout_screen.dart';
@@ -26,6 +30,7 @@ import 'package:lojavirtual/screens/products/products_screen.dart';
 import 'package:lojavirtual/screens/products_store/products_store_screen.dart';
 import 'package:lojavirtual/screens/select_product/select_product_screen.dart';
 import 'package:lojavirtual/screens/signup/signup_screen.dart';
+import 'package:lojavirtual/screens/store/store_screen.dart';
 import 'package:lojavirtual/screens/stores/stores_screen.dart';
 import 'package:lojavirtual/screens/stores_category/stores_category_screen.dart';
 import 'package:provider/provider.dart';
@@ -61,6 +66,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => CreditCard(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AvaliationManager(),
           lazy: false,
         ),
         ChangeNotifierProxyProvider<UserManager, CartManager>(
@@ -116,7 +125,7 @@ class MyApp extends StatelessWidget {
                   builder: (_) => StoresCategoryScreen(category: settings.arguments as String));
             case '/productsStore':
               return MaterialPageRoute(
-                  builder: (_) => ProductsStoreScreen(settings.arguments as Store));
+                  builder: (_) => StoreScreen(settings.arguments as Store));
             case '/cart':
               return MaterialPageRoute(
                 builder: (_) => CartScreen(),
@@ -141,6 +150,9 @@ class MyApp extends StatelessWidget {
             case '/select_city':
               return MaterialPageRoute(
                   builder: (_) => SelectCityScreen());
+            case '/avaliations':
+              return MaterialPageRoute(
+                  builder: (_) => CreateAvaliationScreen(settings.arguments as String));
             case '/':
             default:
               return MaterialPageRoute(

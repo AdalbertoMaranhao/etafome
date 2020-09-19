@@ -33,6 +33,13 @@ class ProductManager extends ChangeNotifier {
     return filteredProducts;
   }
 
+  List<Product> getStoreProducts (String storeId){
+    final List<Product> productsList = [];
+
+    productsList.addAll(allProducts.where((p) => p.store.contains(storeId)));
+    return productsList;
+  }
+
   Future<void> _loadAllProducts() async {
     final QuerySnapshot snapProduct =
         await firestore.collection('products').where('deleted', isEqualTo: false).getDocuments();
