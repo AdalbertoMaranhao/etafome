@@ -27,6 +27,7 @@ class AvaliationsScreen extends StatelessWidget {
           child: Consumer<AvaliationManager>(
             builder: (_, avaliationManager, __) {
               if(items.isNotEmpty) {
+                items.sort((a, b) => a.grade.compareTo(b.grade));
                 return ListView.builder(
                   reverse: true,
                   itemCount: items.length,

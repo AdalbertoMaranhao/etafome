@@ -10,8 +10,9 @@ import 'package:provider/provider.dart';
 
 class StoreCard extends StatelessWidget {
 
-  const StoreCard(this.store);
+  StoreCard(this.store);
 
+  List<String> emojis = ['😥', '😔', '😐', '😁', '😍',];
   final Store store;
 
   @override
@@ -142,7 +143,7 @@ class StoreCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          store.name,
+                          "${store.name} - ${emojis[4]} ${store.media.toStringAsPrecision(2)}",
                           style: TextStyle(
                             fontWeight: FontWeight.w800,
                             fontSize: 17,

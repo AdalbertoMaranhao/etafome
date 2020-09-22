@@ -19,12 +19,16 @@ class Avaliation {
   int grade;
   String user;
 
-  Future<void> save(String storeId, Avaliation avaliation) async {
+  Future<void> save(String storeId, Avaliation avaliation, num media) async {
 
     final Map<String, dynamic> data = {
       'text': avaliation.text,
       'grade': avaliation.grade,
       'user': avaliation.user,
+    };
+
+    final Map<String, dynamic> mediaGrade = {
+      'mg': media,
     };
     
     if(id == null) {
@@ -33,6 +37,9 @@ class Avaliation {
     } else {
       firestore.document('stores/$storeId/avaliations/$id').updateData(data);
     }
+
+    firestore.document('stores/$storeId').updateData(mediaGrade);
+
   }
 
 

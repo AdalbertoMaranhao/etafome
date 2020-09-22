@@ -13,6 +13,7 @@ class Store {
     image = doc.data['image'] as String;
     phone = doc.data['phone'] as String;
     category = doc.data['category'] as String;
+    media = doc.data['mg'] as num;
     address = Address.fromMap(doc.data['address'] as Map<String, dynamic>);
 
     opening = (doc.data['opening'] as Map<String, dynamic>).map((key, value) {
@@ -40,6 +41,7 @@ class Store {
   String image;
   String phone;
   String category;
+  num media;
   Address address;
   Map<String, Map<String, TimeOfDay>> opening;
 

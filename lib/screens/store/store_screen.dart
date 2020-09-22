@@ -4,6 +4,7 @@ import 'package:lojavirtual/models/avaliation_manager.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/product_manager.dart';
 import 'package:lojavirtual/models/store.dart';
+import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:lojavirtual/screens/avaliations/avaliations_screen.dart';
 import 'package:lojavirtual/screens/products/components/products_list_tile.dart';
@@ -14,6 +15,8 @@ class StoreScreen extends StatelessWidget{
   StoreScreen(this.store);
 
   final Store store;
+
+  List<String> emojis = ['😥', '😔', '😐', '😁', '😍',];
 
 
   @override
@@ -26,7 +29,9 @@ class StoreScreen extends StatelessWidget{
 
     Future<bool> _backScreem(){
       Navigator.of(context).pop();
-      context.read<UserManager>().adminClear();
+      if(context.read<UserManager>().adminEnabled){
+        context.read<UserManager>().adminClear();
+      }
     }
 
     return WillPopScope(
@@ -44,6 +49,11 @@ class StoreScreen extends StatelessWidget{
                 ],
               ),
               actions: [
+                Center(
+                  child: Text(
+                      "${emojis[store.media.toInt() - 1]} ${store.media.toStringAsPrecision(2)}"
+                  ),
+                ),
                 Consumer<UserManager>(
                   builder: (_, userManager, __){
                     if(userManager.adminEnabled){

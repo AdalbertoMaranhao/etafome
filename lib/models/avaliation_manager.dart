@@ -24,7 +24,15 @@ class AvaliationManager extends ChangeNotifier {
 
   void save(String storeId, Avaliation avaliation){
 
-    avaliation.save(storeId, avaliation);
+    num media = 0.0;
+
+    for (final aval in avaliations){
+      media += aval.grade;
+    }
+    media = media/avaliations.length;
+    print(media.toStringAsFixed(2));
+
+    avaliation.save(storeId, avaliation, media);
     loadAvaliations(storeId);
     notifyListeners();
   }
