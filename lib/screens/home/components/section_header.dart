@@ -26,7 +26,7 @@ class SectionHeader extends StatelessWidget {
                     border: InputBorder.none,
                   ),
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 128, 53, 73),
                     fontWeight: FontWeight.w800,
                     fontSize: 18
                   ),
@@ -35,7 +35,7 @@ class SectionHeader extends StatelessWidget {
               ),
               CustomIconButton(
                 iconData: Icons.remove,
-                color: Colors.white,
+                color: const Color.fromARGB(255, 128, 53, 73),
                 onTap: (){
                   homeManager.removeSection(section);
                 },
@@ -63,7 +63,7 @@ class SectionHeader extends StatelessWidget {
         child:  Text(
           section.name,
           style: const TextStyle(
-            color: Colors.white,
+            color: Color.fromARGB(255, 128, 53, 73),
             fontWeight: FontWeight.w800,
             fontSize: 18,
           ),

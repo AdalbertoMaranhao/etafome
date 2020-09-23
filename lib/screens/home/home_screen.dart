@@ -10,6 +10,7 @@ import 'package:lojavirtual/models/user_manager.dart';
 import 'package:provider/provider.dart';
 
 import 'components/add_section_widget.dart';
+import 'components/section_category.dart';
 import 'components/section_list.dart';
 import 'components/section_staggered.dart';
 
@@ -31,10 +32,9 @@ class HomeScreen extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-
                 colors: [
-                  Color.fromARGB(255, 211, 118, 130),
-                  Color.fromARGB(255, 253, 181, 168)
+                  Color.fromARGB(255, 255, 255, 255),
+                  Color.fromARGB(255, 255, 255, 230)
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -44,22 +44,23 @@ class HomeScreen extends StatelessWidget {
           CustomScrollView(
             slivers: <Widget>[
               SliverAppBar(
+                iconTheme: const IconThemeData(color: Color.fromARGB(255, 128, 53, 73)),
                 snap: true,
                 floating: true,
                 elevation: 0,
                 backgroundColor: Colors.transparent,
                 flexibleSpace: const FlexibleSpaceBar(
-                  title: Text('Êta Fome'),
+                  title: Text('Êta Fome', style: TextStyle(color: Color.fromARGB(255, 128, 53, 73),),),
                   centerTitle: true,
                 ),
                 actions: <Widget>[
                     DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                         value: dropDownValue,
-                        style: TextStyle(color: Colors.white,),
+                        style: const TextStyle(color: Color.fromARGB(255, 128, 53, 73)),
                         iconEnabledColor: Colors.white,
-                        dropdownColor: Color.fromARGB(255, 211, 118, 130),
-                        icon: Icon(Icons.location_on, color: Colors.white,),
+                        dropdownColor: Colors.white,
+                        icon: const Icon(Icons.location_on, color: Color.fromARGB(255, 128, 53, 73),),
                         iconSize: 20,
                         elevation: 16,
 
@@ -79,7 +80,7 @@ class HomeScreen extends StatelessWidget {
 
                   IconButton(
                     icon: const Icon(Icons.shopping_cart),
-                    color: Colors.white,
+                    color: const Color.fromARGB(255, 128, 53, 73),
                     onPressed: () => Navigator.of(context).pushNamed('/cart'),
                   ),
                   Consumer2<UserManager, HomeManager>(
@@ -105,7 +106,7 @@ class HomeScreen extends StatelessWidget {
                           );
                         } else {
                           return IconButton(
-                            icon: Icon(Icons.edit),
+                            icon: const Icon(Icons.edit, color: Color.fromARGB(255, 128, 53, 73),),
                             onPressed: homeManager.enterEditing,
                           );
                         }
@@ -133,6 +134,8 @@ class HomeScreen extends StatelessWidget {
                         //verificacao de cidade
                         if((section.city == storeManager.city) || section.city == "todos") {
                           switch(section.type){
+                            case 'categorys':
+                              return SectionCategory(section);
                             case 'List':
                               return SectionList(section);
                             case 'Staggered':

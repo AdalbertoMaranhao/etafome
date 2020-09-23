@@ -17,7 +17,7 @@ class AddSectionWidget extends StatelessWidget {
             onPressed: (){
               homeManager.addSection(Section(type: 'List', city: city));
             },
-            textColor: Colors.white,
+            textColor: const Color.fromARGB(255, 128, 53, 73),
             child: const Text('Adicionar Lista'),
           ),
         ),
@@ -26,7 +26,7 @@ class AddSectionWidget extends StatelessWidget {
             onPressed: (){
               homeManager.addSection(Section(type: 'Staggered', city: city));
             },
-            textColor: Colors.white,
+            textColor: const Color.fromARGB(255, 128, 53, 73),
             child: const Text('Adicionar Grade'),
           ),
         ),

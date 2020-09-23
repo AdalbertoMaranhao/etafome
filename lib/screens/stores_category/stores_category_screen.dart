@@ -27,11 +27,11 @@ class StoresCategoryScreen extends StatelessWidget {
           }
 
           return ListView.builder(
-            itemCount: storesManager.stores.length,
+            itemCount: storesManager.storesCity.length,
             itemBuilder: (_, index){
               if(category != null) {
-                if (storesManager.stores[index].category == category) {
-                  return StoreCard(storesManager.stores[index]);
+                if (storesManager.storesCity[index].category == category) {
+                  return StoreCard(storesManager.storesCity[index]);
                 } else{
                   return Container();
                 }
