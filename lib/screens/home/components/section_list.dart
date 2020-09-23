@@ -46,7 +46,7 @@ class SectionList extends StatelessWidget {
                   );
                 },
               ),
-            )
+            ),
           ],
         ),
       ),

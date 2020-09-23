@@ -49,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                 elevation: 0,
                 backgroundColor: Colors.transparent,
                 flexibleSpace: const FlexibleSpaceBar(
-                  title: Text('Loja Virtual'),
+                  title: Text('Êta Fome'),
                   centerTitle: true,
                 ),
                 actions: <Widget>[
@@ -116,7 +116,6 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-
               Consumer<HomeManager>(
                 builder: (_, homeManager, __) {
                   if(homeManager.loading){

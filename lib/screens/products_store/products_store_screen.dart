@@ -17,9 +17,10 @@ import 'components/search_dialog.dart';
 
 class ProductsStoreScreen extends StatelessWidget {
 
-  const ProductsStoreScreen(this.store);
+  ProductsStoreScreen(this.store);
 
   final Store store;
+  List<String> emojis = ['😥', '😔', '😐', '😁', '😍',];
 
 
   @override
@@ -33,109 +34,7 @@ class ProductsStoreScreen extends StatelessWidget {
     return WillPopScope(
       onWillPop: _backScreem,
       child: Scaffold(
-        // appBar: AppBar(
-        //   title: Consumer<ProductManager>(
-        //     builder: (_, productManager, __){
-        //       if(productManager.search.isEmpty){
-        //         return const Text("Produtos");
-        //       } else {
-        //         return LayoutBuilder(
-        //           builder: (_, contrains){
-        //             return GestureDetector(
-        //               onTap: () async {
-        //                 final search = await showDialog<String>(
-        //                     context: context, builder: (_) => SearchDialog(productManager.search));
-        //                 if(search != null){
-        //                   productManager.search = search;
-        //                 }
-        //               },
-        //               child: Container(
-        //                 width: contrains.biggest.width,
-        //                 child: Text(
-        //                   productManager.search,
-        //                   textAlign: TextAlign.center,
-        //                 ),
-        //               ),
-        //             );
-        //           },
-        //         );
-        //       }
-        //     },
-        //   ),
-        //   centerTitle: true,
-        //   actions: <Widget>[
-        //     Consumer<ProductManager>(
-        //         builder: (_, productManager, __){
-        //           if(productManager.search.isEmpty){
-        //             return IconButton(
-        //               icon: const Icon(Icons.search),
-        //               onPressed: () async {
-        //                 final search = await showDialog<String>(
-        //                     context: context, builder: (_) => SearchDialog(productManager.search));
-        //                 if(search != null){
-        //                   productManager.search = search;
-        //                 }
-        //               },
-        //             );
-        //           } else {
-        //             return IconButton(
-        //               icon: const Icon(Icons.close),
-        //               onPressed: () async {
-        //                 productManager.search = '';
-        //               },
-        //             );
-        //           }
-        //         }
-        //     ),
-        //     Consumer<AvaliationManager>(
-        //       builder: (_, avaliationManager, __){
-        //         return IconButton(
-        //           icon: Icon(Icons.star),
-        //           onPressed: () async {
-        //             await avaliationManager.loadAvaliations(store.id);
-        //             Navigator.of(context).pushNamed('/avaliations', arguments: avaliationManager.avaliations);
-        //           },
-        //         );
-        //       },
-        //     ),
-        //     Consumer<UserManager>(
-        //       builder: (_, userManager, __){
-        //         if(userManager.adminEnabled){
-        //           return IconButton(
-        //             icon: const Icon(Icons.add),
-        //             onPressed: () {
-        //               Navigator.of(context).pushNamed(
-        //                 '/create_product', arguments: store.id
-        //               );
-        //             },
-        //           );
-        //         } else {
-        //           return Container();
-        //         }
-        //       },
-        //     ),
-        //     Consumer<UserManager>(
-        //       builder: (_, userManager, __){
-        //         if(userManager.adminEnabled){
-        //           return IconButton(
-        //             icon: const Icon(Icons.playlist_add_check),
-        //             onPressed: (){
-        //               context.read<AdminOrdersManager>().setStoreFilter(store);
-        //               Navigator.of(context).pushNamed(
-        //                 '/orders',
-        //               );
-        //             },
-        //           );
-        //         } else {
-        //           return Container();
-        //         }
-        //       },
-        //     )
-        //
-        //
-        //   ],
-        // ),
-        body:                 Consumer<ProductManager>(
+        body: Consumer<ProductManager>(
           builder: (_, productManager, __) {
             final filteredProducts = productManager.getStoreProducts(store.id);
             return GridView.builder(
@@ -143,7 +42,6 @@ class ProductsStoreScreen extends StatelessWidget {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 4,
-                // crossAxisSpacing: 2,
                 childAspectRatio: 0.8,
               ),
               itemCount: filteredProducts.length,

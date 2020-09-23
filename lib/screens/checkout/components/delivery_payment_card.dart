@@ -19,6 +19,10 @@ class _DeliveryPaymentCardState extends State<DeliveryPaymentCard> {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: ExpansionTile(
+        // ignore: avoid_bool_literals_in_conditional_expressions
+        initiallyExpanded: cartManager.paymentMethod == null
+            ? false
+            : true,
         title: const Text(
           "Pagamento na entrega",
           textAlign: TextAlign.start,
@@ -41,26 +45,31 @@ class _DeliveryPaymentCardState extends State<DeliveryPaymentCard> {
                   title: const Text('Cartão de Crédito'),
                   value: "card",
                   activeColor: Theme.of(context).primaryColor,
-                  groupValue: paymentSelect,
-                  onChanged: (val){
+                  groupValue: cartManager.paymentMethod,
+                  onChanged: (val) async {
                     cartManager.setPaymentMethod(val);
-                    setState(() {
-                      paymentSelect = val;
-                    });
                   },
                 ),
                 RadioListTile<String>(
                   title: const Text('Dinheiro'),
                   value: "money",
                   activeColor: Theme.of(context).primaryColor,
-                  groupValue: paymentSelect,
-                  onChanged: (val){
+                  groupValue: cartManager.paymentMethod,
+                  onChanged: (val) async {
                     cartManager.setPaymentMethod(val);
-                    setState(() {
-                      paymentSelect = val;
-                    });
                   },
+
                 ),
+                if(cartManager.paymentMethod != null)
+                  RadioListTile<String>(
+                    title: const Text('Pagamento No App'),
+                    value: "CardApp",
+                    activeColor: Theme.of(context).primaryColor,
+                    groupValue: paymentSelect,
+                    onChanged: (val){
+                      cartManager.setPaymentMethod(null);
+                      },
+                  ),
               ],
             ),
           ),

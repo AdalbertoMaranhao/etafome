@@ -19,9 +19,6 @@ class AvaliationsScreen extends StatelessWidget {
 
     
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("Avaliações"),
-      // ),
       body: Center(
         child: Container(
           child: Consumer<AvaliationManager>(
@@ -29,6 +26,7 @@ class AvaliationsScreen extends StatelessWidget {
               if(items.isNotEmpty) {
                 items.sort((a, b) => a.grade.compareTo(b.grade));
                 return ListView.builder(
+                  padding: const EdgeInsets.only(top: 8),
                   reverse: true,
                   itemCount: items.length,
                   itemBuilder: (_, index) {
