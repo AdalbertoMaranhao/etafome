@@ -15,9 +15,10 @@ class CustomDrawerHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              Text(
+              const Text(
                 'Loja\nVirtual',
                 style: TextStyle(
+                  color: Color.fromARGB(255, 128, 53, 73),
                   fontSize: 34,
                   fontWeight: FontWeight.bold,
                 ),
@@ -26,7 +27,8 @@ class CustomDrawerHeader extends StatelessWidget {
                 'Olá, ${userManager.user?.name ?? ''}',
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
-                style: TextStyle(
+                style: const TextStyle(
+                  color: Color.fromARGB(255, 128, 53, 73),
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -42,8 +44,8 @@ class CustomDrawerHeader extends StatelessWidget {
                 },
                 child: Text(
                   userManager.isLoggedIn ? 'Sair' : 'Entre ou cadastre-se >',
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 242, 196, 56),
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
