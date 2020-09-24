@@ -5,6 +5,11 @@ class LoginCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
+        elevation: 10,
+        color: Theme.of(context).primaryColor,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+        ),
         margin: const EdgeInsets.all(16),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
@@ -12,12 +17,12 @@ class LoginCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Icon(
-                Icons.account_circle,
-                color: Theme.of(context).primaryColor,
+              const Icon(
+                Icons.account_circle_outlined,
+                color: Colors.white,
                 size: 100,
               ),
-              Padding(
+              const Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   'Faça login para acessar',
@@ -25,7 +30,7 @@ class LoginCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w800,
-                    color: Theme.of(context).primaryColor,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -33,8 +38,8 @@ class LoginCard extends StatelessWidget {
                 onPressed: (){
                   Navigator.of(context).pushNamed('/login');
                 },
-                color: Theme.of(context).primaryColor,
-                textColor: Colors.white,
+                color: Colors.white,
+                textColor: Theme.of(context).primaryColor,
                 child: const Text(
                     'LOGIN'
                 ),

@@ -21,13 +21,6 @@ class BodyStoreScreen extends StatelessWidget{
     final avaliationManager = context.watch<AvaliationManager>();
     avaliationManager.loadAvaliations(store.id);
 
-    Future<bool> _backScreem(){
-      Navigator.of(context).pop();
-      if(context.read<UserManager>().adminEnabled){
-        context.read<UserManager>().adminClear();
-      }
-    }
-
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -42,7 +35,7 @@ class BodyStoreScreen extends StatelessWidget{
                 margin: const EdgeInsets.fromLTRB(0, 0, 16, 0),
                 child: Text(
                     "${emojis[store.media.toInt() - 1]} ${store.media.toStringAsPrecision(2)}",
-                  style: TextStyle(color: const Color.fromARGB(255, 128, 53, 73)),
+                  style: const TextStyle(color: const Color.fromARGB(255, 128, 53, 73)),
                 ),
               ),
             ),

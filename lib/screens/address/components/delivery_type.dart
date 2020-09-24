@@ -18,6 +18,7 @@ class _DeliveryTypeState extends State<DeliveryType> {
     final cartManager = context.watch<CartManager>();
 
     return Card(
+      elevation: 5,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

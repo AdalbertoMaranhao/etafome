@@ -9,6 +9,7 @@ class CupomCard extends StatelessWidget {
     final cartManager = context.watch<CartManager>();
 
     return Card(
+      elevation: 5,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: ExpansionTile(
         title: const Text(

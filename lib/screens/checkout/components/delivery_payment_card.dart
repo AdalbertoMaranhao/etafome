@@ -17,6 +17,7 @@ class _DeliveryPaymentCardState extends State<DeliveryPaymentCard> {
     final cartManager = context.watch<CartManager>();
 
     return Card(
+      elevation: 5,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: ExpansionTile(
         // ignore: avoid_bool_literals_in_conditional_expressions

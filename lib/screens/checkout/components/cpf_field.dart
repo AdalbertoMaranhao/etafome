@@ -11,6 +11,7 @@ class CpfField extends StatelessWidget {
     final userManager = context.watch<UserManager>();
 
     return Card(
+      elevation: 5,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Padding(
         padding: const EdgeInsets.all(16),

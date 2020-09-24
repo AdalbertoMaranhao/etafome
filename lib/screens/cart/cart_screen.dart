@@ -23,7 +23,9 @@ class CartScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Carrinho'),
+        backgroundColor: Colors.transparent,
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 128, 53, 73)),
+        title: const Text('Carrinho', style: TextStyle(color: Color.fromARGB(255, 128, 53, 73)),),
         centerTitle: true,
       ),
       body: Consumer<CartManager>(

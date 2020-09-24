@@ -17,6 +17,10 @@ class ConfirmationScreen extends StatelessWidget {
       ),
       body: Center(
         child: Card(
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10)
+          ),
           margin: const EdgeInsets.all(16),
           child: ListView(
             shrinkWrap: true,
