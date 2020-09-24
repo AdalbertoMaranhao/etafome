@@ -28,73 +28,72 @@ class BodyStoreScreen extends StatelessWidget{
       }
     }
 
-    return WillPopScope(
-      onWillPop: _backScreem,
-      child: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(store.name),
-            leading: Container(),
-            leadingWidth: 4,
-            actions: [
-              Center(
-                child: Container(
-                  margin: const EdgeInsets.fromLTRB(0, 0, 16, 0),
-                  child: Text(
-                      "${emojis[store.media.toInt() - 1]} ${store.media.toStringAsPrecision(2)}"
-                  ),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Text(store.name, style: const TextStyle(color: Color.fromARGB(255, 128, 53, 73)),),
+          leading: Container(),
+          leadingWidth: 4,
+          actions: [
+            Center(
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(0, 0, 16, 0),
+                child: Text(
+                    "${emojis[store.media.toInt() - 1]} ${store.media.toStringAsPrecision(2)}",
+                  style: TextStyle(color: const Color.fromARGB(255, 128, 53, 73)),
                 ),
               ),
-              Consumer<UserManager>(
-                builder: (_, userManager, __){
-                  if(userManager.adminEnabled){
-                    return IconButton(
-                      icon: const Icon(Icons.add),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(
-                            '/create_product', arguments: store.id
-                        );
-                      },
-                    );
-                  } else {
-                    return Container();
-                  }
-                },
-              ),
-              Consumer<UserManager>(
-                builder: (_, userManager, __) {
-                  if (userManager.adminEnabled) {
-                    return IconButton(
-                      icon: const Icon(Icons.playlist_add_check),
-                      onPressed: () {
-                        context.read<AdminOrdersManager>().setStoreFilter(store);
-                        Navigator.of(context).pushNamed(
-                          '/orders',
-                        );
-                      },
-                    );
-                  } else {
-                    return Container();
-                  }
-                },
-              )
-            ],
-            bottom: const TabBar(
-              indicatorColor: Colors.white,
-              tabs: <Widget>[
-                Tab(text: "Produtos",),
-                Tab(text: "Avaliações",),
-              ],
             ),
-          ),
-          body: TabBarView(
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              ProductsStoreScreen(store),
-              AvaliationsScreen(avaliationManager.avaliations, store.id)
+            Consumer<UserManager>(
+              builder: (_, userManager, __){
+                if(userManager.adminEnabled){
+                  return IconButton(
+                    icon: const Icon(Icons.add, color: Color.fromARGB(255, 128, 53, 73),),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                          '/create_product', arguments: store.id
+                      );
+                    },
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
+            Consumer<UserManager>(
+              builder: (_, userManager, __) {
+                if (userManager.adminEnabled) {
+                  return IconButton(
+                    icon: const Icon(Icons.playlist_add_check, color: Color.fromARGB(255, 128, 53, 73),),
+                    onPressed: () {
+                      context.read<AdminOrdersManager>().setStoreFilter(store);
+                      Navigator.of(context).pushNamed(
+                        '/orders',
+                      );
+                    },
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            )
+          ],
+          bottom: const TabBar(
+            indicatorColor: Color.fromARGB(255, 128, 53, 73),
+            tabs: <Widget>[
+              Tab(child: Text("Produtos", style: TextStyle(color: Color.fromARGB(255, 128, 53, 73))),),
+              Tab(child: Text("Avaliações", style: TextStyle(color: Color.fromARGB(255, 128, 53, 73))),),
             ],
           ),
+        ),
+        body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            ProductsStoreScreen(store),
+            AvaliationsScreen(avaliationManager.avaliations, store.id)
+          ],
         ),
       ),
     );

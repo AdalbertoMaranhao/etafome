@@ -153,8 +153,6 @@ class ProductScreen extends StatelessWidget {
                                   context.read<CartManager>().addToCart(
                                       product);
                                   Navigator.of(context).pushNamed("/cart");
-//                                  showDialog(context: context,
-//                                      builder: (_) => AlertProductAdd());
                                 } else {
                                   showDialog(context: context,
                                       builder: (_) => AlertStoresDifferent(product));

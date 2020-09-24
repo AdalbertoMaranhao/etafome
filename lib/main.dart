@@ -103,8 +103,8 @@ class MyApp extends StatelessWidget {
         title: 'Loja de Roupas',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: const Color.fromARGB(255, 4, 125, 141),
-          scaffoldBackgroundColor: const Color.fromARGB(255, 4, 125, 141),
+          primaryColor: const Color.fromARGB(255, 128, 53, 73),
+          scaffoldBackgroundColor: Colors.white,
           appBarTheme: const AppBarTheme(elevation: 0),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),

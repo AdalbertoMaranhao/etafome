@@ -29,11 +29,13 @@ class StoreScreen extends StatelessWidget{
             children: [
               Scaffold(
                 appBar: AppBar(
+                  iconTheme: const IconThemeData(color: Color.fromARGB(255, 128, 53, 73)),
+                  backgroundColor: Colors.white,
                   bottom: PreferredSize(preferredSize: const Size(0,85),
                     child: Container(),
                   ),
                 ),
-                 body: BodyStoreScreen(store),
+                body: BodyStoreScreen(store),
               ),
               Align(
                 alignment: Alignment.topCenter,

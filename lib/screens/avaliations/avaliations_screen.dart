@@ -40,12 +40,12 @@ class AvaliationsScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        foregroundColor: Theme.of(context).primaryColor,
+        backgroundColor: const Color.fromARGB(255, 128, 53, 73),
+        foregroundColor: Colors.white,
         onPressed: () {
           Navigator.of(context).pushNamed("/avaliations", arguments: storeId);
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

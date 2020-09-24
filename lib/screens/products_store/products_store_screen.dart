@@ -55,12 +55,12 @@ class ProductsStoreScreen extends StatelessWidget {
           },
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.white,
-          foregroundColor: Theme.of(context).primaryColor,
+          backgroundColor: const Color.fromARGB(255, 128, 53, 73),
+          foregroundColor: Colors.white,
           onPressed: () async {
             Navigator.of(context).pushNamed('/cart');
           },
-          child: Icon(Icons.shopping_cart),
+          child: const Icon(Icons.shopping_cart),
         ),
       ),
     );

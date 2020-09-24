@@ -11,6 +11,7 @@ class AvaliationTile extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 10,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4)
@@ -33,10 +34,10 @@ class AvaliationTile extends StatelessWidget{
               children: [
                 Text(
                   item.user,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w800,
-                      color: Theme.of(context).primaryColor
+                      color: Color.fromARGB(255, 128, 53, 73)
                   ),
                 ),
 
