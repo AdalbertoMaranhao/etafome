@@ -44,33 +44,22 @@ class CartTile extends StatelessWidget {
                             fontSize: 17.0,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Text(
-                            'Tamanho: ${cartProduct.size}',
-                            style: const TextStyle(fontWeight: FontWeight.w300),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(vertical: 8),
+                        //   child: Text(
+                        //     'Tamanho: ${cartProduct.size}',
+                        //     style: const TextStyle(fontWeight: FontWeight.w300),
+                        //   ),
+                        // ),
                         Consumer<CartProduct>(
                           builder: (_, cartProduct, __){
-                            if(cartProduct.hasStock) {
-                              return Text(
-                                'R\$ ${cartProduct.unitPrice.toStringAsFixed(2)}',
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold
-                                ),
-                              );
-                            } else {
-                              return const Text(
-                                'Sem estoque suficiente',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 12,
-                                ),
-                              );
-                            }
+                            return Text(
+                              'R\$ ${cartProduct.unitPrice.toStringAsFixed(2)}',
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold),
+                            );
                           },
                         )
                       ],

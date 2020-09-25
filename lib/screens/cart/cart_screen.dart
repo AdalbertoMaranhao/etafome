@@ -53,9 +53,9 @@ class CartScreen extends StatelessWidget {
               CupomCard(),
               PriceCard(
                 buttonText: 'Continuar para Pagamento',
-                onPressed: cartManager.isCartValid ? (){
+                onPressed: (){
                   Navigator.of(context).pushNamed('/checkout');
-                } : null,
+                },
               ),
             ],
           );

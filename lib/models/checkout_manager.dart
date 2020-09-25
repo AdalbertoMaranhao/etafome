@@ -46,17 +46,6 @@ class CheckoutManager extends ChangeNotifier {
       }
     }
 
-    try {
-      await _decrementStock();
-    } catch(e){
-      if(payId != null) {
-        cieloPayment.cancel(payId);
-      }
-      onStockFail(e);
-      loading = false;
-      return;
-    }
-
     if(payId != null) {
       try {
         await cieloPayment.capture(payId);
@@ -96,52 +85,6 @@ class CheckoutManager extends ChangeNotifier {
       debugPrint(e.toString());
       return Future.error('Falha ao gerar número do pedido');
     }
-  }
-
-  Future<void> _decrementStock() {
-    return firestore.runTransaction((tx) async {
-      final List<Product> productsToUpdate = [];
-      final List<Product> productsWithoutStock = [];
-
-      for (final cartProduct in cartManager.items) {
-        Product product;
-
-        if(productsToUpdate.any((p) => p.id == cartProduct.productID)){
-          product = productsToUpdate.firstWhere(
-                  (p) => p.id == cartProduct.productID
-          );
-        } else {
-          final doc = await tx.get(
-              firestore.document('products/${cartProduct.productID}')
-          );
-          product = Product.fromDocument(doc);
-        }
-
-        cartProduct.product = product;
-
-        final size = product.findSize(cartProduct.size);
-        if(size.stock - cartProduct.quantity < 0){
-          productsWithoutStock.add(product);
-        } else {
-          size.stock -= cartProduct.quantity;
-          productsToUpdate.add(product);
-        }
-      }
-
-      if(productsWithoutStock.isNotEmpty){
-        return Future.error(
-            'produtos sem estoque: ${productsWithoutStock.length}'
-        );
-      }
-
-      for(final product in productsToUpdate){
-        tx.update(
-            firestore.document('products/${product.id}'),
-            {'sizes': product.exportSizeList()}
-            );
-      }
-
-    });
   }
 
   Future<void> saveCreditCard(CreditCard creditCard) async {

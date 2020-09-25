@@ -7,7 +7,7 @@ class EditItemSize extends StatelessWidget {
   const EditItemSize({Key key, this.size, this.onRemove,
     this.onMoveUp, this.onMoveDown}) : super(key: key);
 
-  final ItemSize size;
+  final Item size;
   final VoidCallback onRemove;
   final VoidCallback onMoveUp;
   final VoidCallback onMoveDown;
@@ -37,7 +37,7 @@ class EditItemSize extends StatelessWidget {
         Expanded(
           flex: 30,
           child: TextFormField(
-            initialValue: size.stock?.toString(),
+            initialValue: "0",
             decoration: const InputDecoration(
               labelText: 'Estoque',
               isDense: true,
@@ -49,7 +49,6 @@ class EditItemSize extends StatelessWidget {
               }
               return null;
             },
-            onChanged: (stock) => size.stock = int.tryParse(stock),
           ),
         ),
         const SizedBox(width: 4,),

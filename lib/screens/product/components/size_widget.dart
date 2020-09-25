@@ -3,62 +3,55 @@ import 'package:lojavirtual/models/item_size.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:provider/provider.dart';
 
-class SizeWidget extends StatelessWidget {
+class SizeWidget extends StatefulWidget {
 
-  const SizeWidget({this.size});
+  const SizeWidget({this.size, this.title});
 
-  final ItemSize size;
+  final Item size;
+  final String title;
+
+  @override
+  _SizeWidgetState createState() => _SizeWidgetState();
+}
+
+class _SizeWidgetState extends State<SizeWidget> {
+  bool select = false;
 
   @override
   Widget build(BuildContext context) {
     final product = context.watch<Product>();
-    final selected = size == product.selectedSize;
-
-    Color color;
-    if(!size.hasStock){
-      color = Colors.red.withAlpha(50);
-    } else if(selected){
-      color = Theme.of(context).primaryColor;
-    } else{
-      color = Colors.grey;
-    }
+    // final selected = widget.size == product.selectedSize;
 
 
-    return GestureDetector(
-      onTap: (){
-        if(size.hasStock){
-          product.selectedSize = size;
-        }
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: color
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Container(
-              color: color,
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              child: Text(
-                size.name,
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                'R\$ ${size.price.toStringAsFixed(2)}',
-                style: TextStyle(
-                  color: color,
-                ),
-              ),
-            ),
-          ],
-        ),
+    return CheckboxListTile(
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(widget.size.name),
+          if(widget.size.price > 0)
+            Text("R\$ ${widget.size.price.toStringAsFixed(2)}")
+        ],
       ),
+      //subtitle: Text(size.price.toStringAsFixed(2)),
+      value: select,
+      activeColor: Theme.of(context).primaryColor,
+      onChanged: (bool val) {
+        setState((){
+          num price= 0;
+          select = val;
+          print(product.price);
+          if(select) {
+            product.listOptions.add("${widget.title} - ${widget.size.name}");
+            product.setOrderPriceMais(widget.size.price);
+
+          } else {
+            product.listOptions.remove("${widget.title} - ${widget.size.name}");
+            product.setOrderPriceMenos(widget.size.price);
+          }
+        });
+        print(product.orderPrice);
+        print(product.listOptions);
+      },
     );
   }
 }

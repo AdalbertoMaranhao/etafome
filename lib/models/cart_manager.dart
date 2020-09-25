@@ -64,7 +64,7 @@ class CartManager extends ChangeNotifier{
     }
   }
 
-  void setDeliveryType(bool value) async{
+  Future<void> setDeliveryType(bool value) async{
     deliveryType = value;
     //notifyListeners();
     if(value){

@@ -103,7 +103,7 @@ class ProductsScreen extends StatelessWidget {
         onPressed: (){
           Navigator.of(context).pushNamed('/cart');
         },
-        child: Icon(Icons.shopping_cart),
+        child: const Icon(Icons.shopping_cart),
       ),
     );
   }

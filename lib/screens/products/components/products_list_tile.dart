@@ -49,28 +49,21 @@ class ProductListTile extends StatelessWidget {
                             fontWeight: FontWeight.w800,
                           ),
                         ),
-                        Text(
-                          'A partir de',
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                            fontSize: 12,
+                        if(product.price > 0)
+                          Text(
+                            'R\$ ${product.price.toStringAsFixed(2)}',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w800,
+                                color: Theme.of(context).primaryColor
+                            ),
                           ),
-                        ),
-                        Text(
-                          'R\$ ${product.basePrice.toStringAsFixed(2)}',
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w800,
-                              color: Theme.of(context).primaryColor
-                          ),
-                        ),
                       ],
                     ),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: InkWell(
                           onTap: (){
-                            product.selectedSize = product.sizes[0];
                             if(context.read<UserManager>().isLoggedIn){
                               if(context.read<CartManager>().verifyCart(product.store)) {
                                 context.read<CartManager>().addToCart(

@@ -51,15 +51,14 @@ class ConfirmationScreen extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    const SizedBox(height: 4,),
-                    RaisedButton(
+                    const SizedBox(height: 8,),
+                    FlatButton(
                       color: Theme.of(context).primaryColor,
-                      disabledColor: Theme.of(context).primaryColor.withAlpha(100),
                       textColor: Colors.white,
                       onPressed: (){
                         Navigator.of(context).pushNamed("/");
                       },
-                      child: Text("Tudo certo, agora é só aguardar!"),
+                      child: const Text("Tudo certo, agora é só aguardar!"),
                     )
                   ],
                 ),

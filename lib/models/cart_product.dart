@@ -9,7 +9,7 @@ class CartProduct extends ChangeNotifier{
     productID = product.id;
     productStore = product.store;
     quantity = 1;
-    size = product.selectedSize.name;
+    options.addAll(product.listOptions);
   }
 
   CartProduct.fromDocument(DocumentSnapshot document){
@@ -17,8 +17,7 @@ class CartProduct extends ChangeNotifier{
     productID = document.data['pid'] as String;
     productStore = document.data['pst'] as String;
     quantity = document.data['quantity'] as int;
-    size = document.data['size'] as String;
-
+    options = List<String>.from(document.data['options'] as List<dynamic> ?? []);
     firestore.document('products/$productID').get().then(
             (doc) {
               product = Product.fromDocument(doc);
@@ -26,11 +25,12 @@ class CartProduct extends ChangeNotifier{
     );
   }
 
+
   CartProduct.fromMap(Map<String, dynamic> map){
     productID = map['pid'] as String;
     productStore = map['pst'] as String;
     quantity = map['quantity'] as int;
-    size = map['size'] as String;
+    options = List<String>.from(map['options'] as List<dynamic> ?? []);
     fixedPrice = map['fixedPrice'] as num;
 
     firestore.document('products/$productID').get().then(
@@ -46,7 +46,7 @@ class CartProduct extends ChangeNotifier{
   String productID;
   String productStore;
   int quantity;
-  String size;
+  List<String> options = [];
   num fixedPrice;
 
   Product _product;
@@ -56,14 +56,9 @@ class CartProduct extends ChangeNotifier{
     notifyListeners();
   }
 
-  ItemSize get itemSize {
-    if(product == null) return null;
-    return product.findSize(size);
-  }
-
   num get unitPrice {
     if(product == null) return 0;
-    return itemSize?.price ?? 0;
+    return product.basePrice + product.price ?? 0;
   }
 
   num get totalPrice => unitPrice * quantity;
@@ -73,7 +68,7 @@ class CartProduct extends ChangeNotifier{
       'pid': productID,
       'pst': productStore,
       'quantity': quantity,
-      'size': size,
+      'options': options,
     };
   }
 
@@ -82,14 +77,14 @@ class CartProduct extends ChangeNotifier{
       'pid': productID,
       'pst': productStore,
       'quantity': quantity,
-      'size': size,
+      'options': options,
       'fixedPrice': fixedPrice ?? unitPrice,
     };
   }
 
 
   bool stackable(Product product){
-    return product.id == productID && product.selectedSize.name == size;
+    return product.id == productID;
   }
 
   void increment(){
@@ -104,10 +99,6 @@ class CartProduct extends ChangeNotifier{
 
   bool get hasStock {
     if(product != null && product.deleted) return false;
-
-    final size = itemSize;
-    if(size == null) return false;
-    return size.stock >= quantity;
   }
 
 

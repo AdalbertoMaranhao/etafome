@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:lojavirtual/models/item_size.dart';
 import 'package:uuid/uuid.dart';
 
+import 'option.dart';
+
 class Product extends ChangeNotifier {
   final Firestore firestore = Firestore.instance;
   final FirebaseStorage storage = FirebaseStorage.instance;
@@ -14,19 +16,20 @@ class Product extends ChangeNotifier {
 
   StorageReference get storageRef => storage.ref().child('products').child(id);
 
-  Product({this.id, this.name, this.description, this.images, this.sizes, this.deleted = false, this.store}) {
+  Product({this.id, this.name, this.price, this.description, this.images, this.options, this.deleted = false, this.store,}) {
     images = images ?? [];
-    sizes = sizes ?? [];
+    options = options ?? [];
   }
 
   Product.fromDocument(DocumentSnapshot document) {
     id = document.documentID;
     name = document['name'] as String;
+    price = document['price'] as num;
     store = document['store'] as String;
     description = document['description'] as String;
     images = List<String>.from(document.data['images'] as List<dynamic> ?? []);
-    sizes = (document.data['sizes'] as List<dynamic>)
-        .map((s) => ItemSize.fromMap(s as Map<String, dynamic>))
+    options = (document.data['options'] as List<dynamic>)
+        .map((s) => Option.fromMap(s as Map<String, dynamic>))
         .toList();
 
     deleted = (document.data['deleted'] ?? false) as bool;
@@ -34,10 +37,13 @@ class Product extends ChangeNotifier {
 
   String id;
   String name;
+  num price;
   String description;
   String store;
   List<String> images;
-  List<ItemSize> sizes;
+  List<Option> options;
+
+  num orderPrice = 0;
 
   bool deleted;
   List<dynamic> newImages;
@@ -50,47 +56,33 @@ class Product extends ChangeNotifier {
   }
 
 
-  ItemSize _selectedSize;
+  List<String> listOptions = [];
 
-  ItemSize get selectedSize => _selectedSize;
 
-  set selectedSize(ItemSize value) {
-    _selectedSize = value;
-    notifyListeners();
-  }
-
-  int get totalStock {
-    int stock = 0;
-    for (final size in sizes) {
-      stock += size.stock;
-    }
-    return stock;
-  }
-
-  bool get hasStock {
-    return totalStock > 0 && !deleted;
-  }
 
   num get basePrice {
-    num lowest = double.infinity;
-    for (final size in sizes) {
-      if (size.price < lowest) {
-        lowest = size.price;
-      }
+    num lowest;
+    if(orderPrice == 0) {
+      lowest = price;
+    } else {
+      lowest = orderPrice;
     }
+
     return lowest;
   }
 
-  ItemSize findSize(String name) {
-    try {
-      return sizes.firstWhere((s) => s.name == name);
-    } catch (e) {
-      return null;
-    }
+  void setOrderPriceMais(num value){
+    orderPrice += value;
+    notifyListeners();
   }
 
-  List<Map<String, dynamic>> exportSizeList() {
-    return sizes.map((size) => size.toMap()).toList();
+  void setOrderPriceMenos(num value){
+    orderPrice -= value;
+    notifyListeners();
+  }
+
+  List<Map<String, dynamic>> exportOptionList() {
+    return options.map((size) => size.toMap()).toList();
   }
 
   Future<void> save() async {
@@ -100,7 +92,7 @@ class Product extends ChangeNotifier {
       'name': name,
       'description': description,
       'store': store,
-      'sizes': exportSizeList(),
+      'options': exportOptionList(),
       'deleted': deleted,
     };
 
@@ -154,7 +146,7 @@ class Product extends ChangeNotifier {
       description: description,
       store: store,
       images: List.from(images),
-      sizes: sizes.map((size) => size.clone()).toList(),
+      options: options,
       deleted: deleted,
     );
   }

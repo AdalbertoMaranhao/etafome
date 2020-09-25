@@ -15,8 +15,8 @@ class SizesForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        FormField<List<ItemSize>>(
-          initialValue: product.sizes,
+        FormField<List<Item>>(
+          initialValue: product.options[0].items,
           validator: (sizes){
             if(sizes.isEmpty){
               return 'Insira um tamanho';
@@ -28,10 +28,10 @@ class SizesForm extends StatelessWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    const Expanded(
+                    Expanded(
                       child: Text(
-                        'Tamanhos',
-                        style: TextStyle(
+                        product.options[0].title,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ),
@@ -41,7 +41,7 @@ class SizesForm extends StatelessWidget {
                       iconData: Icons.add,
                       color: Colors.black,
                       onTap: (){
-                        state.value.add(ItemSize());
+                        state.value.add(Item());
                         state.didChange(state.value);
                       },
                     ),

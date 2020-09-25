@@ -6,6 +6,7 @@ import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:lojavirtual/screens/product/components/alert_stores_different.dart';
+import 'package:lojavirtual/screens/product/components/option_widget.dart';
 
 import 'package:lojavirtual/screens/product/components/size_widget.dart';
 import 'package:provider/provider.dart';
@@ -24,14 +25,16 @@ class ProductScreen extends StatelessWidget {
       value: product,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(product.name),
+          backgroundColor: Colors.transparent,
+          iconTheme: const IconThemeData(color: Color.fromARGB(255, 128, 53, 73)),
+          title: Text(product.name, style: const TextStyle(color: Color.fromARGB(255, 128, 53, 73)),),
           centerTitle: true,
           actions: <Widget>[
             Consumer<UserManager>(
               builder: (_, userManager, __){
                 if(userManager.adminEnabled && !product.deleted){
                   return IconButton(
-                    icon: const Icon(Icons.edit),
+                    icon: Icon(Icons.edit, color: primaryColor,),
                     onPressed: (){
                       Navigator.of(context).pushReplacementNamed(
                           '/edit_product',
@@ -55,10 +58,10 @@ class ProductScreen extends StatelessWidget {
                 images: product.images.map((url){
                   return NetworkImage(url);
                 }).toList(),
-                dotSize: 4,
+                dotSize: 0,
                 dotSpacing: 15,
                 dotBgColor: Colors.transparent,
-                dotColor: primaryColor,
+                dotColor: Colors.transparent,
                 autoplay: false,
               ),
             ),
@@ -69,43 +72,28 @@ class ProductScreen extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     product.name,
-                    style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Text(
-                      'A partir de',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 13,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    'R\$ ${product.basePrice.toStringAsFixed(2)}',
                     style: TextStyle(
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
                       color: primaryColor,
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 16, bottom: 8),
-                    child: Text(
-                      'Descrição',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500
-                      ),
                     ),
                   ),
                   Text(
                     product.description,
                     style: const TextStyle(
                         fontSize: 16
+                    ),
+                  ),
+                  if(product.price > 0)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                      'R\$ ${product.price.toStringAsFixed(2)}',
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
+                        color: primaryColor,
+                      ),
                     ),
                   ),
                   if(product.deleted)
@@ -122,58 +110,53 @@ class ProductScreen extends StatelessWidget {
                     )
                   else
                     ...[
-                      const Padding(
-                        padding: EdgeInsets.only(top: 16, bottom: 8),
-                        child: Text(
-                          'Tamanhos',
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500
-                          ),
-                        ),
-                      ),
                       Wrap(
                         spacing: 8,
                         runSpacing: 8,
-                        children: product.sizes.map((s){
-                          return SizeWidget(size: s);
+                        children: product.options.map((o){
+                          return OptionWidget(option: o,);
                         }).toList(),
                       ),
                     ],
                   const SizedBox(height: 20,),
-                  if(product.hasStock)
-                    Consumer2<UserManager, Product>(
-                      builder: (_, userManager, product, __){
-                        return SizedBox(
-                          height: 44,
-                          child: RaisedButton(
-                            onPressed: product.selectedSize != null ? (){
-                              if(userManager.isLoggedIn){
-                                if(context.read<CartManager>().verifyCart(product.store)) {
-                                  context.read<CartManager>().addToCart(
-                                      product);
-                                  Navigator.of(context).pushNamed("/cart");
-                                } else {
-                                  showDialog(context: context,
-                                      builder: (_) => AlertStoresDifferent(product));
+                  Consumer2<UserManager, Product>(
+                    builder: (_, userManager, product, __) {
+                      return SizedBox(
+                        height: 44,
+                        child: RaisedButton(
+                          onPressed: product.listOptions != null
+                              ? () {
+                                  if (userManager.isLoggedIn) {
+                                    if (context
+                                        .read<CartManager>()
+                                        .verifyCart(product.store)) {
+                                      context
+                                          .read<CartManager>()
+                                          .addToCart(product);
+                                      Navigator.of(context).pushNamed("/cart");
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) =>
+                                              AlertStoresDifferent(product));
+                                    }
+                                  } else {
+                                    Navigator.of(context).pushNamed('/login');
+                                  }
                                 }
-
-                              } else {
-                                Navigator.of(context).pushNamed('/login');
-                              }
-                            } : null,
-                            color: primaryColor,
-                            textColor: Colors.white,
-                            child: Text(
-                              userManager.isLoggedIn
-                                  ? 'Adicionar ao Carrinho'
-                                  : 'Entre para Comprar',
-                              style: const TextStyle(fontSize: 18),
-                            ),
+                              : null,
+                          color: primaryColor,
+                          textColor: Colors.white,
+                          child: Text(
+                            userManager.isLoggedIn
+                                ? 'Adicionar ao Carrinho'
+                                : 'Entre para Comprar',
+                            style: const TextStyle(fontSize: 18),
                           ),
-                        );
-                      },
-                    )
+                        ),
+                      );
+                    },
+                  )
                 ],
               ),
             )

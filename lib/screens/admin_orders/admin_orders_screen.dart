@@ -20,7 +20,9 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Todos os Pedidos'),
+        backgroundColor: Colors.transparent,
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 128, 53, 73)),
+        title: const Text('Todos os Pedidos', style: TextStyle(color: Color.fromARGB(255, 128, 53, 73)),),
         centerTitle: true,
       ),
       body: Consumer<AdminOrdersManager>(
@@ -74,7 +76,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                         }
                     ),
                   ),
-                const SizedBox(height: 100,),
+                const SizedBox(height: 140,),
               ],
             ),
             minHeight: 40,
