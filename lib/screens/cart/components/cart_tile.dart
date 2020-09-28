@@ -43,14 +43,14 @@ class CartTile extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             fontSize: 17.0,
                           ),
+                        ), 
+                        Wrap(
+                          spacing: 4,
+                          runSpacing: 4,
+                          children: cartProduct.options.map((o){
+                            return Text(o);
+                          }).toList(),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(vertical: 8),
-                        //   child: Text(
-                        //     'Tamanho: ${cartProduct.size}',
-                        //     style: const TextStyle(fontWeight: FontWeight.w300),
-                        //   ),
-                        // ),
                         Consumer<CartProduct>(
                           builder: (_, cartProduct, __){
                             return Text(

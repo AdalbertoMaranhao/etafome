@@ -43,18 +43,18 @@ class CartManager extends ChangeNotifier{
     removeAddress();
 
     if (user != null) {
-      _loadCartItems();
+      //_loadCartItems();
       _loadUserAddress();
     }
   }
 
-  Future<void> _loadCartItems() async {
-    final QuerySnapshot cartSnap = await user.cartReference.getDocuments();
-
-    items = cartSnap.documents
-        .map((d) => CartProduct.fromDocument(d)..addListener(_onItemUpdate))
-        .toList();
-  }
+  // Future<void> _loadCartItems() async {
+  //   final QuerySnapshot cartSnap = await user.cartReference.getDocuments();
+  //
+  //   items = cartSnap.documents
+  //       .map((d) => CartProduct.fromDocument(d)..addListener(_onItemUpdate))
+  //       .toList();
+  // }
 
   Future<void> _loadUserAddress() async{
     if(user.address != null
@@ -90,15 +90,15 @@ class CartManager extends ChangeNotifier{
   }
 
   void addToCart(Product product) {
-    try {
-      final e = items.firstWhere((p) => p.stackable(product));
-      e.increment();
-    } catch (e) {
+     try {
+       final e = items.firstWhere((p) => p.stackable(product));
+       e.increment();
+     } catch (e) {
       final cartProduct = CartProduct.fromProduct(product);
       cartProduct.addListener(_onItemUpdate);
       items.add(cartProduct);
-      user.cartReference.add(cartProduct.toCartItemMap())
-          .then((doc) => cartProduct.id = doc.documentID);
+      // user.cartReference.add(cartProduct.toCartItemMap())
+      //     .then((doc) => cartProduct.id = doc.documentID);
       _onItemUpdate();
     }
     notifyListeners();
@@ -147,18 +147,18 @@ class CartManager extends ChangeNotifier{
 
       productsPrice += cartProduct.totalPrice;
 
-      _updateCartProduct(cartProduct);
+      //_updateCartProduct(cartProduct);
     }
     notifyListeners();
   }
 
-  void _updateCartProduct(CartProduct cartProduct) {
-    if(cartProduct.id != null) {
-      user.cartReference
-          .document(cartProduct.id)
-          .updateData(cartProduct.toCartItemMap());
-    }
-  }
+  // void _updateCartProduct(CartProduct cartProduct) {
+  //   if(cartProduct.id != null) {
+  //     user.cartReference
+  //         .document(cartProduct.id)
+  //         .updateData(cartProduct.toCartItemMap());
+  //   }
+  // }
 
 
   bool get isCartValid {

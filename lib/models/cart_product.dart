@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:lojavirtual/models/item_size.dart';
 import 'package:lojavirtual/models/product.dart';
 
@@ -9,6 +10,7 @@ class CartProduct extends ChangeNotifier{
     productID = product.id;
     productStore = product.store;
     quantity = 1;
+    orderPrice = product.orderPrice;
     options.addAll(product.listOptions);
   }
 
@@ -48,6 +50,7 @@ class CartProduct extends ChangeNotifier{
   int quantity;
   List<String> options = [];
   num fixedPrice;
+  num orderPrice = 0;
 
   Product _product;
   Product get product => _product;
@@ -56,9 +59,19 @@ class CartProduct extends ChangeNotifier{
     notifyListeners();
   }
 
+  // void setOrderPriceMais(num value){
+  //   orderPrice += value;
+  //   notifyListeners();
+  // }
+  //
+  // void setOrderPriceMenos(num value){
+  //   orderPrice -= value;
+  //   notifyListeners();
+  // }
+
   num get unitPrice {
     if(product == null) return 0;
-    return product.basePrice + product.price ?? 0;
+    return product.basePrice + orderPrice ?? 0;
   }
 
   num get totalPrice => unitPrice * quantity;
@@ -84,7 +97,8 @@ class CartProduct extends ChangeNotifier{
 
 
   bool stackable(Product product){
-    return product.id == productID;
+
+    return product.id == productID && listEquals(product.options, options);;
   }
 
   void increment(){

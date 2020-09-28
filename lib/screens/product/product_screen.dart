@@ -124,7 +124,7 @@ class ProductScreen extends StatelessWidget {
                       return SizedBox(
                         height: 44,
                         child: RaisedButton(
-                          onPressed: product.listOptions != null
+                          onPressed: product.listOptions.isNotEmpty || product.price > 0
                               ? () {
                                   if (userManager.isLoggedIn) {
                                     if (context

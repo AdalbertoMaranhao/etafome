@@ -61,13 +61,7 @@ class Product extends ChangeNotifier {
 
 
   num get basePrice {
-    num lowest;
-    if(orderPrice == 0) {
-      lowest = price;
-    } else {
-      lowest = orderPrice;
-    }
-
+    final num lowest = price;
     return lowest;
   }
 
