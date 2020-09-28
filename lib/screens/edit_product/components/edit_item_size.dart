@@ -4,10 +4,10 @@ import '../../../common/custom_icon_button.dart';
 
 class EditItemSize extends StatelessWidget {
 
-  const EditItemSize({Key key, this.size, this.onRemove,
+  const EditItemSize({Key key, this.item, this.onRemove,
     this.onMoveUp, this.onMoveDown}) : super(key: key);
 
-  final Item size;
+  final Item item;
   final VoidCallback onRemove;
   final VoidCallback onMoveUp;
   final VoidCallback onMoveDown;
@@ -17,11 +17,11 @@ class EditItemSize extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-          flex: 30,
+          flex: 60,
           child: TextFormField(
-            initialValue: size.name,
+            initialValue: item.name,
             decoration: const InputDecoration(
-              labelText: 'Titulo',
+              labelText: 'Titulo da opção',
               isDense: true,
             ),
             validator: (name){
@@ -30,32 +30,14 @@ class EditItemSize extends StatelessWidget {
               }
               return null;
             },
-            onChanged: (name) => size.name = name,
-          ),
-        ),
-        const SizedBox(width: 4,),
-        Expanded(
-          flex: 30,
-          child: TextFormField(
-            initialValue: "0",
-            decoration: const InputDecoration(
-              labelText: 'Estoque',
-              isDense: true,
-            ),
-            keyboardType: TextInputType.number,
-            validator: (stock){
-              if(int.tryParse(stock) == null){
-                return 'Invalido';
-              }
-              return null;
-            },
+            onChanged: (name) => item.name = name,
           ),
         ),
         const SizedBox(width: 4,),
         Expanded(
           flex: 40,
           child: TextFormField(
-            initialValue: size.price?.toStringAsFixed(2),
+            initialValue: item.price?.toStringAsFixed(2),
             decoration: const InputDecoration(
               labelText: 'Preço',
               isDense: true,
@@ -68,7 +50,7 @@ class EditItemSize extends StatelessWidget {
               }
               return null;
             },
-            onChanged: (price) => size.price = num.tryParse(price),
+            onChanged: (price) => item.price = num.tryParse(price),
           ),
         ),
         CustomIconButton(

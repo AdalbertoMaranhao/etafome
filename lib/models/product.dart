@@ -65,6 +65,7 @@ class Product extends ChangeNotifier {
     return lowest;
   }
 
+
   void setOrderPriceMais(num value){
     orderPrice += value;
     notifyListeners();
@@ -76,7 +77,7 @@ class Product extends ChangeNotifier {
   }
 
   List<Map<String, dynamic>> exportOptionList() {
-    return options.map((size) => size.toMap()).toList();
+    return options.map((option) => option.toMap()).toList();
   }
 
   Future<void> save() async {
@@ -86,6 +87,7 @@ class Product extends ChangeNotifier {
       'name': name,
       'description': description,
       'store': store,
+      'price': price,
       'options': exportOptionList(),
       'deleted': deleted,
     };
@@ -139,8 +141,9 @@ class Product extends ChangeNotifier {
       name: name,
       description: description,
       store: store,
+      price: price,
       images: List.from(images),
-      options: options,
+      options: List.from(options),
       deleted: deleted,
     );
   }

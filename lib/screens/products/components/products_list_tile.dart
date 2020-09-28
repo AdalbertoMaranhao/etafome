@@ -49,54 +49,52 @@ class ProductListTile extends StatelessWidget {
                             fontWeight: FontWeight.w800,
                           ),
                         ),
-                        if(product.price > 0)
-                          Text(
-                            'R\$ ${product.price.toStringAsFixed(2)}',
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w800,
-                                color: Theme.of(context).primaryColor
-                            ),
-                          ),
+                        Text(
+                          product.price > 0 ?'R\$ ${product.price.toStringAsFixed(2)}' : "",
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w800,
+                              color: Theme.of(context).primaryColor),
+                        ),
                       ],
                     ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: InkWell(
-                          onTap: (){
-                            if(context.read<UserManager>().isLoggedIn){
-                              if(context.read<CartManager>().verifyCart(product.store)) {
-                                context.read<CartManager>().addToCart(
-                                    product);
-                                // Navigator.of(context).pushNamed("/cart");
-                                Scaffold.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Produto adicionado ao carrinho!"),
-                                    backgroundColor: Colors.greenAccent,
-                                  ),
-                                );
-                              } else {
-                                showDialog(context: context,
-                                    builder: (_) => AlertStoresDifferent(product));
-                              }
-
-                            } else {
-                              Navigator.of(context).pushNamed('/login');
-                            }
-                          },
-                        child: SizedBox(
-                          height: 50,
-                          width: 50,
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50)
-                            ),
-                            color: const Color.fromARGB(255, 128, 53, 73),
-                            child: const Icon(Icons.add, color: Colors.white,),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Align(
+                    //   alignment: Alignment.bottomRight,
+                    //   child: InkWell(
+                    //       onTap: (){
+                    //         if(context.read<UserManager>().isLoggedIn){
+                    //           if(context.read<CartManager>().verifyCart(product.store)) {
+                    //             context.read<CartManager>().addToCart(
+                    //                 product);
+                    //             // Navigator.of(context).pushNamed("/cart");
+                    //             Scaffold.of(context).showSnackBar(
+                    //               const SnackBar(
+                    //                 content: Text("Produto adicionado ao carrinho!"),
+                    //                 backgroundColor: Colors.greenAccent,
+                    //               ),
+                    //             );
+                    //           } else {
+                    //             showDialog(context: context,
+                    //                 builder: (_) => AlertStoresDifferent(product));
+                    //           }
+                    //
+                    //         } else {
+                    //           Navigator.of(context).pushNamed('/login');
+                    //         }
+                    //       },
+                    //     child: SizedBox(
+                    //       height: 50,
+                    //       width: 50,
+                    //       child: Card(
+                    //         shape: RoundedRectangleBorder(
+                    //             borderRadius: BorderRadius.circular(50)
+                    //         ),
+                    //         color: const Color.fromARGB(255, 128, 53, 73),
+                    //         child: const Icon(Icons.add, color: Colors.white,),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lojavirtual/common/custom_icon_button.dart';
+import 'package:lojavirtual/models/option.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/product_manager.dart';
-import 'package:lojavirtual/models/store.dart';
-import 'package:lojavirtual/screens/edit_product/components/delete_product_dialog.dart';
+import 'package:lojavirtual/screens/edit_product/components/edit_option.dart';
+import 'package:lojavirtual/screens/edit_product/components/option_form.dart';
 import 'package:provider/provider.dart';
 
 import 'components/images_form.dart';
@@ -14,7 +16,7 @@ class CreateProductScreen extends StatelessWidget {
 
   Product product = Product();
   final String productStore;
-
+  Option option = Option();
 
 
 
@@ -72,13 +74,29 @@ class CreateProductScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Text(
-                      'R\$ ...',
+                    TextFormField(
+                      initialValue: product.price?.toString(),
                       style: TextStyle(
                         fontSize: 27,
                         fontWeight: FontWeight.bold,
                         color: primaryColor,
                       ),
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      decoration: const InputDecoration(
+                        hintText: 'Preço',
+                        isDense: true,
+                        border: InputBorder.none,
+                        prefixText: 'R\$ ',
+                      ),
+                      validator: (price) {
+                        if (num.tryParse(price) == null) {
+                          return 'Preço inválido';
+                        }
+                        return null;
+                      },
+                      onSaved: (price) {
+                        product.price = num.tryParse(price);
+                      },
                     ),
                     const Padding(
                       padding: EdgeInsets.only(
@@ -110,7 +128,7 @@ class CreateProductScreen extends StatelessWidget {
                         product.description = desc;
                       },
                     ),
-                    SizesForm(product),
+                    OptionsForm(product),
                     const SizedBox(
                       height: 20,
                     ),

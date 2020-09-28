@@ -23,7 +23,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromRGBO(20, 26, 50, 1),
+      color: const Color.fromRGBO(20, 26, 50, 1),
+      child: const Center(
+        child: CircularProgressIndicator(
+          valueColor:
+          AlwaysStoppedAnimation(Colors.white),
+        ),
+      ),
     );
   }
 
