@@ -4,6 +4,7 @@ import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:lojavirtual/screens/base/base_screen.dart';
 import 'package:lojavirtual/screens/home/select_city_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:transparent_image/transparent_image.dart';
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -16,19 +17,29 @@ class _SplashScreenState extends State<SplashScreen> {
 
     super.initState();
     //mudar duração quando colocar o logo
-    Timer(Duration(seconds: 1),()=>Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+    Timer(const Duration(seconds: 1),()=>Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
       return city != null ? BaseScreen() : SelectCityScreen();
     })));
   }
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color.fromRGBO(20, 26, 50, 1),
-      child: const Center(
-        child: CircularProgressIndicator(
-          valueColor:
-          AlwaysStoppedAnimation(Colors.white),
-        ),
+      color: Colors.white,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          const Center(
+            child: SizedBox(
+              height: 300,
+              width: 300,
+              child: Image(image: AssetImage('assets/oficial.png')),
+            ),
+          ),
+          const CircularProgressIndicator(
+            valueColor:
+            AlwaysStoppedAnimation(Color.fromARGB(255, 128, 53, 73)),
+          ),
+        ],
       ),
     );
   }

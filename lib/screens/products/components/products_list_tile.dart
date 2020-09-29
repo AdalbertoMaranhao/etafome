@@ -50,6 +50,9 @@ class ProductListTile extends StatelessWidget {
                           ),
                         ),
                         Text(
+                          product.description,
+                        ),
+                        Text(
                           product.price > 0 ?'R\$ ${product.price.toStringAsFixed(2)}' : "",
                           style: TextStyle(
                               fontSize: 15,

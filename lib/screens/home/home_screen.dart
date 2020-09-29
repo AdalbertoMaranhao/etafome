@@ -8,6 +8,7 @@ import 'package:lojavirtual/models/page_manager.dart';
 import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 import 'components/add_section_widget.dart';
 import 'components/section_category.dart';
@@ -50,7 +51,10 @@ class HomeScreen extends StatelessWidget {
                 elevation: 0,
                 backgroundColor: Colors.transparent,
                 flexibleSpace: const FlexibleSpaceBar(
-                  title: Text('Êta Fome', style: TextStyle(color: Color.fromARGB(255, 128, 53, 73),),),
+                  title: SizedBox(
+                    height: 30,
+                      width: 130,
+                      child: Image(image: AssetImage('assets/logo.png'))),
                   centerTitle: true,
                 ),
                 actions: <Widget>[
