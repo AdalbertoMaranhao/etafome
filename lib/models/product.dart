@@ -57,6 +57,8 @@ class Product extends ChangeNotifier {
 
 
   List<String> listOptions = [];
+  List<String> listOptionsTitle = [];
+  List<String> listItems = [];
 
 
 
