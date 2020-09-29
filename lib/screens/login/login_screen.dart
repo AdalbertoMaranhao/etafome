@@ -146,6 +146,7 @@ class LoginScreen extends StatelessWidget {
                                   );
                                 },
                                 onSucess: (){
+
                                   Navigator.of(context).pop();
                                 },
                               );

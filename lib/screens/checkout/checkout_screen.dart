@@ -46,15 +46,15 @@ class CheckoutScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation(Colors.white),
+                        valueColor: AlwaysStoppedAnimation(Color.fromARGB(255, 128, 53, 73)),
                       ),
                       const SizedBox(
                         height: 16,
                       ),
                       const Text(
-                        'Processando seu pagamento...',
+                        'Processando sua entrega...',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Color.fromARGB(255, 128, 53, 73),
                           fontWeight: FontWeight.w800,
                           fontSize: 16,
                         ),

@@ -22,15 +22,17 @@ class ExportAddressDialog extends StatelessWidget {
         child: Container(
           color: Colors.white,
           padding: const EdgeInsets.all(8),
-          child: Text(
-            'Cliente: ${user}\n'
-            '${payment}\n'
-            'Entrega: ${deliveryMethod}\n'
-            '${address.street}, ${address.number}, ${address.complement}\n'
-            '${address.district}\n'
-            '${address.city}/${address.state}\n'
-            '${address.zipCode}',
-          ),
+          child: deliveryMethod == "Retirar na Loja" ? Text(
+            'Cliente: $user\n'
+            '$payment\n'
+            'Entrega: $deliveryMethod\n'
+
+          ):Text('Cliente: $user\n'
+              '$payment\n\n'
+              '${address.street}, ${address.number}, ${address.complement}\n'
+              '${address.district}\n'
+              '${address.city}/${address.state}\n'
+              '${address.zipCode}',),
         ),
       ),
       contentPadding: const EdgeInsets.fromLTRB(16, 16, 8, 0),

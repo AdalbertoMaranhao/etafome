@@ -42,7 +42,7 @@ class StoreScreen extends StatelessWidget{
                 child: Container(
                   margin: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                   height: 140,
-                  width: 150,
+                  width: 140,
                   child: Card(
                     elevation: 10,
                       clipBehavior: Clip.antiAlias,

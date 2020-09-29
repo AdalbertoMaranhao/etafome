@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/common/order_tile/order_product_tile.dart';
 import 'package:lojavirtual/models/order.dart';
+import 'package:lojavirtual/models/user_manager.dart';
+import 'package:provider/provider.dart';
 
 class ConfirmationScreen extends StatelessWidget {
 
@@ -56,6 +58,7 @@ class ConfirmationScreen extends StatelessWidget {
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
                       onPressed: (){
+                        context.read<UserManager>().adminClear();
                         Navigator.of(context).pushNamed("/");
                       },
                       child: const Text("Tudo certo, agora é só aguardar!"),

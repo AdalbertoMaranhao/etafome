@@ -45,23 +45,6 @@ class OrderTile extends StatelessWidget {
                         fontSize: 14,
                       ),
                     ),
-                    // if(showControls)
-                    //   Column(
-                    //     crossAxisAlignment: CrossAxisAlignment.start,
-                    //     children: [
-                    //       Text(order.userName,
-                    //         overflow: TextOverflow.ellipsis,
-                    //         maxLines: 3,
-                    //         style: const TextStyle(color: Colors.black),),
-                    //       Text(order.paymentMethod,
-                    //         overflow: TextOverflow.ellipsis,
-                    //         maxLines: 3,
-                    //         style: const TextStyle(color: Colors.black),
-                    //       ) ,
-                    //       Text(order.deliveryType, style: const TextStyle(color: Colors.black)),
-                    //     ],
-                    //   ),
-
                   ],
                 ),
               ),
@@ -139,7 +122,7 @@ class OrderTile extends StatelessWidget {
                       );
                     },
                     textColor: primaryColor,
-                    child: const Text('Endereço'),
+                    child: const Text('Entrega'),
                   ),
                 ],
               ),
