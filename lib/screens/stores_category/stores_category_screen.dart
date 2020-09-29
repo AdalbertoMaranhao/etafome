@@ -14,7 +14,9 @@ class StoresCategoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(category.toLowerCase()),
+        backgroundColor: Colors.transparent,
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 128, 53, 73)),
+        title: Text(category.toUpperCase(), style: const TextStyle(color: Color.fromARGB(255, 128, 53, 73)),),
         centerTitle: true,
       ),
       body: Consumer<StoresManager>(

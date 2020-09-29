@@ -16,7 +16,9 @@ class StoresScreen extends StatelessWidget {
     return Scaffold(
       drawer: CustomDrawer(),
       appBar: AppBar(
-        title: const Text('Lojas'),
+        backgroundColor: Colors.transparent,
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 128, 53, 73)),
+        title: const Text("Restaurantes", style: TextStyle(color: Color.fromARGB(255, 128, 53, 73)),),
         centerTitle: true,
       ),
       body: Consumer<StoresManager>(

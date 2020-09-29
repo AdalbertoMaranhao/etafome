@@ -40,6 +40,8 @@ class StoresManager extends ChangeNotifier {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     _city = prefs.getString('city') ?? "";
 
+    getStoresCity(_city);
+
     //await getLocation();
     //getStoresCity(_city);
 

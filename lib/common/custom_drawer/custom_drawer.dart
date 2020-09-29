@@ -28,13 +28,13 @@ class CustomDrawer extends StatelessWidget {
               const Divider(),
               DrawerTile(iconData: Icons.home,title: "Início", page: 0,),
               DrawerTile(iconData: Icons.playlist_add_check,title: "Meus Pedidos", page: 2,),
-              DrawerTile(iconData: Icons.location_on,title: "Lojas", page: 3,),
               Consumer<UserManager>(
                 builder: (_, userManager, __){
                   if(userManager.adminEnabled){
                     return Column(
                       children: <Widget>[
                         const Divider(),
+                        DrawerTile(iconData: Icons.location_on,title: "Restaurantes", page: 3,),
                         DrawerTile(iconData: Icons.list,title: "Categorias", page: 1,),
                         DrawerTile(iconData: Icons.settings,title: "Usuários", page: 4,),
                         DrawerTile(iconData: Icons.settings,title: "Pedidos", page: 5,),

@@ -26,7 +26,7 @@ class OptionWidget extends StatelessWidget{
           spacing: 1,
           runSpacing: 1,
           children: option.items.map((s){
-            return SizeWidget(size: s, title: option.title,);
+            return SizeWidget(size: s, option: option,);
           }).toList(),
         ),
       ],
