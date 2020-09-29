@@ -13,6 +13,7 @@ class Order {
     items = List.from(cartManager.items);
     price = cartManager.totalPrice;
     userId = cartManager.user.id;
+    userName = cartManager.user.name;
     address = cartManager.address;
     status = Status.waiting;
     if(!cartManager.deliveryType) {
@@ -36,6 +37,7 @@ class Order {
     }).toList();
     price = doc.data['price'] as num;
     userId = doc.data['user'] as String;
+    userName = doc.data['userName'] as String;
     address = Address.fromMap(doc.data['address'] as Map<String, dynamic>);
     date = doc.data['date'] as Timestamp;
 
@@ -57,6 +59,7 @@ class Order {
   List<CartProduct> items;
   num price;
   String userId;
+  String userName;
   Address address;
 
   Status status;
@@ -80,6 +83,7 @@ class Order {
         'items': items.map((e) => e.toOrderItemMap()).toList(),
         'price': price,
         'user': userId,
+        'userName': userName,
         'address': address.toMap(),
         'status': status.index,
         'date': Timestamp.now(),

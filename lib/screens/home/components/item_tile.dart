@@ -7,6 +7,7 @@ import 'package:lojavirtual/models/section.dart';
 import 'package:lojavirtual/models/section_item.dart';
 import 'package:lojavirtual/models/store.dart';
 import 'package:lojavirtual/models/stores_manager.dart';
+import 'package:lojavirtual/models/user_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -22,9 +23,9 @@ class ItemTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (item.store != null) {
-          final store =
-              context.read<StoresManager>().findStoreById(item.store);
-          if (store != null) {
+          final store = context.read<StoresManager>().findStoreById(item.store);
+          context.read<UserManager>().adminStore(store);
+          if (store != null /*&& store.status == StoreStatus.open*/) {
             Navigator.of(context).pushNamed('/productsStore', arguments: store);
           }
         }

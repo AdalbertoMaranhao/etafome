@@ -61,7 +61,7 @@ class PriceCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     const Text('Entrega'),
-                    Text('R\$ ${deliveryPrice.toStringAsFixed(2)}'),
+                    if (deliveryPrice > 0) Text('R\$ ${deliveryPrice.toStringAsFixed(2)}') else const Text('Grátis'),
                   ],
                 ),
                 const Divider(),

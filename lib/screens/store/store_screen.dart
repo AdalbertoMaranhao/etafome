@@ -41,7 +41,7 @@ class StoreScreen extends StatelessWidget{
                 alignment: Alignment.topCenter,
                 child: Container(
                   margin: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-                  height: 150,
+                  height: 140,
                   width: 150,
                   child: Card(
                     elevation: 10,

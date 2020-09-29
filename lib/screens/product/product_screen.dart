@@ -117,6 +117,24 @@ class ProductScreen extends StatelessWidget {
                           return OptionWidget(option: o,);
                         }).toList(),
                       ),
+                      const Text("Observações", style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                      )),
+                      TextFormField(
+                        minLines: 1,
+                        maxLines: 10,
+                        decoration: const InputDecoration(border: OutlineInputBorder(), hintText: "Ex: retirar cebola."),
+                        keyboardType: TextInputType.text,
+                        onFieldSubmitted: (ob){
+                          if(ob.isNotEmpty) {
+                            product.listOptions.add("Observações: $ob");
+                          } else {
+                            product.listOptions.removeWhere((element) => element.contains("Observações"));
+                          }
+                          print(product.listOptions);
+                        },
+                      ),
                     ],
                   const SizedBox(height: 20,),
                   Consumer2<UserManager, Product>(

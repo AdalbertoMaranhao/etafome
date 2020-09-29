@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:lojavirtual/models/product.dart';
+import 'package:lojavirtual/models/store.dart';
+import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:lojavirtual/screens/product/components/alert_stores_different.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +17,18 @@ class ProductListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.of(context).pushNamed('/product', arguments: product);
+        final store = context.read<StoresManager>().findStoreById(product.store);
+        if(store.status == StoreStatus.open) {
+          Navigator.of(context).pushNamed('/product', arguments: product);
+        } else {
+          Scaffold.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Loja Fechada!\nHorario de funcionamento\n${store.openingText}"),
+              backgroundColor: Theme.of(context).primaryColor,
+              duration: const Duration(seconds: 2),
+            ),
+          );
+        }
       },
       child: Card(
         elevation: 10,

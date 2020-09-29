@@ -39,10 +39,10 @@ class SignUpScreen extends StatelessWidget {
           ),
           Align(alignment: Alignment.topCenter,
               child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                   height: 200,
                   width: 200,
-                  child: Image.network("https://i.ibb.co/MM0h6t8/logo-app.png")
+                  child: const Image(image: AssetImage('assets/logo_oficial.png'))
               )
           ),
           Center(

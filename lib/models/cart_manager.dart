@@ -25,7 +25,7 @@ class CartManager extends ChangeNotifier{
   num deliveryPrice;
   num discount;
 
-  num get totalPrice => (productsPrice + (deliveryPrice ?? 0)) - (discount ?? 0.0);
+  num get totalPrice => (productsPrice /*+ (deliveryPrice ?? 0)*/) - (discount ?? 0.0);
 
   bool _loading = false;
   bool get loading => _loading;

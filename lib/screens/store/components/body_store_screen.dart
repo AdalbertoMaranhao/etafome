@@ -26,7 +26,14 @@ class BodyStoreScreen extends StatelessWidget{
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text(store.name, style: const TextStyle(color: Color.fromARGB(255, 128, 53, 73)),),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(store.name,
+                style: const TextStyle(color: Color.fromARGB(255, 128, 53, 73)),),
+              Text(store.statusText, style: TextStyle(color: Colors.black, fontSize: 14),),
+            ],
+          ),
           leading: Container(),
           leadingWidth: 4,
           actions: [
