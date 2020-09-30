@@ -25,6 +25,7 @@ class ProductsStoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final admin = context.watch<UserManager>().adminEnabled;
 
     Future<bool> _backScreem(){
       Navigator.of(context).pop();
@@ -54,14 +55,22 @@ class ProductsStoreScreen extends StatelessWidget {
             );
           },
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color.fromARGB(255, 128, 53, 73),
-          foregroundColor: Colors.white,
-          onPressed: () async {
-            Navigator.of(context).pushNamed('/cart');
-          },
-          child: const Icon(Icons.shopping_cart),
-        ),
+        floatingActionButton: admin ? FloatingActionButton(
+                backgroundColor: const Color.fromARGB(255, 128, 53, 73),
+                foregroundColor: Colors.white,
+                onPressed: () async {
+                  Navigator.of(context).pushNamed('/orders');
+                },
+                child: const Icon(Icons.playlist_add_check),
+              )
+        : FloatingActionButton(
+                backgroundColor: const Color.fromARGB(255, 128, 53, 73),
+                foregroundColor: Colors.white,
+                onPressed: () async {
+                  Navigator.of(context).pushNamed('/cart');
+                },
+                child: const Icon(Icons.shopping_cart),
+              ),
       ),
     );
   }

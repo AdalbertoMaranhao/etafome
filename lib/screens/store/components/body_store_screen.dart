@@ -62,23 +62,6 @@ class BodyStoreScreen extends StatelessWidget{
                 }
               },
             ),
-            Consumer<UserManager>(
-              builder: (_, userManager, __) {
-                if (userManager.adminEnabled) {
-                  return IconButton(
-                    icon: const Icon(Icons.playlist_add_check, color: Color.fromARGB(255, 128, 53, 73),),
-                    onPressed: () {
-                      context.read<AdminOrdersManager>().setStoreFilter(store);
-                      Navigator.of(context).pushNamed(
-                        '/orders',
-                      );
-                    },
-                  );
-                } else {
-                  return Container();
-                }
-              },
-            )
           ],
           bottom: const TabBar(
             indicatorColor: Color.fromARGB(255, 128, 53, 73),
