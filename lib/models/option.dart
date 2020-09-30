@@ -17,13 +17,14 @@ class Option{
   String title;
   int min;
   int max;
-  List<Item> items = [];
   List<Item> itemsTemp = [];
+  List<Item> items = [];
 
   List<Map<String, dynamic>> exportItemList() {
-    // items.addAll(itemsTemp);
-    // itemsTemp.clear();
-    return itemsTemp.map((i) => i.toMap()).toList();
+    if(items == null) {
+      return itemsTemp.map((i) => i.toMap()).toList();
+    }
+    return items.map((i) => i.toMap()).toList();
   }
   Map<String, dynamic> toMap(){
     return {

@@ -55,6 +55,7 @@ class _CreateAvaliationScreenState extends State<CreateAvaliationScreen> {
               keyboardType: TextInputType.text,
             ),
             const SizedBox(height: 16,),
+            Text("Dê a sua nota!"),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

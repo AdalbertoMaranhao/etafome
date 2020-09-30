@@ -42,7 +42,7 @@ class _SizeWidgetState extends State<SizeWidget> {
                select = val;
                product.listOptionsTitle.add(widget.option.title);
                product.listItems.add(widget.size.name);
-               product.listOptions.add("${widget.option.title} - ${widget.size.name}");
+               product.listOptions.add("${widget.option.title}: ${widget.size.name}");
                product.setOrderPriceMais(widget.size.price);
              });
           } else{
@@ -59,6 +59,7 @@ class _SizeWidgetState extends State<SizeWidget> {
             select = val;
             product.listOptionsTitle.remove(widget.option.title);
             product.listItems.remove(widget.size.name);
+            product.listOptions.remove("${widget.option.title}: ${widget.size.name}");
           });
         }
       },

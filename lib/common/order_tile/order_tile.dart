@@ -118,6 +118,7 @@ class OrderTile extends StatelessWidget {
                             deliveryMethod: order.deliveryType,
                             payment: order.paymentMethod,
                             user: order.userName,
+                            numOrder: order.splitOrderId()
                           )
                       );
                     },

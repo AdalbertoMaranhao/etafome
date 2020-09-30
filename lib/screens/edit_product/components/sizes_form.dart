@@ -19,7 +19,7 @@ class SizesForm extends StatelessWidget {
           initialValue: option.items ?? option.itemsTemp,
           validator: (sizes){
             if(sizes.isEmpty){
-              return 'Insira um tamanho';
+              return 'Insira uma opção';
             }
             return null;
           },

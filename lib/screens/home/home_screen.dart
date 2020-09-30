@@ -81,12 +81,6 @@ class HomeScreen extends StatelessWidget {
                         }).toList(),),
                     ),
 
-
-                  IconButton(
-                    icon: const Icon(Icons.shopping_cart),
-                    color: const Color.fromARGB(255, 128, 53, 73),
-                    onPressed: () => Navigator.of(context).pushNamed('/cart'),
-                  ),
                   Consumer2<UserManager, HomeManager>(
                     builder: (_, userManager, homeManager, __){
                       if(userManager.adminEnabled && !homeManager.loading){
@@ -164,6 +158,14 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 128, 53, 73),
+        foregroundColor: Colors.white,
+        onPressed: () async {
+          Navigator.of(context).pushNamed('/cart');
+        },
+        child: const Icon(Icons.shopping_cart),
       ),
     );
   }

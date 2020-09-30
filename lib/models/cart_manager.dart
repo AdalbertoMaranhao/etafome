@@ -66,11 +66,12 @@ class CartManager extends ChangeNotifier{
 
   Future<void> setDeliveryType(bool value) async{
     deliveryType = value;
-    //notifyListeners();
+    notifyListeners();
     if(value){
       deliveryPrice = 0.0;
     } else{
-      await calculateDelivery(address.lat, address.long);
+      deliveryPrice = null;
+       //await calculateDelivery(address.lat, address.long);
     }
     notifyListeners();
   }
@@ -162,10 +163,10 @@ class CartManager extends ChangeNotifier{
 
 
   bool get isCartValid {
-    for(final cartProduct in items){
-      if(!cartProduct.hasStock) return false;
+    if(address != null || deliveryType){
+      return true;
     }
-    return true;
+    return false;
   }
 
   bool get isAddressValid => address != null && deliveryPrice != null;

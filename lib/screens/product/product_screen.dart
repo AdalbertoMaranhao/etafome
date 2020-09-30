@@ -117,6 +117,7 @@ class ProductScreen extends StatelessWidget {
                           return OptionWidget(option: o,);
                         }).toList(),
                       ),
+                      const SizedBox(height: 20,),
                       const Text("Observações", style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -132,7 +133,6 @@ class ProductScreen extends StatelessWidget {
                           } else {
                             product.listOptions.removeWhere((element) => element.contains("Observações"));
                           }
-                          print(product.listOptions);
                         },
                       ),
                     ],

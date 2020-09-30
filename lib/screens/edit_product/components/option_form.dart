@@ -12,8 +12,6 @@ class OptionsForm extends StatelessWidget {
   const OptionsForm(this.product);
 
   final Product product;
-  //final Option option;
-  //final List<Item> items;
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +19,6 @@ class OptionsForm extends StatelessWidget {
       children: <Widget>[
         FormField<List<Option>>(
           initialValue: product.options,
-          validator: (items){
-            if(items.isEmpty){
-              return 'Insira um tamanho';
-            }
-            return null;
-          },
           builder: (state){
             return Column(
               children: <Widget>[
@@ -40,7 +32,6 @@ class OptionsForm extends StatelessWidget {
                             fontWeight: FontWeight.w500),
                       ),
                     ),
-
                     CustomIconButton(
                       iconData: Icons.add,
                       color: Colors.black,
@@ -56,6 +47,10 @@ class OptionsForm extends StatelessWidget {
                     return EditOption(
                       key: ObjectKey(option),
                       option: option,
+                      onRemove: (){
+                        state.value.remove(option);
+                        state.didChange(state.value);
+                      },
                     );
                   }).toList(),
                 ),

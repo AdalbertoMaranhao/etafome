@@ -6,15 +6,18 @@ import '../../../common/custom_icon_button.dart';
 
 class EditOption extends StatelessWidget {
 
-  const EditOption({Key key, this.option}) : super(key: key);
+  const EditOption({Key key, this.option, this.onRemove}) : super(key: key);
 
   final Option option;
+  final VoidCallback onRemove;
 
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(height: 10,),
+        const Divider(color: Colors.black,),
         Row(
           children: <Widget>[
             Expanded(
@@ -73,6 +76,11 @@ class EditOption extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 4,),
+            CustomIconButton(
+              iconData: Icons.remove,
+              color: Colors.red,
+              onTap: onRemove,
+            ),
           ],
         ),
         SizesForm(option),
