@@ -11,7 +11,7 @@ class StoresManager extends ChangeNotifier {
 
   StoresManager(){
     _loadStoreList();
-    _startTimer();
+    //_startTimer();
   }
 
 
@@ -80,16 +80,22 @@ class StoresManager extends ChangeNotifier {
     }
   }
 
-  void _startTimer(){
-    _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
-      _checkOpening();
-    });
-  }
+  // void _startTimer(){
+  //   _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
+  //     _checkOpening();
+  //   });
+  // }
 
-  void _checkOpening() {
-    for(final store in stores){
-      store.updateStatus();
-    }
+  // void _checkOpening() {
+  //   for(final store in stores){
+  //     store.updateStatus();
+  //   }
+  //   notifyListeners();
+  // }
+
+  void updateStatusStore(StoreStatus status, Store store){
+    store.status = status;
+    store.updateStatusStore(status);
     notifyListeners();
   }
 

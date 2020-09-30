@@ -62,6 +62,7 @@ class BodyStoreScreen extends StatelessWidget{
                 }
               },
             ),
+            const SizedBox(width: 20,),
           ],
           bottom: const TabBar(
             indicatorColor: Color.fromARGB(255, 128, 53, 73),

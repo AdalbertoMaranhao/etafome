@@ -15,7 +15,7 @@ class Store {
     category = doc.data['category'] as String;
     media = doc.data['mg'] as num;
     address = Address.fromMap(doc.data['address'] as Map<String, dynamic>);
-
+    status = StoreStatus.values[doc.data['status'] as int];
     opening = (doc.data['opening'] as Map<String, dynamic>).map((key, value) {
       final timeString = value as String;
 
@@ -33,8 +33,12 @@ class Store {
       }
     });
 
-    updateStatus();
+    //updateStatus();
   }
+
+  final Firestore firestore = Firestore.instance;
+  DocumentReference get firestoreRef =>
+      firestore.collection('stores').document(id);
 
   String id;
   String name;
@@ -59,10 +63,17 @@ class Store {
 
   String get cleanPhone => phone.replaceAll(RegExp(r"[^\d]"), "");
 
+  void updateStatusStore(StoreStatus status){
+    firestoreRef.updateData({'status': status.index});
+  }
 
   String formattedPeriod(Map<String, TimeOfDay> period) {
     if (period == null) return "Fechada";
     return '${period['from'].formatted()} - ${period['to'].formatted()}';
+  }
+
+  void updateFromDocument(DocumentSnapshot doc) {
+    status = StoreStatus.values[doc.data['status'] as int];
   }
 
   void updateStatus(){

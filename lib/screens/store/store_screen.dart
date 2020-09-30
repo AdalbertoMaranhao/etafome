@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/models/store.dart';
+import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,8 @@ class StoreScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    final admin = context.watch<UserManager>().adminEnabled;
+    final storesManager = context.watch<StoresManager>();
 
     Future<bool> _backScreem(){
       Navigator.of(context).pop();
@@ -43,13 +46,31 @@ class StoreScreen extends StatelessWidget{
                   margin: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                   height: 140,
                   width: 140,
-                  child: Card(
-                    elevation: 10,
-                      clipBehavior: Clip.antiAlias,
-                      child: Image.network(store.image)
+                  child: GestureDetector(
+                    onTap: (){
+                      if(admin) {
+                        if (store.status == StoreStatus.closed) {
+                          //store.status = StoreStatus.open;
+                          //store.updateStatusStore(StoreStatus.open);
+                          storesManager.updateStatusStore(StoreStatus.open, store);
+                        } else {
+                          //store.status = StoreStatus.closed;
+                          //store.status = StoreStatus.closed;
+                          //store.updateStatusStore(StoreStatus.closed);
+                          storesManager.updateStatusStore(StoreStatus.closed, store);
+                        }
+                      }
+                    },
+                    child: Card(
+                      elevation: 10,
+                        clipBehavior: Clip.antiAlias,
+                        child: store.status == StoreStatus.open
+                            ? Image.network(store.image)
+                            : const Image(image: AssetImage('assets/portao.png')),
+                    ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
       ),
