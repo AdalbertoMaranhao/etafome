@@ -2,11 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:lojavirtual/helpers/firebase_erros.dart';
 import 'package:lojavirtual/models/store.dart';
 import 'package:lojavirtual/models/user.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class UserManager extends ChangeNotifier {
 
@@ -39,86 +37,86 @@ class UserManager extends ChangeNotifier {
     loading = false;
   }
 
-  Future<void> facebookLogin({Function onFail, Function onSuccess}) async {
+  // Future<void> facebookLogin({Function onFail, Function onSuccess}) async {
+  //
+  //   loading = true;
+  //
+  //   final result = await FacebookLogin().logIn(['email', 'public_profile']);
+  //
+  //   switch(result.status){
+  //     case FacebookLoginStatus.loggedIn:
+  //       final credential = FacebookAuthProvider.getCredential(
+  //           accessToken: result.accessToken.token
+  //       );
+  //
+  //       final authResult = await auth.signInWithCredential(credential);
+  //
+  //       if(authResult.user != null){
+  //         final firebaseUser = authResult.user;
+  //
+  //         user = User(
+  //             id: firebaseUser.uid,
+  //             name: firebaseUser.displayName,
+  //             email: firebaseUser.email
+  //         );
+  //
+  //         await user.saveData();
+  //         user.saveToken();
+  //
+  //         onSuccess();
+  //       }
+  //       break;
+  //     case FacebookLoginStatus.cancelledByUser:
+  //       break;
+  //     case FacebookLoginStatus.error:
+  //       onFail(result.errorMessage);
+  //       break;
+  //   }
+  //
+  //   loading = false;
+  //
+  // }
 
-    loading = true;
-
-    final result = await FacebookLogin().logIn(['email', 'public_profile']);
-
-    switch(result.status){
-      case FacebookLoginStatus.loggedIn:
-        final credential = FacebookAuthProvider.getCredential(
-            accessToken: result.accessToken.token
-        );
-
-        final authResult = await auth.signInWithCredential(credential);
-
-        if(authResult.user != null){
-          final firebaseUser = authResult.user;
-
-          user = User(
-              id: firebaseUser.uid,
-              name: firebaseUser.displayName,
-              email: firebaseUser.email
-          );
-
-          await user.saveData();
-          user.saveToken();
-
-          onSuccess();
-        }
-        break;
-      case FacebookLoginStatus.cancelledByUser:
-        break;
-      case FacebookLoginStatus.error:
-        onFail(result.errorMessage);
-        break;
-    }
-
-    loading = false;
-
-  }
-
-  Future<void> googleLogin({Function onFail, Function onSuccess}) async {
-    final GoogleSignIn googleSignIn = GoogleSignIn(
-      scopes: [
-        'email',
-        'profile',
-        'openid',
-      ],
-    );
-
-    loading = true;
-
-    try {
-      final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-      final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
-
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
-          idToken: googleSignInAuthentication.idToken,
-          accessToken: googleSignInAuthentication.accessToken
-      );
-
-      final AuthResult authResult = await FirebaseAuth.instance.signInWithCredential(credential);
-
-      final FirebaseUser user = authResult.user;
-
-      User(
-        id: user.uid,
-        name: user.displayName,
-        email: user.email,
-      );
-
-      onSuccess();
-      loading = false;
-
-    } catch (e){
-      onFail(e.toString());
-      debugPrint(e.toString());
-      loading = false;
-    }
-
-  }
+  // Future<void> googleLogin({Function onFail, Function onSuccess}) async {
+  //   final GoogleSignIn googleSignIn = GoogleSignIn(
+  //     scopes: [
+  //       'email',
+  //       'profile',
+  //       'openid',
+  //     ],
+  //   );
+  //
+  //   loading = true;
+  //
+  //   try {
+  //     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+  //     final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+  //
+  //     final AuthCredential credential = GoogleAuthProvider.getCredential(
+  //         idToken: googleSignInAuthentication.idToken,
+  //         accessToken: googleSignInAuthentication.accessToken
+  //     );
+  //
+  //     final AuthResult authResult = await FirebaseAuth.instance.signInWithCredential(credential);
+  //
+  //     final FirebaseUser user = authResult.user;
+  //
+  //     User(
+  //       id: user.uid,
+  //       name: user.displayName,
+  //       email: user.email,
+  //     );
+  //
+  //     onSuccess();
+  //     loading = false;
+  //
+  //   } catch (e){
+  //     onFail(e.toString());
+  //     debugPrint(e.toString());
+  //     loading = false;
+  //   }
+  //
+  // }
 
 
 
