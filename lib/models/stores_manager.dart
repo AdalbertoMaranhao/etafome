@@ -12,6 +12,7 @@ class StoresManager extends ChangeNotifier {
   StoresManager(){
     _loadStoreList();
     //_startTimer();
+    setCity("Mauriti");
   }
 
 

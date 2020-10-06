@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:lojavirtual/models/address.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:lojavirtual/models/cart_product.dart';
+import 'package:lojavirtual/models/store.dart';
+import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:lojavirtual/services/cielo_payment.dart';
 
 enum Status {canceled, waiting, preparing, transporting, delivered}
@@ -56,6 +58,7 @@ class Order {
   String deliveryType;
   String paymentMethod;
 
+
   List<CartProduct> items;
   num price;
   String userId;
@@ -76,6 +79,12 @@ class Order {
     final List<String> split = orderId.split("@");
     return exibitionOrderId = split[0];
   }
+
+  String storeOrderId (){
+    final List<String> split = orderId.split("@");
+    return exibitionOrderId = split[1];
+  }
+
 
   Future<void> save() async {
     firestoreRef.setData(

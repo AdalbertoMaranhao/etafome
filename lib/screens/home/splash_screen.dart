@@ -18,7 +18,11 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     //mudar duração quando colocar o logo
     Timer(const Duration(seconds: 1),()=>Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-      return city != null ? BaseScreen() : SelectCityScreen();
+      if(city == null){
+        //StoresManager().setCity("Mauriti");
+        return BaseScreen();
+      }
+      return  BaseScreen();
     })));
   }
   @override

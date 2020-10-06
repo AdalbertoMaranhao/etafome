@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/models/order.dart';
+import 'package:lojavirtual/models/store.dart';
 import 'package:lojavirtual/models/user.dart';
 
 class OrdersManager extends ChangeNotifier {
@@ -10,6 +11,7 @@ class OrdersManager extends ChangeNotifier {
   StreamSubscription _subscription;
 
   User user;
+
 
   List<Order> orders = [];
 
@@ -22,7 +24,6 @@ class OrdersManager extends ChangeNotifier {
       _listenToOrders();
     }
   }
-
   void _listenToOrders() {
     _subscription = firestore
         .collection('orders')

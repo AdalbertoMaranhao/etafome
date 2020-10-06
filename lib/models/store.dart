@@ -6,6 +6,7 @@ import 'package:lojavirtual/helpers/extensions.dart';
 enum StoreStatus { closed, open, closing }
 
 class Store {
+  Store();
 
   Store.fromDocument(DocumentSnapshot doc) {
     id = doc.documentID;

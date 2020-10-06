@@ -58,28 +58,28 @@ class HomeScreen extends StatelessWidget {
                   centerTitle: true,
                 ),
                 actions: <Widget>[
-                    DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: dropDownValue,
-                        style: const TextStyle(color: Color.fromARGB(255, 128, 53, 73)),
-                        iconEnabledColor: Colors.white,
-                        dropdownColor: Colors.white,
-                        icon: const Icon(Icons.location_on, color: Color.fromARGB(255, 128, 53, 73),),
-                        iconSize: 20,
-                        elevation: 16,
-
-                        onChanged: (String newValue) {
-                          storeManager.getStoresCity(newValue);
-                        },
-
-                        items: dropDownList
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),),
-                    ),
+                    // DropdownButtonHideUnderline(
+                    //   child: DropdownButton<String>(
+                    //     value: dropDownValue,
+                    //     style: const TextStyle(color: Color.fromARGB(255, 128, 53, 73)),
+                    //     iconEnabledColor: Colors.white,
+                    //     dropdownColor: Colors.white,
+                    //     icon: const Icon(Icons.location_on, color: Color.fromARGB(255, 128, 53, 73),),
+                    //     iconSize: 20,
+                    //     elevation: 16,
+                    //
+                    //     onChanged: (String newValue) {
+                    //       storeManager.getStoresCity(newValue);
+                    //     },
+                    //
+                    //     items: dropDownList
+                    //         .map<DropdownMenuItem<String>>((String value) {
+                    //       return DropdownMenuItem<String>(
+                    //         value: value,
+                    //         child: Text(value),
+                    //       );
+                    //     }).toList(),),
+                    // ),
 
                   Consumer2<UserManager, HomeManager>(
                     builder: (_, userManager, homeManager, __){

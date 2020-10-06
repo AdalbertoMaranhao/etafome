@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/models/order.dart';
+import 'package:lojavirtual/models/store.dart';
+import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 
 import 'cancel_order_dialog.dart';
@@ -9,15 +11,15 @@ import 'package:provider/provider.dart';
 
 class OrderTile extends StatelessWidget {
 
-  const OrderTile(this.order,{this.showControls = false});
+  OrderTile(this.order,{this.showControls = false});
 
   final Order order;
   final bool showControls;
-
+  Store store;
   @override
   Widget build(BuildContext context) {
+    store = context.watch<StoresManager>().findStoreById(order.storeOrderId());
     final primaryColor = Theme.of(context).primaryColor;
-
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: ExpansionTile(
@@ -77,6 +79,24 @@ class OrderTile extends StatelessWidget {
                     style: const TextStyle(color: Colors.black),
                   ) ,
                   Text(order.deliveryType, style: const TextStyle(color: Colors.black)),
+                ],
+              ),
+            ),
+          if(!showControls && store != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Restaurante: ${store.name}",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
+                    style: const TextStyle(color: Colors.black),),
+                  Text("Telefone: ${store.phone}",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
+                    style: const TextStyle(color: Colors.black),
+                  ) ,
                 ],
               ),
             ),
