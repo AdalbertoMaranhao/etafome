@@ -68,10 +68,10 @@ class CheckoutScreen extends StatelessWidget {
                 key: formKey,
                 child: ListView(
                   children: <Widget>[
-                    if(cartManager.paymentMethod == null)
-                      CreditCardWidget(creditCard),
-                    if(cartManager.paymentMethod == null)
-                      CpfField(),
+                    // if(cartManager.paymentMethod == null)
+                    //   CreditCardWidget(creditCard),
+                    // if(cartManager.paymentMethod == null)
+                    //   CpfField(),
                     DeliveryPaymentCard(),
                     PriceCard(
                       buttonText: 'Finalizar Pedido',

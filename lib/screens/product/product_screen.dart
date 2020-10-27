@@ -134,6 +134,14 @@ class ProductScreen extends StatelessWidget {
                             product.listOptions.removeWhere((element) => element.contains("Observações"));
                           }
                         },
+                        //verificar depois
+                        onSaved: (ob){
+                          if(ob.isNotEmpty) {
+                            product.listOptions.add("Observações: $ob");
+                          } else {
+                            product.listOptions.removeWhere((element) => element.contains("Observações"));
+                          }
+                        },
                       ),
                     ],
                   const SizedBox(height: 20,),
@@ -142,6 +150,7 @@ class ProductScreen extends StatelessWidget {
                       return SizedBox(
                         height: 44,
                         child: RaisedButton(
+
                           onPressed: product.listOptions.isNotEmpty || product.price > 0
                               ? () {
                                   if (userManager.isLoggedIn) {

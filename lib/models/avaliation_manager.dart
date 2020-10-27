@@ -18,6 +18,8 @@ class AvaliationManager extends ChangeNotifier {
     avaliations = avaliationSnap.documents
         .map((d) => Avaliation.fromDocument(d))
         .toList();
+    avaliations.sort((a, b) => a.grade.compareTo(b.grade));
+    avaliations.reversed;
 
     notifyListeners();
   }
@@ -29,7 +31,11 @@ class AvaliationManager extends ChangeNotifier {
     for (final aval in avaliations){
       media += aval.grade;
     }
-    media = media/avaliations.length;
+    if(avaliations.length > 2) {
+      media = media / avaliations.length;
+    }else {
+      media = 5;
+    }
     print(media.toStringAsFixed(2));
 
     avaliation.save(storeId, avaliation, media);

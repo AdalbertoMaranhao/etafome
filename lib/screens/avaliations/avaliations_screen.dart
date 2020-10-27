@@ -16,7 +16,6 @@ class AvaliationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     
     return Scaffold(
       body: Center(
@@ -24,10 +23,8 @@ class AvaliationsScreen extends StatelessWidget {
           child: Consumer<AvaliationManager>(
             builder: (_, avaliationManager, __) {
               if(items.isNotEmpty) {
-                items.sort((a, b) => a.grade.compareTo(b.grade));
                 return ListView.builder(
                   padding: const EdgeInsets.only(top: 8),
-                  reverse: true,
                   itemCount: items.length,
                   itemBuilder: (_, index) {
                     return AvaliationTile(items[index]);
@@ -43,7 +40,11 @@ class AvaliationsScreen extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 128, 53, 73),
         foregroundColor: Colors.white,
         onPressed: () {
-          Navigator.of(context).pushNamed("/avaliations", arguments: storeId);
+          if(context.read<UserManager>().isLoggedIn) {
+            Navigator.of(context).pushNamed("/avaliations", arguments: storeId);
+          }else {
+            Navigator.of(context).pushNamed('/login');
+          }
         },
         child: const Icon(Icons.add),
       ),
