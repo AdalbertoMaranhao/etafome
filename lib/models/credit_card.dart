@@ -1,4 +1,4 @@
-import 'package:credit_card_type_detector/credit_card_type_detector.dart';
+//import 'package:credit_card_type_detector/credit_card_type_detector.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,7 +29,7 @@ class CreditCard extends ChangeNotifier{
 
   void setNumber(String number) {
     this.number = number;
-    brand = detectCCType(number.replaceAll(' ', '')).toString().toUpperCase().split(".").last;
+    //brand = detectCCType(number.replaceAll(' ', '')).toString().toUpperCase().split(".").last;
     notifyListeners();
   }
 
