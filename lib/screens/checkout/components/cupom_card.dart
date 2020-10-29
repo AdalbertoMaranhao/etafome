@@ -1,9 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
+import 'package:lojavirtual/models/cart_product.dart';
 import 'package:provider/provider.dart';
 
 class CupomCard extends StatelessWidget {
+  CupomCard(this.cartProduct);
+
+  final CartProduct cartProduct;
   @override
   Widget build(BuildContext context) {
     final cartManager = context.watch<CartManager>();
@@ -36,17 +40,26 @@ class CupomCard extends StatelessWidget {
               onFieldSubmitted: (text){
                 Firestore.instance.collection("coupons").document(text).get().then(
                    (docSnap) {
-                  if(docSnap.data != null){
-                    cartManager.setCoupon(text, docSnap.data["percent"] as int);
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Desconto de ${docSnap.data["percent"]}% aplicada"),
-                        backgroundColor: Colors.green,
-                      ),
-                    );
+                  if(docSnap.data != null && (docSnap.data["store"] as String == cartProduct.productStore || docSnap.data["store"] as String == null)){
+                    cartManager.setCoupon(text, docSnap.data["value"] as int, docSnap.data["type"] as String);
+                    if(docSnap.data["type"] as String == "percent"){
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Desconto de ${docSnap.data["value"]}% aplicado"),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    } else {
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Desconto de R\$ ${docSnap.data["value"]} aplicado"),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    }
 
                   } else {
-                    cartManager.setCoupon(null, 0);
+                    cartManager.setCoupon(null, 0, "value");
                     Scaffold.of(context).showSnackBar(
                       const SnackBar(
                         content: Text("Cupom não existente"),

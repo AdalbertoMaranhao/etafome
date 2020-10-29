@@ -50,7 +50,7 @@ class CartScreen extends StatelessWidget {
               ),
               AddressCard(),
               DeliveryType(),
-              CupomCard(),
+              CupomCard(cartManager.items.first),
               PriceCard(
                 buttonText: 'Continuar para Pagamento',
                   onPressed: cartManager.isCartValid ? (){

@@ -13,7 +13,7 @@ class CartManager extends ChangeNotifier{
   List<CartProduct> items = [];
 
   String cupomCode;
-  int discoutPercentage = 0;
+  int discoutValue = 0;
 
   bool deliveryType = false;
   String paymentMethod;
@@ -81,11 +81,15 @@ class CartManager extends ChangeNotifier{
     notifyListeners();
   }
 
-  void setCoupon(String couponCode, int percent){
+  void setCoupon(String couponCode, int percent, String type){
     cupomCode = couponCode;
-    discoutPercentage = percent;
+    discoutValue = percent;
 
-    discount = productsPrice * discoutPercentage / 100;
+    if(type == "percent") {
+      discount = productsPrice * discoutValue / 100;
+    } else {
+      discount = discoutValue;
+    }
 
     notifyListeners();
   }
