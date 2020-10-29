@@ -61,7 +61,7 @@ class AddressInputField extends StatelessWidget {
                   initialValue: address.complement,
                   decoration: const InputDecoration(
                     isDense: true,
-                    labelText: 'Complemento',
+                    labelText: 'Ponto de Referência',
                     hintText: 'Opcional',
                   ),
                   onSaved: (t) => address.complement = t,
@@ -150,7 +150,7 @@ class AddressInputField extends StatelessWidget {
                 }
               }
             } : null,
-            child: const Text('Calcular Frete'),
+            child: const Text('Confirmar Endereço'),
           ),
         ],
       );
