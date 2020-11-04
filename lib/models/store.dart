@@ -116,4 +116,22 @@ class Store {
         return '';
     }
   }
+
+  Future<void> saveData() async {
+    await firestoreRef.setData(toMap());
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'phone': phone,
+      'category': category,
+      if(opening != null)
+        'opening': opening,
+      if(address != null)
+        'address': address.toMap(),
+      if(image != null)
+        'image': image,
+    };
+  }
 }

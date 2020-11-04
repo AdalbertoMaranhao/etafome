@@ -7,8 +7,6 @@ import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:lojavirtual/screens/product/components/alert_stores_different.dart';
 import 'package:lojavirtual/screens/product/components/option_widget.dart';
-
-import 'package:lojavirtual/screens/product/components/size_widget.dart';
 import 'package:provider/provider.dart';
 
 class ProductScreen extends StatelessWidget {
