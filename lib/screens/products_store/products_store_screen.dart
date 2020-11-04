@@ -5,6 +5,7 @@ import 'package:lojavirtual/models/admin_orders_manager.dart';
 import 'package:lojavirtual/models/avaliation_manager.dart';
 import 'package:lojavirtual/models/cepaberto_address.dart';
 import 'package:lojavirtual/models/page_manager.dart';
+import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/product_manager.dart';
 import 'package:lojavirtual/models/store.dart';
 import 'package:lojavirtual/models/user_manager.dart';
@@ -26,6 +27,8 @@ class ProductsStoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final admin = context.watch<UserManager>().adminEnabled;
+    List<Product> filteredProducts = [];
+
 
     Future<bool> _backScreem(){
       Navigator.of(context).pop();
@@ -37,7 +40,12 @@ class ProductsStoreScreen extends StatelessWidget {
       child: Scaffold(
         body: Consumer<ProductManager>(
           builder: (_, productManager, __) {
-            final filteredProducts = productManager.getStoreProducts(store.id);
+            if(admin){
+              filteredProducts = productManager.getStoreProductsAdmin(store.id);
+            } else {
+              filteredProducts = productManager.getStoreProducts(store.id);
+            }
+
             return GridView.builder(
               padding: const EdgeInsets.only(top: 8),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -48,7 +56,7 @@ class ProductsStoreScreen extends StatelessWidget {
               itemCount: filteredProducts.length,
               itemBuilder: (_, index) {
                 if(filteredProducts.isNotEmpty) {
-                  return ProductListTile(filteredProducts[index]);
+                    return ProductListTile(filteredProducts[index]);
                 }
                 return Container();
               },

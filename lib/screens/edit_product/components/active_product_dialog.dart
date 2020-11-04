@@ -3,25 +3,25 @@ import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/product_manager.dart';
 import 'package:provider/provider.dart';
 
-class DeleteProductDialog extends StatelessWidget {
+class ActiveProductDialog extends StatelessWidget {
 
-  const DeleteProductDialog(this.product);
+  const ActiveProductDialog(this.product);
 
   final Product product;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Desativar ${product.name}?',),
-      content: const Text('Este produto não vai mais estar visivel para os seus clientes!'),
+      title: Text('Ativar ${product.name}?',),
+      content: const Text('Esse produto vai ser listado novamente para os seus clientes!'),
       actions: <Widget>[
         FlatButton(
           onPressed: (){
-            context.read<ProductManager>().delete(product);
+            context.read<ProductManager>().active(product);
             Navigator.of(context).pop();
           },
-          textColor: Colors.red,
-          child: const Text('Desativar Produto'),
+          textColor: Colors.green,
+          child: const Text('Ativar Produto'),
         ),
       ],
     );

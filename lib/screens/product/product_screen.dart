@@ -7,6 +7,7 @@ import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:lojavirtual/screens/product/components/alert_stores_different.dart';
 import 'package:lojavirtual/screens/product/components/option_widget.dart';
+import 'package:lojavirtual/screens/edit_product/components/active_product_dialog.dart';
 import 'package:provider/provider.dart';
 
 class ProductScreen extends StatelessWidget {
@@ -37,6 +38,15 @@ class ProductScreen extends StatelessWidget {
                       Navigator.of(context).pushReplacementNamed(
                           '/edit_product',
                           arguments: product
+                      );
+                    },
+                  );
+                } else if(userManager.adminEnabled && product.deleted){
+                  return IconButton(
+                    icon: Icon(Icons.assignment_turned_in_rounded, color: primaryColor,),
+                    onPressed: (){
+                      showDialog(context: context,
+                          builder: (_) => ActiveProductDialog(product)
                       );
                     },
                   );

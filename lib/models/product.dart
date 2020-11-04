@@ -137,6 +137,10 @@ class Product extends ChangeNotifier {
     firestoreRef.updateData({'deleted': true});
   }
 
+  void active() {
+    firestoreRef.updateData({'deleted': false});
+  }
+
   Product clone() {
     return Product(
       id: id,
