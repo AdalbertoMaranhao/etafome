@@ -55,8 +55,16 @@ class ProductListTile extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        Text(
-                          product.deleted == true ? "Deletado" : product.name,
+                        if (product.deleted == true)
+                          const Text(
+                          "Desativado" ,
+                          style:  TextStyle(
+                            fontSize: 16,
+                            color: Colors.red,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ) else Text(
+                          product.name,
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w800,

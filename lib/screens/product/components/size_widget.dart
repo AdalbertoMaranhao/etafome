@@ -25,8 +25,7 @@ class _SizeWidgetState extends State<SizeWidget> {
 
 
     return CheckboxListTile(
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      title: Wrap(
         children: [
           Text(widget.size.name),
           if(widget.size.price > 0)

@@ -115,7 +115,7 @@ class MyApp extends StatelessWidget {
             case '/login':
               return MaterialPageRoute(builder: (_) => LoginScreen());
             case '/signup':
-              return MaterialPageRoute(builder: (_) => StoreSignUpScreen());
+              return MaterialPageRoute(builder: (_) => SignUpScreen());
             case '/orders':
               return MaterialPageRoute(builder: (_) => AdminOrdersScreen());
             case '/product':

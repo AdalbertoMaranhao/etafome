@@ -13,7 +13,7 @@ class DeleteProductDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text('Desativar ${product.name}?',),
-      content: const Text('Este produto não vai mais estar visivel para os seus clientes!'),
+      content: const Text('Esse produto não estará visivel para os seus clientes!'),
       actions: <Widget>[
         FlatButton(
           onPressed: (){

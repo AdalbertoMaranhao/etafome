@@ -41,7 +41,7 @@ class _DeliveryPaymentCardState extends State<DeliveryPaymentCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 RadioListTile<String>(
-                  title: const Text('Cartão de Crédito'),
+                  title: const Text('Cartão'),
                   value: "card",
                   activeColor: Theme.of(context).primaryColor,
                   groupValue: cartManager.paymentMethod,
