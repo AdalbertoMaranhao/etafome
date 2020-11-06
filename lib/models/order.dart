@@ -146,7 +146,7 @@ class Order {
 
   Future<void> cancel() async {
     try {
-      await CieloPayment().cancel(payId);
+      //await CieloPayment().cancel(payId);
 
       status = Status.canceled;
       firestoreRef.updateData({'status': status.index});

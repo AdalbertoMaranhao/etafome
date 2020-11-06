@@ -67,6 +67,7 @@ class ProductsStoreScreen extends StatelessWidget {
                 backgroundColor: const Color.fromARGB(255, 128, 53, 73),
                 foregroundColor: Colors.white,
                 onPressed: () async {
+                  context.read<AdminOrdersManager>().setStoreFilter(store);
                   Navigator.of(context).pushNamed('/orders');
                 },
                 child: const Icon(Icons.playlist_add_check),
