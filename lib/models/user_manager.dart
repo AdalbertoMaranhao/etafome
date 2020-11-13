@@ -120,7 +120,7 @@ class UserManager extends ChangeNotifier {
 
 
 
-  Future<void> signUP({Store store, User user, Function onFail, Function onSucess}) async {
+  Future<void> signUP({User user, Function onFail, Function onSucess}) async {
     loading = true;
     try {
       final AuthResult result = await auth.createUserWithEmailAndPassword(
@@ -130,7 +130,6 @@ class UserManager extends ChangeNotifier {
       this.user = user;
 
       await user.saveData();
-      await store.saveData();
       user.saveToken();
 
       onSucess();

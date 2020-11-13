@@ -90,6 +90,7 @@ class Product extends ChangeNotifier {
       'description': description,
       'store': store,
       'price': price,
+      //'images': images,
       'options': exportOptionList(),
       'deleted': deleted,
     };

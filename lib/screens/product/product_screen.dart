@@ -104,20 +104,20 @@ class ProductScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if(product.deleted)
-                    const Padding(
-                      padding: EdgeInsets.only(top: 16, bottom: 8),
-                      child: Text(
-                        'Este produto não está mais disponível',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.red
-                        ),
-                      ),
-                    )
-                  else
-                    ...[
+                  // if(product.deleted)
+                  //   const Padding(
+                  //     padding: EdgeInsets.only(top: 16, bottom: 8),
+                  //     child: Text(
+                  //       'Este produto não está mais disponível',
+                  //       style: TextStyle(
+                  //           fontSize: 16,
+                  //           fontWeight: FontWeight.w500,
+                  //           color: Colors.red
+                  //       ),
+                  //     ),
+                  //   )
+                  // else
+                  //   ...[
                       Wrap(
                         spacing: 8,
                         runSpacing: 8,
@@ -151,7 +151,7 @@ class ProductScreen extends StatelessWidget {
                           }
                         },
                       ),
-                    ],
+                    //],
                   const SizedBox(height: 20,),
                   Consumer2<UserManager, Product>(
                     builder: (_, userManager, product, __) {

@@ -312,7 +312,7 @@ class _StoreSignUpScreenState extends State<StoreSignUpScreen> {
                                 }
                                 userManager.signUP(
                                     user: user,
-                                    store: store,
+                                    //store: store,
                                     onSucess: (){
                                       Navigator.of(context).pop();
                                     },

@@ -17,6 +17,8 @@ class ProductListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
+        // final pclone = product.clone();
+        // pclone.save();
         final store = context.read<StoresManager>().findStoreById(product.store);
         if(store.status == StoreStatus.open) {
           Navigator.of(context).pushNamed('/product', arguments: product);

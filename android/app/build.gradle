@@ -49,7 +49,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 29
         multiDexEnabled true
-        versionCode 5
+        versionCode 7
         versionName "1.0.12"
     }
 
