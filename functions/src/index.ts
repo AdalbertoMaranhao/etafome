@@ -360,7 +360,10 @@ async function sendPushFCM(tokens: string[], title: string, message:string){
             notification: {
                 title: title,
                 body: message,
-                click_action: 'FLUTTER_NOTIFICATION_CLICK'
+                vibration: 'true',
+                importance: '5',
+                sound: 'mysound',
+                click_action: 'FLUTTER_NOTIFICATION_CLICK',
             } 
         };
 
