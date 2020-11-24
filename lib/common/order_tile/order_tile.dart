@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lojavirtual/common/custom_icon_button.dart';
 import 'package:lojavirtual/models/order.dart';
 import 'package:lojavirtual/models/store.dart';
 import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:lojavirtual/models/user_manager.dart';
+import 'package:map_launcher/map_launcher.dart';
 
 import 'cancel_order_dialog.dart';
 import 'export_address_dialog.dart';
@@ -18,6 +20,47 @@ class OrderTile extends StatelessWidget {
   Store store;
   @override
   Widget build(BuildContext context) {
+
+    Future<void> openMap() async{
+      try {
+        final availableMaps = await MapLauncher.installedMaps;
+
+        showModalBottomSheet(
+            context: context,
+            builder: (_) {
+              return SafeArea(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    for(final map in availableMaps)
+                      ListTile(
+                        onTap: (){
+                          map.showMarker(
+                            coords: Coords(order.address.lat, order.address.long),
+                            title: order.userName,
+                            description: order.userName,
+                          );
+                          Navigator.of(context).pop();
+                        },
+                        title: Text(map.mapName),
+                        leading: Image(
+                          image: map.icon,
+                          width: 30,
+                          height: 30,
+                        ),
+                      ),
+                  ],
+                ),
+              );
+            }
+        );
+      } catch(e){
+        debugPrint(e.toString());
+      }
+    }
+
+
+
     store = context.watch<StoresManager>().findStoreById(order.storeOrderId());
     final primaryColor = Theme.of(context).primaryColor;
     return Card(
@@ -66,19 +109,31 @@ class OrderTile extends StatelessWidget {
           if(showControls)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Cliente: ${order.userName}",
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
-                    style: const TextStyle(color: Colors.black),),
-                  Text(order.paymentMethod,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
-                    style: const TextStyle(color: Colors.black),
-                  ) ,
-                  Text(order.deliveryType, style: const TextStyle(color: Colors.black)),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Cliente: ${order.userName}",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
+                        style: const TextStyle(color: Colors.black),),
+                      Text(order.paymentMethod,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
+                        style: const TextStyle(color: Colors.black),
+                      ) ,
+                      Text(order.deliveryType, style: const TextStyle(color: Colors.black)),
+                    ],
+                  ),
+                  if(order.status == Status.transporting)
+                  CustomIconButton(
+                    size: 40,
+                    iconData: Icons.map,
+                    color: primaryColor,
+                    onTap: openMap,
+                  ),
                 ],
               ),
             ),
