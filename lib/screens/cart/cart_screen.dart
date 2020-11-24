@@ -6,7 +6,10 @@ import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:lojavirtual/screens/address/components/address_card.dart';
 import 'package:lojavirtual/screens/address/components/delivery_type.dart';
 import 'package:lojavirtual/screens/checkout/components/cupom_card.dart';
+import 'package:lojavirtual/services/location.dart';
 import 'package:provider/provider.dart';
+import 'package:geocoding/geocoding.dart';
+
 
 import '../../common/price_card.dart';
 import 'components/cart_tile.dart';
@@ -14,6 +17,8 @@ import 'components/cart_tile.dart';
 class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final location = Loc();
+
     //codigo para mudar o retorno da tela do carrinho para a tela da loja, ao invés da tela do produto
 //    final storeId = context.watch<CartManager>().items[0].productStore;
 //    final store = context.watch<StoresManager>().findStoreById(storeId);
@@ -53,9 +58,9 @@ class CartScreen extends StatelessWidget {
               CupomCard(cartManager.items.first),
               PriceCard(
                 buttonText: 'Continuar para Pagamento',
-                  onPressed: cartManager.isCartValid ? (){
-                    Navigator.of(context).pushNamed('/checkout');
-                  } : null,
+                onPressed: cartManager.isCartValid ? (){
+                  Navigator.of(context).pushNamed('/checkout');
+                } : null,
               ),
             ],
           );

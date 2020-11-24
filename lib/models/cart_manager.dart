@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+//import 'package:geolocator/geolocator.dart';
 import 'package:lojavirtual/models/address.dart';
 import 'package:lojavirtual/models/cart_product.dart';
 import 'package:lojavirtual/models/product.dart';
@@ -8,6 +8,8 @@ import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:lojavirtual/models/user.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:lojavirtual/services/cepaberto_service.dart';
+import 'package:lojavirtual/services/location.dart';
+import 'package:geocoding/geocoding.dart';
 
 class CartManager extends ChangeNotifier{
   List<CartProduct> items = [];
@@ -177,22 +179,24 @@ class CartManager extends ChangeNotifier{
 
   //ADDRESS
 
-  Future<void> getAddress(String cep) async{
+  Future<void> getAddress(Loc location) async{
     loading = true;
 
-    final cepAbertoService = CepAbertoService();
+    //final cepAbertoService = CepAbertoService();
 
     try {
-      final cepAbertoAddress = await cepAbertoService.getAddresFromCep(cep);
-      if(cepAbertoAddress != null){
+      List<Placemark> placemarks = await placemarkFromCoordinates(location.latitude, location.longitude);
+      //final cepAbertoAddress = await cepAbertoService.getAddresFromCep(cep);
+      if(placemarks != null){
         address = Address(
-          street:  cepAbertoAddress.logradouro,
-          district: cepAbertoAddress.bairro,
-          zipCode: cepAbertoAddress.cep,
-          city: cepAbertoAddress.cidade.nome,
-          state: cepAbertoAddress.estado.sigla,
-          lat: cepAbertoAddress.latitude,
-          long: cepAbertoAddress.longitude,
+          number: placemarks[0].subThoroughfare,
+          street:  placemarks[0].thoroughfare,
+          district: placemarks[0].subLocality,
+          zipCode: placemarks[0].postalCode,
+          city: placemarks[0].subAdministrativeArea,
+          state: "CE",
+          lat: location.latitude,
+          long: location.longitude,
         );
       }
       loading = false;
@@ -228,26 +232,27 @@ class CartManager extends ChangeNotifier{
   }
 
   Future<bool> calculateDelivery(double lat, double long) async{
-    final DocumentSnapshot doc = await firestore.document('aux/delivery').get();
+    // final DocumentSnapshot doc = await firestore.document('aux/delivery').get();
+    //
+    // final latStore = doc.data['lat'] as double;
+    // final longStore = doc.data['long'] as double;
+    // final base = doc.data['base'] as num;
+    // final km = doc.data['km'] as num;
+    // final maxkm = doc.data['maxkm'] as num;
+    //
 
-    final latStore = doc.data['lat'] as double;
-    final longStore = doc.data['long'] as double;
-    final base = doc.data['base'] as num;
-    final km = doc.data['km'] as num;
-    final maxkm = doc.data['maxkm'] as num;
+    // double dis = await Geolocator()
+    //     .distanceBetween(latStore, longStore, lat, long);
 
-
-    double dis = await Geolocator()
-        .distanceBetween(latStore, longStore, lat, long);
-
-    dis /= 1000;
-
-
-    if(dis > maxkm){
-      return false;
-    }
-
-    deliveryPrice = base + dis * km;
+    // dis /= 1000;
+    //
+    //
+    // if(dis > maxkm){
+    //   return false;
+    // }
+    //
+    // deliveryPrice = base + dis * km;
+    deliveryPrice = 0.0;
     return true;
   }
 

@@ -4,7 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:lojavirtual/common/custom_icon_button.dart';
 import 'package:lojavirtual/models/address.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
+import 'package:lojavirtual/services/location.dart';
 import 'package:provider/provider.dart';
+import 'package:geocoding/geocoding.dart';
 
 class CepInputField extends StatefulWidget {
 
@@ -21,6 +23,7 @@ class _CepInputFieldState extends State<CepInputField> {
 
   @override
   Widget build(BuildContext context) {
+    final location = Loc();
     final cartManager = context.watch<CartManager>();
     final primaryColor = Theme.of(context).primaryColor;
 
@@ -28,28 +31,6 @@ class _CepInputFieldState extends State<CepInputField> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          TextFormField(
-            enabled: !cartManager.loading,
-            controller: cepController,
-            decoration: const InputDecoration(
-              isDense: true,
-              labelText: 'CEP',
-              hintText: '12.345-678',
-            ),
-            keyboardType: TextInputType.number,
-            inputFormatters: [
-              WhitelistingTextInputFormatter.digitsOnly,
-              CepInputFormatter(),
-            ],
-            validator: (cep){
-              if(cep.isEmpty){
-                return 'Campo obrigatório';
-              } else if(cep.length != 10){
-                return 'CEP inválido';
-              }
-              return null;
-            },
-          ),
           if(cartManager.loading)
             LinearProgressIndicator(
               valueColor: AlwaysStoppedAnimation(primaryColor),
@@ -57,23 +38,16 @@ class _CepInputFieldState extends State<CepInputField> {
             ),
           RaisedButton(
             onPressed: !cartManager.loading ? () async {
-              if(Form.of(context).validate()){
-                try {
-                  await context.read<CartManager>().getAddress(cepController.text);
-                } catch (e) {
-                  Scaffold.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('$e'),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
-                }
-              }
+              cartManager.loading = true;
+              await location.getCurrentLocation();
+              await context.read<CartManager>().getAddress(location);
+              cartManager.loading = false;
+
             } : null,
             color: primaryColor,
             disabledColor: primaryColor.withAlpha(100),
             textColor: Colors.white,
-            child: const Text('Buscar CEP'),
+            child: const Text('Buscar minha localização'),
           ),
         ],
       );

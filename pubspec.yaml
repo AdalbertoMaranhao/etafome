@@ -57,6 +57,8 @@ dependencies:
   flushbar: ^1.10.4
   shared_preferences: ^0.5.10
 
+  geocoding: ^1.0.5
+
   #vibration: ^1.6.1
 
   #flutter_signin_button: ^1.0.0

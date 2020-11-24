@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/common/price_card.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
+import 'package:lojavirtual/services/location.dart';
 import 'package:provider/provider.dart';
 
 import 'components/address_card.dart';
@@ -8,6 +9,8 @@ import 'components/address_card.dart';
 class AddressScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
+    //final location = Location();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Entrega'),
@@ -20,11 +23,12 @@ class AddressScreen extends StatelessWidget{
             builder: (_, cartManager, __){
               return PriceCard(
                 buttonText: 'Continuar para o Pagamento',
-                onPressed: cartManager.isAddressValid
-                  ? (){
-                    Navigator.of(context).pushNamed('/checkout');
-                  }
-                  : null,
+
+                // onPressed: cartManager.isAddressValid
+                //   ? (){
+                //     Navigator.of(context).pushNamed('/checkout');
+                //   }
+                //   : null,
               );
             },
           ),
