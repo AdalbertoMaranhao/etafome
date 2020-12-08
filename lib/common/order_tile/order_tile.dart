@@ -5,6 +5,7 @@ import 'package:lojavirtual/models/store.dart';
 import 'package:lojavirtual/models/stores_manager.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:map_launcher/map_launcher.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'cancel_order_dialog.dart';
 import 'export_address_dialog.dart';
@@ -20,6 +21,41 @@ class OrderTile extends StatelessWidget {
   Store store;
   @override
   Widget build(BuildContext context) {
+
+
+    Future<void> openPhone() async {
+      final String cleanPhone = order.userPhone.replaceAll(RegExp(r"[^\d]"), "");
+      if(await canLaunch('tel:$cleanPhone')){
+        launch('tel:$cleanPhone');
+      } else {
+        debugPrint("erro na hora de ligar");
+      }
+    }
+    Future<void> openWhats() async {
+      final String cleanPhone = order.userPhone.replaceAll(RegExp(r"[^\d]"), "");
+      if(await canLaunch('https://wa.me/55$cleanPhone')){
+        launch('https://wa.me/55$cleanPhone');
+      } else {
+        debugPrint("erro na hora de ligar");
+      }
+    }
+
+
+    Future<void> openWhatsStore() async {
+      if(await canLaunch('https://wa.me/55${store.cleanPhone}')){
+        launch('https://wa.me/55${store.cleanPhone}');
+      } else {
+        debugPrint("erro na hora de ligar");
+      }
+    }
+
+    Future<void> openPhoneStore() async {
+      if(await canLaunch('tel:${store.cleanPhone}')){
+        launch('tel:${store.cleanPhone}');
+      } else {
+        debugPrint("erro na hora de ligar");
+      }
+    }
 
     Future<void> openMap() async{
       try {
@@ -119,6 +155,8 @@ class OrderTile extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 3,
                         style: const TextStyle(color: Colors.black),),
+                      if(order.userPhone != null)
+                        Text("Tel: ${order.userPhone}", style: const TextStyle(color: Colors.black)),
                       Text(order.paymentMethod,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 3,
@@ -126,34 +164,74 @@ class OrderTile extends StatelessWidget {
                       ) ,
                       Text(order.deliveryType, style: const TextStyle(color: Colors.black)),
                       if(order.troco != null)
-                        Text("Troco: ${order.troco}"),
+                        Text("Troco: ${order.troco}", style: const TextStyle(color: Colors.black)),
                     ],
                   ),
-                  if(order.status == Status.transporting)
-                  CustomIconButton(
-                    size: 40,
-                    iconData: Icons.map,
-                    color: primaryColor,
-                    onTap: openMap,
-                  ),
+                    Column(
+                      children: [
+                        if(order.userPhone != null && order.status != Status.delivered)
+                          CustomIconButton(
+                            iconData: Icons.phone,
+                            color: primaryColor,
+                            onTap: openPhone,
+                          ),
+                        const SizedBox(height: 10,),
+                        if(order.userPhone != null && (order.status != Status.delivered && order.status != Status.transporting))
+                          CustomIconButton(
+                            iconData: Icons.message,
+                            color: primaryColor,
+                            onTap: openWhats,
+                          ),
+                        const SizedBox(height: 10,),
+                        if(order.status == Status.transporting)
+                          CustomIconButton(
+                            size: 30,
+                            iconData: Icons.map,
+                            color: primaryColor,
+                            onTap: openMap,
+                          ),
+
+                      ],
+                    ),
                 ],
               ),
             ),
           if(!showControls && store != null)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Restaurante: ${store.name}",
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
-                    style: const TextStyle(color: Colors.black),),
-                  Text("Telefone: ${store.phone}",
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
-                    style: const TextStyle(color: Colors.black),
-                  ) ,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Restaurante: ${store.name}",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
+                        style: const TextStyle(color: Colors.black),),
+                      Text("Telefone: ${store.phone}",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
+                        style: const TextStyle(color: Colors.black),
+                      ) ,
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomIconButton(
+                        iconData: Icons.phone,
+                        color: primaryColor,
+                        onTap: openPhoneStore,
+                      ),
+                      const SizedBox(height: 20,),
+                      CustomIconButton(
+                        iconData: Icons.message,
+                        color: primaryColor,
+                        onTap: openWhatsStore,
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

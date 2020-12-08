@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lojavirtual/helpers/validators.dart';
 import 'package:lojavirtual/models/user.dart';
 import 'package:lojavirtual/models/user_manager.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
+import 'package:brasil_fields/brasil_fields.dart';
 
 class SignUpScreen extends StatelessWidget {
 
@@ -10,6 +13,7 @@ class SignUpScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   final User user = User();
+  var maskFormatterPhone = MaskTextInputFormatter(mask: '(##) #####-####', filter: { "#": RegExp(r'[0-9]') });
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +85,22 @@ class SignUpScreen extends StatelessWidget {
                               return null;
                             },
                             onSaved: (email) => user.email = email,
+                          ),
+                          const SizedBox(height: 16,),
+                          TextFormField(
+                            decoration: const InputDecoration(hintText: 'Telefone'),
+                            enabled: !userManager.loading,
+                            keyboardType: TextInputType.phone,
+                            inputFormatters: [
+                              maskFormatterPhone
+                            ],
+                            validator: (tel){
+                              if(tel.isEmpty){
+                                return 'Campo obrigatório';
+                              }
+                              return null;
+                            },
+                            onSaved: (phone) => user.phone = phone,
                           ),
                           const SizedBox(height: 16,),
                           TextFormField(

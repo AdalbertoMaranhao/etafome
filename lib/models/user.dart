@@ -11,6 +11,7 @@ class User {
     id = document.documentID;
     name = document.data['name'] as String;
     email = document.data['email'] as String;
+    phone = document.data['phone'] as String;
     cpf = document.data['cpf'] as String;
     if(document.data.containsKey('address')){
       address = Address.fromMap(
@@ -21,6 +22,7 @@ class User {
   String id;
   String name;
   String email;
+  String phone;
   String cpf;
   String password;
 
@@ -47,6 +49,7 @@ class User {
     return {
       'name': name,
       'email': email,
+      'phone': phone,
       if(address != null)
         'address': address.toMap(),
       if(cpf != null)

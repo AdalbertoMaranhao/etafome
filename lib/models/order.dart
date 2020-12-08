@@ -14,6 +14,7 @@ class Order {
     price = cartManager.totalPrice;
     userId = cartManager.user.id;
     userName = cartManager.user.name;
+    userPhone = cartManager.user.phone ?? "";
     address = cartManager.address;
     troco = cartManager.troco;
     status = Status.waiting;
@@ -40,6 +41,7 @@ class Order {
     userId = doc.data['user'] as String;
     troco = doc.data['troco'] as String;
     userName = doc.data['userName'] as String;
+    userPhone = doc.data['userPhone'] as String;
     address = Address.fromMap(doc.data['address'] as Map<String, dynamic>);
     date = doc.data['date'] as Timestamp;
 
@@ -64,6 +66,7 @@ class Order {
   num price;
   String userId;
   String userName;
+  String userPhone;
   Address address;
 
   Status status;
@@ -94,6 +97,7 @@ class Order {
         'price': price,
         'user': userId,
         'userName': userName,
+        'userPhone': userPhone,
         'address': address.toMap(),
         'status': status.index,
         'date': Timestamp.now(),
