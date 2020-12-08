@@ -135,14 +135,22 @@ class ProductScreen extends StatelessWidget {
                         maxLines: 10,
                         decoration: const InputDecoration(border: OutlineInputBorder(), hintText: "Ex: retirar cebola."),
                         keyboardType: TextInputType.text,
-                        onFieldSubmitted: (ob){
+                        onChanged: (ob){
                           if(ob.isNotEmpty) {
+                            product.listOptions.removeWhere((element) => element.contains("Observações"));
                             product.listOptions.add("Observações: $ob");
                           } else {
                             product.listOptions.removeWhere((element) => element.contains("Observações"));
                           }
                         },
-                        //verificar depois
+                        onFieldSubmitted: (ob){
+                          if(ob.isNotEmpty) {
+                            product.listOptions.removeWhere((element) => element.contains("Observações"));
+                            product.listOptions.add("Observações: $ob");
+                          } else {
+                            product.listOptions.removeWhere((element) => element.contains("Observações"));
+                          }
+                        },
                         onSaved: (ob){
                           if(ob.isNotEmpty) {
                             product.listOptions.add("Observações: $ob");

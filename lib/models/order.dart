@@ -3,9 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:lojavirtual/models/address.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:lojavirtual/models/cart_product.dart';
-import 'package:lojavirtual/models/store.dart';
-import 'package:lojavirtual/models/stores_manager.dart';
-import 'package:lojavirtual/services/cielo_payment.dart';
+
 
 enum Status {canceled, waiting, preparing, transporting, delivered}
 
@@ -17,6 +15,7 @@ class Order {
     userId = cartManager.user.id;
     userName = cartManager.user.name;
     address = cartManager.address;
+    troco = cartManager.troco;
     status = Status.waiting;
     if(!cartManager.deliveryType) {
       deliveryType = "Receber em Casa";
@@ -39,6 +38,7 @@ class Order {
     }).toList();
     price = doc.data['price'] as num;
     userId = doc.data['user'] as String;
+    troco = doc.data['troco'] as String;
     userName = doc.data['userName'] as String;
     address = Address.fromMap(doc.data['address'] as Map<String, dynamic>);
     date = doc.data['date'] as Timestamp;
@@ -57,6 +57,7 @@ class Order {
   String payId;
   String deliveryType;
   String paymentMethod;
+  String troco;
 
 
   List<CartProduct> items;
@@ -97,6 +98,7 @@ class Order {
         'status': status.index,
         'date': Timestamp.now(),
         'payId': payId,
+        'troco': troco,
         'deliveryType': deliveryType,
         'paymentMethod': paymentMethod,
       }

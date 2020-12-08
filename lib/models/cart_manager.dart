@@ -19,6 +19,7 @@ class CartManager extends ChangeNotifier{
 
   bool deliveryType = false;
   String paymentMethod;
+  String troco;
 
   User user;
   Address address;

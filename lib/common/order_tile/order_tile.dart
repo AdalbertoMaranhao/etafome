@@ -125,6 +125,8 @@ class OrderTile extends StatelessWidget {
                         style: const TextStyle(color: Colors.black),
                       ) ,
                       Text(order.deliveryType, style: const TextStyle(color: Colors.black)),
+                      if(order.troco != null)
+                        Text("Troco: ${order.troco}"),
                     ],
                   ),
                   if(order.status == Status.transporting)

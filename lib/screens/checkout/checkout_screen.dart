@@ -3,12 +3,8 @@ import 'package:lojavirtual/common/price_card.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:lojavirtual/models/checkout_manager.dart';
 import 'package:lojavirtual/models/credit_card.dart';
-import 'package:lojavirtual/screens/checkout/components/cpf_field.dart';
-import 'package:lojavirtual/screens/checkout/components/credit_card_widget.dart';
-import 'package:lojavirtual/screens/checkout/components/cupom_card.dart';
 import 'package:lojavirtual/screens/checkout/components/delivery_payment_card.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CheckoutScreen extends StatelessWidget {
 
@@ -73,9 +69,26 @@ class CheckoutScreen extends StatelessWidget {
                     // if(cartManager.paymentMethod == null)
                     //   CpfField(),
                     DeliveryPaymentCard(),
+                    if(cartManager.paymentMethod == "money")
+                      Card(
+                        elevation: 5,
+                        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: TextFormField(
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: "Precisa de Troco?",
+                            ),
+                            onChanged: (troco){
+                              cartManager.troco = troco;
+                            },
+                          ),
+                        ),
+                      ),
                     PriceCard(
                       buttonText: 'Finalizar Pedido',
-                      onPressed: () {
+                      onPressed: cartManager.paymentMethod == null ? null : () {
                         if (formKey.currentState.validate()) {
                           formKey.currentState.save();
 
