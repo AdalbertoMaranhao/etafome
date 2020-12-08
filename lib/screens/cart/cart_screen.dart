@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:lojavirtual/common/empty_card.dart';
 import 'package:lojavirtual/common/login_card.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
+import 'package:lojavirtual/models/user_manager.dart';
 import 'package:lojavirtual/screens/address/components/address_card.dart';
 import 'package:lojavirtual/screens/address/components/delivery_type.dart';
 import 'package:lojavirtual/screens/checkout/components/cupom_card.dart';
 import 'package:lojavirtual/services/location.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:geocoding/geocoding.dart';
 
@@ -17,7 +19,9 @@ import 'components/cart_tile.dart';
 class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final location = Loc();
+    final userManager  = context.watch<UserManager>();
+    String contato;
+    var maskFormatterPhone = MaskTextInputFormatter(mask: '(##) #####-####', filter: { "#": RegExp(r'[0-9]') });
 
     //codigo para mudar o retorno da tela do carrinho para a tela da loja, ao invés da tela do produto
 //    final storeId = context.watch<CartManager>().items[0].productStore;
@@ -58,7 +62,48 @@ class CartScreen extends StatelessWidget {
               CupomCard(cartManager.items.first),
               PriceCard(
                 buttonText: 'Continuar para Pagamento',
-                onPressed: cartManager.isCartValid ? (){
+                onPressed: cartManager.isCartValid ? () async {
+                  if(cartManager.user.phone == null){
+                   await showDialog(
+                        context: context,
+                       barrierDismissible: false,
+                        builder: (_) =>
+                            AlertDialog(
+                              title: Text('Cadastrar número de telefone',),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text('Para facilitar o seu atendimento\nsolicitamos que informe o seu \nnúmero de telefone para o cadastro.\n'),
+                                  TextFormField(
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      hintText: "Telefone",
+                                    ),
+                                    onChanged: (troco){
+                                      contato = troco;
+                                    },
+                                    keyboardType: TextInputType.phone,
+                                    inputFormatters: [
+                                      maskFormatterPhone
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              actions: <Widget>[
+                                FlatButton(
+                                  onPressed: (){
+                                    userManager.user.phone = contato;
+                                    userManager.user.updatePhone();
+                                    Navigator.of(context).pop();
+                                  },
+                                  textColor: Colors.green,
+                                  child: const Text('Salvar', style: TextStyle(fontSize: 20),),
+                                ),
+                              ],
+                            )
+                    );
+                  }
                   Navigator.of(context).pushNamed('/checkout');
                 } : null,
               ),

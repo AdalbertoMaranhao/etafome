@@ -45,6 +45,14 @@ class User {
     await firestoreRef.setData(toMap());
   }
 
+  Future<void> updatePhone() async {
+    await firestoreRef.updateData(
+      {
+        'phone': phone,
+      }
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'name': name,
